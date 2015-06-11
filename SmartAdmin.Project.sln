@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Gerador", "0 - Gerador", "{5496AF4C-C9C7-4604-B22D-E16222EE9853}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Data", "1 - Data", "{B88B749B-C207-4C01-8299-2F70F83B15F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{894FBC8A-D66D-4DC4-B0F3-962A56860CC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Presentation", "3 - Presentation", "{B39CDC59-CAE4-4F04-B4D8-DAF78392D3A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.Data", "SmartAdmin.Data\SmartAdmin.Data.csproj", "{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.Domain", "SmartAdmin.Domain\SmartAdmin.Domain.csproj", "{99779F07-C527-46F4-8F95-97C002A709DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.Generator", "SmartAdmin.Generator\SmartAdmin.Generator.csproj", "{2C0D8826-9F2C-4C84-9564-399D58F115E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.WebUI", "SmartAdmin.WebUI\SmartAdmin.WebUI.csproj", "{B97DBA2F-F137-4252-95AE-9AB4516337A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4851E737-006A-4C36-A789-981918E8D4F6}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99779F07-C527-46F4-8F95-97C002A709DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99779F07-C527-46F4-8F95-97C002A709DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99779F07-C527-46F4-8F95-97C002A709DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99779F07-C527-46F4-8F95-97C002A709DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0D8826-9F2C-4C84-9564-399D58F115E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0D8826-9F2C-4C84-9564-399D58F115E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0D8826-9F2C-4C84-9564-399D58F115E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0D8826-9F2C-4C84-9564-399D58F115E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B97DBA2F-F137-4252-95AE-9AB4516337A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B97DBA2F-F137-4252-95AE-9AB4516337A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B97DBA2F-F137-4252-95AE-9AB4516337A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B97DBA2F-F137-4252-95AE-9AB4516337A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2C0D8826-9F2C-4C84-9564-399D58F115E8} = {5496AF4C-C9C7-4604-B22D-E16222EE9853}
+		{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B} = {B88B749B-C207-4C01-8299-2F70F83B15F5}
+		{99779F07-C527-46F4-8F95-97C002A709DB} = {894FBC8A-D66D-4DC4-B0F3-962A56860CC1}
+		{B97DBA2F-F137-4252-95AE-9AB4516337A4} = {B39CDC59-CAE4-4F04-B4D8-DAF78392D3A2}
+	EndGlobalSection
+EndGlobal

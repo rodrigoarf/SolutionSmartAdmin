@@ -1,0 +1,58 @@
+﻿<header>
+	<span class="widget-icon"><i class="fa fa-edit"></i></span>
+	<h2>Busca por Usuários</h2>
+</header>
+<div>
+	<div class="widget-body no-padding">
+		<div class="smart-form">
+            @using (Html.BeginForm("Index", "Usuario", FormMethod.Post, new { @id = "smart-form-filter" }))
+            {
+			    <fieldset>
+				    <div class="row">
+					    <section class="col col-4">
+						    <label class="label">Busca por Nome</label>
+						    <label class="input">
+							    <i class="icon-append fa fa-user"></i>
+							    <input type="text" name="NOME" placeholder="Nome do usuário ou parte do nome">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe o nome ou parte do nome do usuário 
+                                </b>
+						    </label>
+					    </section>
+					    <section class="col col-2">
+						    <label class="label">Busca por Status</label>
+						    <label class="select">
+							    <select name="ativo">
+								    <option value="0" selected="" disabled="">(Todos)</option>
+								    <option value="A">Ativo</option>
+								    <option value="I">Inativo</option>
+							    </select>
+							    <i></i>
+						    </label>
+					    </section>
+				    </div>
+				    <div class="row">
+					    <section class="col col-2">
+						    <label class="label">Busca por Data de Cadastro</label>
+						    <label class="input">
+							    <i class="icon-append fa fa-calendar"></i>
+							    <input type="text" name="DATA" placeholder="__/__/____" class="datemask datepicker">
+						    </label>
+					    </section>                      
+				    </div>
+			    </fieldset>
+			    <footer>
+				    <button type="submit" class="btn btn-sm btn-primary">
+					    <i class="fa fa-search"></i> Buscar
+				    </button>
+				    <a class="btn btn-lg btn-success">
+					    <i class="fa fa-print"></i> Imprimir
+				    </a>
+				    <a class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modal-usuario-create">
+					    <i class="fa fa-cog"></i> Inserir     
+				    </a>
+			    </footer>
+            }
+		</div> 
+	</div>
+</div>

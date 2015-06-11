@@ -1,0 +1,83 @@
+﻿@using (Html.BeginForm("Save", "Usuario", FormMethod.Post, new { @id = "smart-form-create" }))
+{
+    <header>
+        Registre-se
+    </header>
+
+    <fieldset>
+        <section>
+            <label class="input">
+                <i class="icon-append fa fa-user"></i>
+                <input type="text" name="username" placeholder="Usuário">
+                <b class="tooltip tooltip-bottom-right">Usuário de Acesso</b>
+            </label>
+        </section>
+
+        <section>
+            <label class="input">
+                <i class="icon-append fa fa-envelope"></i>
+                <input type="email" name="email" placeholder="E-mail de Contato">
+                <b class="tooltip tooltip-bottom-right">Email de Contato</b>
+            </label>
+        </section>
+
+        <section>
+            <label class="input">
+                <i class="icon-append fa fa-lock"></i>
+                <input type="password" name="password" placeholder="Senha" id="password">
+                <b class="tooltip tooltip-bottom-right">Senha de acesso ao sistema</b>
+            </label>
+        </section>
+
+        <section>
+            <label class="input">
+                <i class="icon-append fa fa-lock"></i>
+                <input type="password" name="passwordConfirm" placeholder="Confirme sua Senha">
+                <b class="tooltip tooltip-bottom-right">Repita sua senha de acesso</b>
+            </label>
+        </section>
+    </fieldset>
+
+    <fieldset>
+        <section>
+            <label class="input">
+                <i class="icon-append fa fa-user"></i>
+                <input type="text" name="firstname" placeholder="Nome completo">
+            </label>
+        </section>
+
+        <div class="row">
+            <section class="col col-6">
+                <label class="select">
+                    <select name="gender">
+                        <option value="0" selected="" disabled="">Sexo</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Feminino</option>
+                    </select>
+                    <i></i>
+                </label>
+            </section>
+        </div>
+
+        <section>
+            <label class="checkbox">
+                <input type="checkbox" name="terms" id="terms">
+                <i></i>Eu concordo com os <a href="#" data-toggle="modal" data-target="#myModal">Termos e Condições</a>
+            </label>
+        </section>
+    </fieldset>
+
+    <footer>
+        <button type="submit" class="btn btn-warning">
+            Registrar
+        </button>
+    </footer>
+
+    <div class="message">
+        <i class="fa fa-check"></i>
+        <p>
+            Thank you for your registration!
+        </p>
+    </div>
+
+}

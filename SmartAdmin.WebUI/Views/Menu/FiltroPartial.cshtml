@@ -1,0 +1,42 @@
+﻿<header>
+    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+    <h2>Busca por Menus</h2>
+</header>
+<div>
+    <div class="widget-body no-padding">
+        @using (Html.BeginForm("Index", "Menu", FormMethod.Post, new { @id = "smart-form-filter" }))
+        {
+            <div class="smart-form">
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-2">
+                            <label class="label">Menus Cadastrados</label>
+                            <label class="select">
+                                <select name="ativo">
+                                    <option value="0" selected="" disabled="">(Todos)</option>
+                                    <option value="0001">Menu 0001</option>
+                                    <option value="0002">Menu 0002</option>
+                                    <option value="0003">Menu 0003</option>
+                                    <option value="0004">Menu 0004</option>
+                                    <option value="0005">Menu 0005</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        <i class="fa fa-search"></i> Buscar
+                    </button>
+                    <a class="btn btn-lg btn-success">
+                        <i class="fa fa-print"></i> Imprimir
+                    </a>                
+                    <a class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modal-menu-create">
+                        <i class="fa fa-cog"></i> Inserir     
+                    </a>
+                </footer>
+            </div> 
+        }
+    </div>
+</div>

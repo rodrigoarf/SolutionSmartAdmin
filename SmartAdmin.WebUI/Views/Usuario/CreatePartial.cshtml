@@ -1,0 +1,80 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+@using (Html.BeginForm("Save", "Usuario", FormMethod.Post, new { @id = "smart-form-create" }))
+        {            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cadastrar novo usuário</h4>
+            </div>  
+            <div class="modal-body" style="padding-bottom:0; margin-bottom:0;">
+                <div class="widget-body no-padding">
+                    <div class="smart-form">
+                        <fieldset>
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="text" name="USUARIO" id="USUARIO" placeholder="Usuário de acesso ao sistema" tabindex="1" />
+                                    <b class="tooltip tooltip-bottom-right">Usuário de acesso</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="SENHA" id="SENHA" placeholder="Senha de acesso ao sistema" tabindex="2" />
+                                    <b class="tooltip tooltip-bottom-right">Senha de acesso ao sistema</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="RESENHA" id="RESENHA" placeholder="Confirme senha de acesso ao sistema" tabindex="3" />
+                                    <b class="tooltip tooltip-bottom-right">Repita sua senha de acesso</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-envelope"></i>
+                                    <input type="password" name="EMAIL" id="EMAIL" placeholder="E-mail de contato" tabindex="4" />
+                                    <b class="tooltip tooltip-bottom-right">Email de contato</b>
+                                </label>
+                            </section>
+
+                        </fieldset>
+
+                        <fieldset>
+
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="text" name="NOME" id="NOME" placeholder="Nome do usuário completo" tabindex="5" />
+                                    <b class="tooltip tooltip-bottom-right">Nome do usuário completo</b>
+                                </label>
+                            </section>
+
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="select">
+                                            <select>
+                                                <option value="0">Sexo</option>
+                                                <option value="M">Masculino</option>
+                                                <option value="F">Feminino</option>
+                                            </select>
+                                            <i></i>
+                                        </label>
+                                </section>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
+                <button class="btn btn-md btn-warning" id="btnSaveUsuario"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
+            </div>                    
+        }
+    </div>
+</div>

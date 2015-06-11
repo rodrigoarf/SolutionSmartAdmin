@@ -1,0 +1,80 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Cadastrar menu</h4>
+        </div>
+        @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "smart-form-create" }))
+        {
+            <div class="modal-body" style="padding-bottom:0px;">
+                <div class="widget-body no-padding">
+                    <div class="smart-form">
+                        <fieldset>
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-tasks"></i>
+                                        <input type="text" name="menu" placeholder="Menu do sistema">
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Nome do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-sitemap"></i>
+                                        <input type="text" name="controller" placeholder="Controller do menu">
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Controller do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-random"></i>
+                                        <input type="text" name="email" placeholder="Action do menu">
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Action do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-leaf"></i>
+                                        <input type="text" name="email" placeholder="Icone do menu">
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Icone do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>  
+
+                        </fieldset> 
+                        <fieldset style="padding-bottom:0px;">
+                                <div class="row">
+                                    <section class="col col-6">
+                                        <label class="select">
+                                            <select name="gender">
+                                                <option value="0" selected="" disabled="">Status do menu</option>
+                                                <option value="A">Ativo</option>
+                                                <option value="I">Inativo</option>
+                                            </select>
+                                            <i></i>
+                                        </label>
+                                    </section>
+                                </div>
+                            </fieldset> 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
+                <button type="submit" class="btn btn-md btn-warning"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- scripts -->
+<script src="~/Script/Menu/Create.js"></script>

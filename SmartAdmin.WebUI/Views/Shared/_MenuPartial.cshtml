@@ -1,0 +1,53 @@
+﻿<!-- User info -->
+<div class="login-info">
+    <span>
+        <!-- User image size is adjusted inside CSS, it should stay as is -->
+
+        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+            <img src="~/Content/img/avatars/sunny.png" alt="me" class="online" />
+            <span onclick="window.location.href='/Usuario/Edit'">john.doe 
+            </span>
+            <i class="fa fa-angle-down"></i>
+        </a>
+
+    </span>
+</div>
+<!-- end user info -->
+
+<nav>
+    <ul>
+        @*<li class="">
+            <a href="/Complexidade/Index" title="Classificacao de Pacientes"><i class="fa fa-lg fa-fw fa-inbox"></i><span class="menu-item-parent">Classificação</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i><span class="menu-item-parent">Dimencionamento</span></a>
+            <ul>
+                <li>
+                    <a href="/Dimensionamento/Diario">Diário</a>
+                </li>
+                <li>
+                    <a href="/Dimensionamento/Mensal">Mensal</a>
+                </li>
+            </ul>
+        </li>*@
+		<li class="top-menu-hidden">
+			<a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Administração</span></a>
+			<ul>
+				<li>
+					<a href="/Usuario/Index"><i class="fa fa-stack-overflow"></i> Usuários</a>
+				</li>
+				<li>
+					<a href="/Menu/Index"><i class="fa fa-cube"></i> Menus</a>
+				</li>
+				<li>
+					<a href="/Historico/Index"><i class="fa fa-pencil"></i> Histórico</a>
+				</li>
+				<li>
+					<a target="_blank"><i class="fa fa-bug"></i> Bugs</a>
+				</li>
+			</ul>
+		</li>
+    </ul>
+</nav>
+
+<span class="minifyme" data-action="minifyMenu"><i class="fa fa-arrow-circle-left hit"></i></span>

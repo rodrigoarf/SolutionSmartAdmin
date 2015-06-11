@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa-fw fa fa-home"></i>Histórico de Acessos ao Sistema
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 text-right"></div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
+                    @{Html.RenderPartial("FiltroPartial");}
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-blueDark">
+                    @{Html.RenderPartial("GridPartial");}
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
+
+ <!-- #script this page -->
+<script src="~/Script/Historico/Index.js" type="text/javascript"></script>

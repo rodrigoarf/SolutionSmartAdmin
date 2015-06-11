@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en-us" id="extr-page">
+<head>
+    <meta charset="utf-8">
+    <title>SmartAdmin</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/demo.min.css">
+    <link rel="shortcut icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+
+    <script src="~/Content/js/plugin/pace/pace.min.js"></script>
+    <script src="~/Content/js/libs/jquery-2.0.2.min.js"></script>
+    <script src="~/Content/js/libs/jquery-ui-1.10.3.min.js"></script>
+    <script src="~/Content/js/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Content/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/Content/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/js/notification/SmartNotification.min.js"></script>
+    <!--[if IE 8]><h1>Seu navegador está desatualizado, por favor atualize seu navegador, indo para www.microsoft.com/download</h1><![endif]-->
+
+</head>
+
+<body class="animated fadeInDown">
+
+     @{Html.RenderPartial("HeaderPartial");}
+
+    <div id="main" role="main">
+
+        <!-- MAIN CONTENT -->
+        <div id="content" class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+                    <h1 class="txt-color-red login-header-big">SmartAdmin</h1>
+                    <div class="hero">
+
+                        <div class="pull-left login-desc-box-l">
+                            <h4 class="paragraph-header">But I must explain to you how all this mistaken idea of denouncing pleasure.</h4>
+                            <div class="login-app-icons">
+                                <a href="javascript:void(0);" class="btn btn-danger btn-lg">A Plataforma</a>
+                                &nbsp;
+                                <a href="javascript:void(0);" class="btn btn-danger btn-lg">Com Dúvidas ?</a>
+                            </div>
+                        </div>
+
+                        <img src="~/Content/img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width: 210px">
+                    </div>
+
+                    <div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<h5 class="about-heading">Give you a complete account</h5>
+							<p>
+								But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account
+							</p>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<h5 class="about-heading">Idea of denouncing pleasure</h5>
+							<p>
+								But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account
+							</p>
+						</div>
+                    </div>
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                    <div class="well no-padding">
+                      @{Html.RenderPartial("FormPartial");}                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #modal-usuario-create -->
+    <div class="modal fade" id="modal-usuario-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        @{Html.RenderPartial("CreatePartial");}
+    </div> 
+</body>
+</html>

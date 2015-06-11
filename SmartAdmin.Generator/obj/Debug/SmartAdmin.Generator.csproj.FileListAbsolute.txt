@@ -1,0 +1,8 @@
+C:\Users\Rodrigo\Desktop\SolutionGerador\SmartAdmin.Generator\SmartAdmin.Generator\bin\Debug\SmartAdmin.Generator.exe.config
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\bin\Debug\SmartAdmin.Generator.exe.config
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\bin\Debug\SmartAdmin.Generator.exe
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\bin\Debug\SmartAdmin.Generator.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\bin\Debug\MySql.Data.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\obj\Debug\SmartAdmin.Generator.csprojResolveAssemblyReference.cache
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\obj\Debug\SmartAdmin.Generator.exe
+D:\Projetos\SolutionPlataform\SmartAdmin.Generator\obj\Debug\SmartAdmin.Generator.pdb
