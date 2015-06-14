@@ -29,6 +29,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("using System.Collections;");
             TextClass.AppendLine("using System.Collections.Generic;");
             TextClass.AppendLine("using System.Linq;");
+            TextClass.AppendLine("using System.ComponentModel.DataAnnotations;");
             TextClass.AppendLine("using System.Threading.Tasks;");
             TextClass.AppendLine("");
             TextClass.AppendLine("namespace " + DataModel.NameSpaceDto);
@@ -693,6 +694,150 @@ namespace SmartAdmin.Generator.Core
             TextClass.Clear();
 
             return ("> " + FileName);
-        }     
+        }
+
+
+
+
+
+
+
+
+
+        public string BuildModelDataAnnotations(KeyValuePair<string, ClassConfig> TableSetting)
+        {
+            var FilePath = ConfigurationManager.AppSettings["OutputClassModels"].ToString();
+            var SufixoModels = "Dto";
+            var TableName = TableSetting.Key;
+            var DataModel = TableSetting.Value;
+            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+
+            //--
+            TextClass = new StringBuilder();
+
+            TextClass.AppendLine("using System;");
+            TextClass.AppendLine("using System.Text;");
+            TextClass.AppendLine("using System.Collections;");
+            TextClass.AppendLine("using System.Collections.Generic;");
+            TextClass.AppendLine("using System.Linq;");
+            TextClass.AppendLine("using System.ComponentModel.DataAnnotations;");
+            TextClass.AppendLine("using System.Threading.Tasks;");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("namespace " + DataModel.NameSpaceDto);
+            TextClass.AppendLine("{");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("    [MetadataType(typeof(" + DataModel.ClassName + SufixoModels + "Validator))]");
+            TextClass.AppendLine("    public class " + DataModel.ClassName + SufixoModels + " : Base");
+            TextClass.AppendLine("    {");
+
+            var ColumnDataType = String.Empty;
+
+            foreach (var ColumnMapper in TableSchema.CollectionColumn)
+            {
+                if (ColumnMapper.ColumnKey != "pk")
+                {
+                    ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                    TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                }
+            }
+
+            TextClass.AppendLine("    }");
+            TextClass.AppendLine("}");
+            //--  
+
+            var Diretory = FilePath + @"\Models\" + DataModel.ClassName;
+            var FileName = DataModel.ClassName + SufixoModels + ".cs";
+            var FullFile = Diretory + @"\" + FileName;
+
+            DirectoryInfo Directory = new DirectoryInfo(Diretory);
+
+            if (!Directory.Exists)
+                Directory.Create();
+
+            using (TextWriter Writer = File.CreateText(FullFile))
+            {
+                Writer.WriteLine(TextClass.ToString());
+            }
+
+            TextClass.Clear();
+
+            return ("> " + FileName);
+        }
+
+        public string BuildDataAnnotations(KeyValuePair<string, ClassConfig> TableSetting)
+        {
+            var FilePath = ConfigurationManager.AppSettings["OutputClassModels"].ToString();
+            var SufixoModels = "DtoValidator";
+            var TableName = TableSetting.Key;
+            var DataModel = TableSetting.Value;
+            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+
+            //--
+            TextClass = new StringBuilder();
+
+            TextClass.AppendLine("using System;");
+            TextClass.AppendLine("using System.Text;");
+            TextClass.AppendLine("using System.Collections;");
+            TextClass.AppendLine("using System.Collections.Generic;");
+            TextClass.AppendLine("using System.Linq;");
+            TextClass.AppendLine("using System.ComponentModel.DataAnnotations;");
+            TextClass.AppendLine("using System.Threading.Tasks;");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("namespace " + DataModel.NameSpaceDto);
+            TextClass.AppendLine("{");
+            TextClass.AppendLine("    public class " + DataModel.ClassName + SufixoModels + " : Base");
+            TextClass.AppendLine("    {");
+
+            var ColumnDataType = String.Empty;
+
+            foreach (var ColumnMapper in TableSchema.CollectionColumn)
+            {
+                if (ColumnMapper.ColumnKey != "pk")
+                {
+                    ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+
+                    if (ColumnMapper.IsNullable == "no")
+                    {
+                        TextClass.AppendLine("        [Required(ErrorMessage = \"Este campo é obrigatório.\")]");
+
+                        if (ColumnMapper.MaxLenght != String.Empty)
+                        {
+                            TextClass.AppendLine("        [StringLength(" + ColumnMapper.MaxLenght + ", ErrorMessage = \"A descrição deve ter no máximo " + ColumnMapper.MaxLenght + " caracteres.\")]");
+                        }                        
+                        
+                        TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        TextClass.AppendLine("");
+                    }  
+                    // Campos não requerido nao precisao ir no Metadata class
+                    //else if (ColumnMapper.IsNullable == "yes")  
+                    //{
+                    //    TextClass.AppendLine("        [Exclude]");
+                    //    TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                    //}                     
+                }
+            }
+
+            TextClass.AppendLine("    }");
+            TextClass.AppendLine("}");
+            //--  
+
+            var Diretory = FilePath + @"\Models\" + DataModel.ClassName;
+            var FileName = DataModel.ClassName + SufixoModels + ".cs";
+            var FullFile = Diretory + @"\" + FileName;
+
+            DirectoryInfo Directory = new DirectoryInfo(Diretory);
+
+            if (!Directory.Exists)
+                Directory.Create();
+
+            using (TextWriter Writer = File.CreateText(FullFile))
+            {
+                Writer.WriteLine(TextClass.ToString());
+            }
+
+            TextClass.Clear();
+
+            return ("> " + FileName);
+        }
     }
 }

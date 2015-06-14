@@ -23,14 +23,15 @@ namespace SmartAdmin.Generator
             WriteToConsole("Deseja iniciar a geração de contextos da aplicação ?");
             WriteToConsole("Responda (S ou N)");
 
-            var acceptQuestion = ReadFromConsole();
-
-            if (acceptQuestion.ToUpper() == "S")
+            var acceptQuestionContext = ReadFromConsole();
+                    
+            if (acceptQuestionContext.ToUpper() == "S")
             {
                 // Start here!
                 Console.ForegroundColor = ConsoleColor.Gray;
 
-                MakeModels();
+                MakeModelsWithDataAnnotation();
+                MakeDataAnnotations();
                 MakeBase();
                 MakeMappers();  
                 MakeContext();
@@ -56,7 +57,7 @@ namespace SmartAdmin.Generator
         }
 
         //ok
-        public static void MakeModels()
+        public static void MakeModelsWithOutDataAnnotation()
         {
             var ConfigTable = new ConfigTables();
             var BuildClass = new Data();
@@ -68,6 +69,40 @@ namespace SmartAdmin.Generator
             foreach (var Table in GroupTables)
             {
                 WriteToConsole(BuildClass.BuildModel(Table));
+                TimeSleep(MILLISECONDS);
+            }
+        }
+
+        //ok
+        public static void MakeModelsWithDataAnnotation()
+        {
+            var ConfigTable = new ConfigTables();
+            var BuildClass = new Data();
+            var GroupTables = ConfigTable.GetTableMapper();
+
+            WriteToConsole(" ");
+            WriteToConsole("Gerando Dto(s)...");
+
+            foreach (var Table in GroupTables)
+            {
+                WriteToConsole(BuildClass.BuildModelDataAnnotations(Table));
+                TimeSleep(MILLISECONDS);
+            }
+        }
+
+        //ok
+        public static void MakeDataAnnotations()
+        {
+            var ConfigTable = new ConfigTables();
+            var BuildClass = new Data();
+            var GroupTables = ConfigTable.GetTableMapper();
+
+            WriteToConsole(" ");
+            WriteToConsole("Gerando Metadata(s)...");
+
+            foreach (var Table in GroupTables)
+            {
+                WriteToConsole(BuildClass.BuildDataAnnotations(Table));
                 TimeSleep(MILLISECONDS);
             }
         }
