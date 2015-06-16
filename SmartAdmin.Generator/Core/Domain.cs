@@ -150,18 +150,32 @@ namespace SmartAdmin.Generator.Core
 
             var FileName = DataModel.ClassName + ".cs";
             var FullName = FilePath + @"\Models\" + DataModel.ClassName + @"\" + FileName;
-
-            var Diretorio = new DirectoryInfo(FilePath + @"\Models\" + DataModel.ClassName);
-
-            if (!Diretorio.Exists)
+                                          
+            if (!System.IO.File.Exists(FullName))
+            {
+                var Diretorio = new DirectoryInfo(FilePath + @"\Models\" + DataModel.ClassName);
                 Diretorio.Create();
 
-            using (TextWriter Writer = File.CreateText(FullName))
-            {
-                Writer.WriteLine(TextClass.ToString());
+                using (TextWriter Writer = File.CreateText(FullName))
+                {
+                    Writer.WriteLine(TextClass.ToString());
+                }
+
+                TextClass.Clear();
             }
 
-            TextClass.Clear();
+
+            //var Diretorio = new DirectoryInfo(FilePath + @"\Models\" + DataModel.ClassName);
+
+            //if (!Diretorio.Exists)
+            //    Diretorio.Create();
+
+            //using (TextWriter Writer = File.CreateText(FullName))
+            //{
+            //    Writer.WriteLine(TextClass.ToString());
+            //}
+
+            //TextClass.Clear();
 
             //--
             //BuildDomainExtension(DataModel, FilePath, Sufixo);
@@ -169,6 +183,106 @@ namespace SmartAdmin.Generator.Core
             return ("> " + FileName);
 
         }
+
+        public string BuildUnitOfWork(Dictionary<string, ClassConfig> GroupTables)
+        {
+            var FilePath = ConfigurationManager.AppSettings["OutputClassDomainUnitOfWork"].ToString();
+            var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString();
+
+            //--
+            TextClass = new StringBuilder();
+
+            TextClass.AppendLine("using System;");
+            TextClass.AppendLine("using System.Collections.Generic;");
+            TextClass.AppendLine("using System.Linq;");
+            TextClass.AppendLine("using System.Text;");
+            TextClass.AppendLine("using System.Threading.Tasks;");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("namespace " + ProjectName + ".Domain");
+            TextClass.AppendLine("{");
+            TextClass.AppendLine("    public class UnitOfWork : IDisposable");
+            TextClass.AppendLine("    {");
+
+            foreach (var item in GroupTables)
+            {
+                var Model = item.Value;
+                TextClass.AppendLine("        private " + Model.ClassName + " _" + Model.ClassName.ToLower() + "Domain;");                
+            }
+
+            TextClass.AppendLine("");
+
+            foreach (var item in GroupTables)
+            {
+                var Model = item.Value;
+
+                TextClass.AppendLine("        public " + Model.ClassName + " " + Model.ClassName + "Domain");
+                TextClass.AppendLine("        {");
+                TextClass.AppendLine("            get");
+                TextClass.AppendLine("            {");
+                TextClass.AppendLine("                if (this._" + Model.ClassName.ToLower() + "Domain == null)");
+                TextClass.AppendLine("                {");
+                TextClass.AppendLine("                    this._" + Model.ClassName.ToLower() + "Domain = new " + Model.ClassName + "();");
+                TextClass.AppendLine("                }");  
+                TextClass.AppendLine("");
+                TextClass.AppendLine("                return _" + Model.ClassName.ToLower() + "Domain;");
+                TextClass.AppendLine("            }");
+                TextClass.AppendLine("        }");
+                TextClass.AppendLine("");  
+            }
+
+            TextClass.AppendLine("        private bool _disposed = false;");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        public void Dispose()");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            Clear(true);");
+            TextClass.AppendLine("            GC.SuppressFinalize(this);");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        private void Clear(bool disposing)");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            if (!this._disposed)");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                if (disposing)");
+            TextClass.AppendLine("                {");
+
+            foreach (var item in GroupTables)
+            {
+                var Model = item.Value;
+                TextClass.AppendLine("                    _" + Model.ClassName.ToLower() + "Domain.Dispose();");
+            }
+
+            TextClass.AppendLine("                }");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("            _disposed = true;");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        ~UnitOfWork()");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            Clear(false);");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("    }");
+            TextClass.AppendLine("}");
+            //--
+
+            var FileName = "UnitOfWork.cs";
+            var FullFile = FilePath + @"\" + FileName;
+
+            DirectoryInfo Directory = new DirectoryInfo(FilePath);
+
+            if (!Directory.Exists)
+                Directory.Create();
+
+            using (TextWriter Writer = File.CreateText(FullFile))
+            {
+                Writer.WriteLine(TextClass.ToString());
+            }
+
+            TextClass.Clear();
+
+            return ("> " + FileName);
+        }
+
+
 
         //private void BuildDomainExtension(ClassConfig DataModel, string FilePath, string Sufixo)
         //{

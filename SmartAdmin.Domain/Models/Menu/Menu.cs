@@ -21,6 +21,7 @@ namespace SmartAdmin.Domain
         public void Save(MenuDto model)
         {
             _unitOfWork.MenuRepository.AddItem(model);
+            //kjhkjkhjkhkhkhk
         }
 
         /// <summary>
@@ -28,6 +29,7 @@ namespace SmartAdmin.Domain
         /// </summary>
         public MenuDto SaveGetItem(MenuDto model)
         {
+            ///uiuihiuhihiuhuiu
            var retorno = _unitOfWork.MenuRepository.AddGetItem(model);
            return (retorno);
         }

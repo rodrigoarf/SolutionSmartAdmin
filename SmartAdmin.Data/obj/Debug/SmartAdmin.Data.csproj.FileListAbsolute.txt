@@ -1,0 +1,9 @@
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\SmartAdmin.Data.dll.config
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\SmartAdmin.Data.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\SmartAdmin.Data.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\EntityFramework.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\EntityFramework.xml
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Debug\SmartAdmin.Data.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Debug\SmartAdmin.Data.pdb

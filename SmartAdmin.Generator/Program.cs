@@ -191,6 +191,9 @@ namespace SmartAdmin.Generator
                 WriteToConsole(BuildClass.BuildDomain(Table.Key, Table.Value));
                 TimeSleep(MILLISECONDS);
             }
+
+            WriteToConsole(BuildClass.BuildUnitOfWork(GroupTables));
+            TimeSleep(MILLISECONDS);
         }
 
         #region FUNCTIONS OF SHELL PROMPT
