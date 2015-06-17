@@ -132,6 +132,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Banco\BancoController.cs" />
+    <Compile Include="Controllers\Boleto\BoletoController.cs" />
     <Compile Include="Controllers\Historico\HistoricoController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Menu\MenuController.cs" />
@@ -795,6 +797,9 @@
     <Content Include="Content\sound\voice_off.mp3" />
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Global.asax" />
+    <Content Include="Script\Boleto\Create.js" />
+    <Content Include="Script\Boleto\Index.js" />
+    <Content Include="Script\Banco\Index.js" />
     <Content Include="Script\Historico\Index.js" />
     <Content Include="Script\Login\Registro.js" />
     <Content Include="Script\Login\Index.js" />
@@ -914,6 +919,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Historico\FiltroPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Boleto\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Boleto\DadosDoCedente.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Boleto\FiltroPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Boleto\GridPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Boleto\CreatePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banco\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banco\CreatePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banco\FiltroPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Banco\GridPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

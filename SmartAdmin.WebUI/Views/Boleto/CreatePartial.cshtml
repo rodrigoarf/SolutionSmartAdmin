@@ -1,0 +1,162 @@
+﻿<header>
+	<span class="widget-icon"><i class="fa fa-edit"></i></span>
+	<h2>Dados do Cedente de Boleto</h2>
+</header>
+<div>
+	<div class="widget-body no-padding">
+		<div class="smart-form">
+            @using (Html.BeginForm("SaveCedente", "Boleto", FormMethod.Post, new { @id = "smart-form-filter" }))
+            {
+			    <fieldset>
+				    <div class="row">
+					    <section class="col col-4">
+						    <label class="label">Nome do Cedente</label>
+						    <label class="input">
+							    <i class="icon-append fa fa-user"></i>
+							    <input type="text" name="NOME" placeholder="Nome do usuário ou parte do nome">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Infome o nome do cedente
+                                </b>
+						    </label>
+					    </section>
+				    </div>
+                    <div class="row">
+                        <section class="col col-6">
+                            <label class="label">Endereço do Cedente</label>
+	                        <label for="address" class="input">                                   
+		                        <input type="text" name="address" placeholder="Endereço">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe o endereço do cedente 
+                                </b>
+	                        </label>
+                        </section>
+                        <section class="col col-3">
+                            <label class="label">Número</label>
+	                        <label for="address" class="input">                                   
+		                        <input type="text" name="address" placeholder="Número">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe o número do endereço 
+                                </b>
+	                        </label>
+                        </section>
+                    </div>
+                    <div class="row">
+						<section class="col col-3">
+                            <label class="label">Bairro</label>
+							<label class="input">
+								<input type="text" name="city" placeholder="Bairro">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe a Bairro do cedente 
+                                </b>
+							</label>
+						</section> 
+						<section class="col col-3">
+                            <label class="label">Cidade</label>
+							<label class="input">
+								<input type="text" name="city" placeholder="Cidade">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe a cidade do cedente 
+                                </b>
+							</label>
+						</section>  
+                        <section class="col col-3">
+                            <label class="label">Estado</label>
+                            <label class="select">
+                                <select name="estado">
+                                    <option value="0" selected="" disabled="">Estado</option>
+                                    <option value="1">Sao Paulo</option>
+                                    <option value="1">Rio de Janeiro</option>
+                                    <option value="1">Espirito Santo</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>  
+					</div>
+				    <div class="row">
+                       <section class="col col-3">
+                            <label class="label">Cep</label>
+							<label class="input">
+								<input type="text" name="city" placeholder="Cep">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe o cep do cedente 
+                                </b>
+							</label>
+						</section>
+					    <section class="col col-3">
+						    <label class="label">Data de Nascimento</label>
+						    <label class="input">
+							    <i class="icon-append fa fa-calendar"></i>
+							    <input type="text" name="DATA" placeholder="__/__/____" class="datemask datepicker">
+						    </label>
+					    </section>                      
+				    </div>
+			    </fieldset>  
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-3">
+                            <label class="label">Agência Bancaria</label>
+                            <label class="select">
+                                <select name="estado">
+                                    <option value="0" selected="" disabled="">Selecione</option>
+                                    <option value="1">Bradesco</option>
+                                    <option value="1">Itaú</option>
+                                    <option value="1">Santander</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">                                                              
+						<section class="col col-3">
+                            <label class="label">Nº Agência Bancaria</label>
+							<label class="input">
+								<input type="text" name="city" placeholder="Nº Agência Bancaria">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Número da agência bancaria 
+                                </b>
+							</label>
+						</section>  
+						<section class="col col-3">
+                            <label class="label">Nº Conta Bancaria</label>
+							<label class="input">
+								<input type="text" name="code" placeholder="Nº Conta Bancaria">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Número da conta bancaria 
+                                </b>
+							</label>
+						</section> 
+					</div>    
+                    <div class="row">
+                        <section class="col col-6">
+                            <label class="label">Cpf ou Cnpj do Cedente</label>
+                            <label for="address" class="input">
+                                <input type="text" name="address" placeholder="Cpf ou Cnpj">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Cpf ou Cnpj do cedente
+                                </b>
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-6">
+                            <label class="label">Dados de Instrução do Boleto</label>
+                            <label class="textarea">
+                                <i class="icon-append fa fa-comment"></i>
+                                <textarea rows="5" name="info" placeholder="Dados de instrução do boleto"></textarea>
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Observações sobre pagamento e vencimento do boleto
+                                </b>
+                            </label>
+                            <div class="note">Informações e instruções referente ao boleto impresso configurar aqui.</div>
+                        </section>
+                     </div>
+                </fieldset>                
+			    <footer>
+				    <a class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modal-usuario-create">
+					    <i class="fa fa-cog"></i> Salvar     
+				    </a>
+			    </footer>
+            }
+		</div> 
+	</div>
+</div>
