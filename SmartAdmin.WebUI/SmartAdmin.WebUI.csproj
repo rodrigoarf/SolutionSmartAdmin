@@ -64,6 +64,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -132,6 +133,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\ActionFilters\AuthorizeUser.cs" />
+    <Compile Include="Infrastructure\Cache\Cache.cs" />
+    <Compile Include="Infrastructure\Cache\CacheExtensions.cs" />
+    <Compile Include="Infrastructure\Cache\ICache.cs" />
     <Compile Include="Controllers\Banco\BancoController.cs" />
     <Compile Include="Controllers\Boleto\BoletoController.cs" />
     <Compile Include="Controllers\Historico\HistoricoController.cs" />
