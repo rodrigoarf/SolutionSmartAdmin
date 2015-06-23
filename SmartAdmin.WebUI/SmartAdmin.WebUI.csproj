@@ -765,6 +765,7 @@
     <Content Include="Content\js\plugin\markdown\markdown.min.js" />
     <Content Include="Content\js\plugin\markdown\to-markdown.min.js" />
     <Content Include="Content\js\plugin\masked-input\jquery.maskedinput.min.js" />
+    <Content Include="Content\js\plugin\masked-money\jquery.maskmoney.min.js" />
     <Content Include="Content\js\plugin\maxlength\bootstrap-maxlength.min.js" />
     <Content Include="Content\js\plugin\morris\morris-chart-settings.min.js" />
     <Content Include="Content\js\plugin\morris\morris.min.js" />
@@ -774,8 +775,7 @@
     <Content Include="Content\js\plugin\noUiSlider\jquery.nouislider.css" />
     <Content Include="Content\js\plugin\noUiSlider\jquery.nouislider.min.js" />
     <Content Include="Content\js\plugin\pace\pace.min.js" />
-    <Content Include="Content\js\plugin\select2\readme.txt" />
-    <Content Include="Content\js\plugin\select2\select2.min.js" />
+    <Content Include="Content\js\plugin\select2\select2.js" />
     <Content Include="Content\js\plugin\selectToUISlider\selectToUISlider.jQuery.min.js" />
     <Content Include="Content\js\plugin\slimscroll\jquery.slimscroll.min.js" />
     <Content Include="Content\js\plugin\sparkline\jquery.sparkline.min.js" />

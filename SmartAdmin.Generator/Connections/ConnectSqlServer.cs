@@ -132,7 +132,7 @@ namespace CodeGenerator.Connections
         /// fim do leitor de dados 
         /// </summary>
         /// <returns></returns>
-        public bool ReaderRegistro()
+        public bool LerRegistro()
         {
             return this.Registro.Read();
         }

@@ -12,6 +12,7 @@ namespace SmartAdmin.Generator.Core
     public class Data
     {
         private StringBuilder TextClass;
+        private EDataBase DatabaseType = EDataBase.MySql;
 
         public string BuildModel(KeyValuePair<string, ClassConfig> TableSetting)
         {
@@ -19,7 +20,7 @@ namespace SmartAdmin.Generator.Core
             var SufixoModels = "Dto";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
-            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+            var TableSchema = Functions.GetTableSchema(TableName, DatabaseType);
 
             //--
             TextClass = new StringBuilder();
@@ -78,7 +79,7 @@ namespace SmartAdmin.Generator.Core
             var SufixoModels = "Dto";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
-            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+            var TableSchema = Functions.GetTableSchema(TableName, DatabaseType);
 
             //--
             TextClass = new StringBuilder();
@@ -710,7 +711,7 @@ namespace SmartAdmin.Generator.Core
             var SufixoModels = "Dto";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
-            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+            var TableSchema = Functions.GetTableSchema(TableName, DatabaseType);
 
             //--
             TextClass = new StringBuilder();
@@ -770,7 +771,7 @@ namespace SmartAdmin.Generator.Core
             var SufixoModels = "DtoValidator";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
-            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+            var TableSchema = Functions.GetTableSchema(TableName, DatabaseType);
 
             //--
             TextClass = new StringBuilder();

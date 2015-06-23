@@ -1,12 +1,5 @@
 ﻿runAllForms()
 
-var pagefunction = function () {
-    $(".datemask").mask("99/99/9999");
-};
-
-pagefunction();
-
-
 $("#btnBuscarHistorico").click(function () {   
     var dataInicial = $("#DATAINICIAL").val();  
     var dataFinal = $("#DATAFINAL").val();

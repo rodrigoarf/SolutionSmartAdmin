@@ -12,11 +12,12 @@ namespace SmartAdmin.Generator.Core
     public sealed class Domain
     {
         private StringBuilder TextClass;
+        private EDataBase DatabaseType = EDataBase.MySql;
 
         public string BuildDomain(string TableName, ClassConfig DataModel)
         {
             var FilePath = ConfigurationManager.AppSettings["OutputClassDomain"].ToString();
-            var TableSchema = Functions.GetTableSchema(TableName, EDataBase.MySql);
+            var TableSchema = Functions.GetTableSchema(TableName, DatabaseType);
             var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString(); 
             var Sufixo = "Dto";
 
@@ -281,6 +282,14 @@ namespace SmartAdmin.Generator.Core
 
             return ("> " + FileName);
         }
+
+
+
+
+
+
+
+
 
 
 

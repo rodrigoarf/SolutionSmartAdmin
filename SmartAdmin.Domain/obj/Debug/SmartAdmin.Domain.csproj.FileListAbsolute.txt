@@ -1,9 +1,9 @@
+D:\Projetos\SolutionPlataform\SmartAdmin.Domain\obj\Debug\SmartAdmin.Domain.csprojResolveAssemblyReference.cache
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\bin\Debug\SmartAdmin.Domain.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\bin\Debug\SmartAdmin.Domain.pdb
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\bin\Debug\SmartAdmin.Data.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\bin\Debug\EntityFramework.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\bin\Debug\SmartAdmin.Data.pdb
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\bin\Debug\EntityFramework.xml
-D:\Projetos\SolutionPlataform\SmartAdmin.Domain\obj\Debug\SmartAdmin.Domain.csprojResolveAssemblyReference.cache
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\obj\Debug\SmartAdmin.Domain.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.Domain\obj\Debug\SmartAdmin.Domain.pdb

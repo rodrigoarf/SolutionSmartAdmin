@@ -16,9 +16,6 @@ namespace SmartAdmin.Dto
         public System.String NOME { get; set; }
         public System.String CONTROLLER { get; set; }
         public System.String ACTION { get; set; }
-        /// <summary>
-        /// Obrigatorio
-        /// </summary>
         public System.String ICON { get; set; }
         public System.String STATUS { get; set; }
     }

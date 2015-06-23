@@ -1,4 +1,3 @@
-D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\obj\Debug\SmartAdmin.WebUI.csprojResolveAssemblyReference.cache
 D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\bin\SmartAdmin.WebUI.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\bin\SmartAdmin.WebUI.pdb
 D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\bin\Antlr3.Runtime.dll
