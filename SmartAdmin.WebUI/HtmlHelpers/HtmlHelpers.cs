@@ -95,7 +95,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
 
-        public static MvcHtmlString DropDownListTyped(string Id, List<SelectListItem> Collection, object HtmlAtributes = null)
+        public static MvcHtmlString DropDownListTyped(string Id, EInputModel ModelType, object HtmlAtributes = null)
         {
             var Atributes = String.Empty;
 
@@ -111,13 +111,13 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             HtmlControl.Append(String.Format("<select name=\"{0}\" {1}>", Id, Atributes));
             HtmlControl.Append(String.Format("<option value=\"0\" selected=\"true\" disabled=\"true\">(Todos)</option>"));
 
-            foreach (var item in Collection)
-            {
-                if (item.Selected)
-                    HtmlControl.Append(String.Format("<option value=\"{0}\" selected=\"true\" >{1}</option>", item.Value, item.Text));
-                else
-                    HtmlControl.Append(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text));
-            }
+            //foreach (var item in Collection)
+            //{
+            //    if (item.Selected)
+            //        HtmlControl.Append(String.Format("<option value=\"{0}\" selected=\"true\" >{1}</option>", item.Value, item.Text));
+            //    else
+            //        HtmlControl.Append(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text));
+            //}
 
             HtmlControl.Append("</select>");
 
