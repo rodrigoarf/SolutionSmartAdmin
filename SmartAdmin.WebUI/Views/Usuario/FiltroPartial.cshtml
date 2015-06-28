@@ -1,10 +1,15 @@
-﻿<header>
+﻿ @using SmartAdmin.WebUI.HtmlHelpers;
+<header>
 	<span class="widget-icon"><i class="fa fa-edit"></i></span>
 	<h2>Busca por Usuários</h2>
 </header>
 <div>
 	<div class="widget-body no-padding">
 		<div class="smart-form">
+
+           
+
+
             @using (Html.BeginForm("Index", "Usuario", FormMethod.Post, new { @id = "smart-form-filter" }))
             {
 			    <fieldset>

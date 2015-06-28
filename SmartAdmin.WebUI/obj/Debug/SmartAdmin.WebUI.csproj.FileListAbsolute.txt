@@ -28,3 +28,4 @@ D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\bin\System.Web.WebPages.Deploymen
 D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\bin\System.Web.WebPages.Razor.xml
 D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\obj\Debug\SmartAdmin.WebUI.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\obj\Debug\SmartAdmin.WebUI.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.WebUI\obj\Debug\SmartAdmin.WebUI.csprojResolveAssemblyReference.cache
