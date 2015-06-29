@@ -95,7 +95,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
 
-        public static MvcHtmlString DropDownListTyped(string Id, EInputModel ModelType, object HtmlAtributes = null)
+        public static MvcHtmlString DropDownListCustom(string Id, EInputModel ModelType, object HtmlAtributes = null)
         {
             var Atributes = String.Empty;
 
@@ -156,6 +156,11 @@ namespace SmartAdmin.WebUI.HtmlHelpers
 
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
+
+        //public static MvcHtmlString FileUpload(string Id, object HtmlAtributes = null)
+        //{ 
+        
+        //}
     }
 
     /// <summary>

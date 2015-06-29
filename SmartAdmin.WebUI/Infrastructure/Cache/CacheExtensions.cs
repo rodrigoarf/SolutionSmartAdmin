@@ -7,12 +7,12 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
 {
     public static class CacheExtensions
     {
-        public static T Get<T>(this ICache cacheManager, string key, Func<T> acquire)
+        public static T Get<T>(this ICache CacheManager, string Key, Func<T> Acquire)
         {
             return Get(cacheManager, key, 60, acquire);
         }
 
-        public static T Get<T>(this ICache cacheManager, string key, int cacheTime, Func<T> acquire)
+        public static T Get<T>(this ICache CacheManager, string Key, int CacheTime, Func<T> Acquire)
         {
             if (cacheManager.IsSet(key))
             {
