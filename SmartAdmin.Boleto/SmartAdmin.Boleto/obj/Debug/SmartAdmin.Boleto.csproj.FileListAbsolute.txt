@@ -1,0 +1,11 @@
+D:\Projetos\SolutionBoletoBancario\SmartAdmin.Boleto\SmartAdmin.Boleto\obj\Debug\SmartAdmin.Boleto.csprojResolveAssemblyReference.cache
+D:\Projetos\SolutionBoletoBancario\SmartAdmin.Boleto\SmartAdmin.Boleto\bin\Debug\SmartAdmin.Boleto.dll
+D:\Projetos\SolutionBoletoBancario\SmartAdmin.Boleto\SmartAdmin.Boleto\bin\Debug\SmartAdmin.Boleto.pdb
+D:\Projetos\SolutionBoletoBancario\SmartAdmin.Boleto\SmartAdmin.Boleto\obj\Debug\SmartAdmin.Boleto.dll
+D:\Projetos\SolutionBoletoBancario\SmartAdmin.Boleto\SmartAdmin.Boleto\obj\Debug\SmartAdmin.Boleto.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Boleto\SmartAdmin.Boleto\bin\Debug\SmartAdmin.Boleto.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Boleto\SmartAdmin.Boleto\bin\Debug\SmartAdmin.Boleto.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Boleto\SmartAdmin.Boleto\bin\Debug\Boleto.Net.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Boleto\SmartAdmin.Boleto\obj\Debug\SmartAdmin.Boleto.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Boleto\SmartAdmin.Boleto\obj\Debug\SmartAdmin.Boleto.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Boleto\SmartAdmin.Boleto\obj\Debug\SmartAdmin.Boleto.csprojResolveAssemblyReference.cache

@@ -48,7 +48,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
 
-        public static MvcHtmlString Datepicker(string Name, object HtmlAtributes = null)
+        public static MvcHtmlString DatePicker(string Name, object HtmlAtributes = null)
         {
             var Atributes = String.Empty;
 
@@ -164,25 +164,21 @@ namespace SmartAdmin.WebUI.HtmlHelpers
     }
 
     /// <summary>
-    /// Colocar aqui os tipo de modelos do banco de dados
+    /// Modelos de listagens para dropdownlist
     /// </summary>
     public enum EInputModel
     {
-        Color,
-        Date,
-        Datetime,
-        DateTimeLocal,
-        Email,
-        Month,
-        Number,
-        Range,
-        Search,
-        Tel,
-        Time,
-        Url,
-        Week
+        ModeloA,
+        ModeloA,
+        ModeloA,
+        ModeloA,
+        ModeloA,
+        ModeloA,
     }
 
+    /// <summary>
+    /// Tipos de controles Html5
+    /// </summary>
     public enum EInputTypes
     {
         Color,
@@ -200,6 +196,9 @@ namespace SmartAdmin.WebUI.HtmlHelpers
         Week
     }
 
+    /// <summary>
+    /// Atributos de controles Html5
+    /// </summary>
     public enum EInputAtributes
     {
         Disabled,
