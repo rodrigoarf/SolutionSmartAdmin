@@ -9,20 +9,20 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
     {
         public static T Get<T>(this ICache CacheManager, string Key, Func<T> Acquire)
         {
-            return Get(cacheManager, key, 60, acquire);
+            return Get(CacheManager, Key, 60, Acquire);
         }
 
         public static T Get<T>(this ICache CacheManager, string Key, int CacheTime, Func<T> Acquire)
         {
-            if (cacheManager.IsSet(key))
+            if (CacheManager.IsSet(Key))
             {
-                return cacheManager.Get<T>(key);
+                return CacheManager.Get<T>(Key);
             }
             else
             {
-                var result = acquire();
+                var result = Acquire();
 
-                cacheManager.Set(key, result, cacheTime);
+                CacheManager.Set(Key, result, CacheTime);
 
                 return result;
             }
