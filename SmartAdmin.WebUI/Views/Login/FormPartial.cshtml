@@ -1,25 +1,28 @@
-﻿@using (Html.BeginForm("Logar", "Login", FormMethod.Post, new { @id = "smart-form-login", @class = "smart-form client-form" }))
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.UsuarioDto
+
+@using (Html.BeginForm("Logar", "Login", FormMethod.Post, new { @id = "smart-form-login", @class = "smart-form client-form" }))
 {
     <header>
         Acesso a Administração
     </header> 
     <fieldset>
         <section>
-            <label class="label">Usuário</label>
+            <label class="label">Login</label>
             <label class="input">
                 <i class="icon-append fa fa-user"></i>
-                <input type="text" name="USUARIO" id="USUARIO">
-                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu usuário</b></label>
+                @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder="Informe seu login", @tabindex="1" })
+                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu login!</b></label>
         </section> 
         <section>
             <label class="label">Senha</label>
             <label class="input">
                 <i class="icon-append fa fa-lock"></i>
-                <input type="password" name="SENHA" id="SENHA">
+                @HtmlControls.Password("SENHA", new { @value = Model.SENHA, @placeholder="Informe sua senha", @tabindex="2" })
                 <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Informe sua senha!</b>
             </label>
             <div class="note">
-                <a>Esqueceu sua senha?</a>
+                <a data-toggle="modal" data-target="#modal-usuario-remember">Esqueceu sua senha?</a>
             </div>
         </section>
         <section>
@@ -29,10 +32,7 @@
         </section>
     </fieldset>
     <footer>
-        <button id="btnLogar" type="submit" class="btn btn-warning">
-            Logar
-        </button>
+        <button id="btnLogar" type="submit" class="btn btn-warning">Logar</button>
     </footer>
-}
-
-   <script src="~/Script/Login/Index.js"></script>
+}     
+<script src="~/Script/Login/Index.js"></script>

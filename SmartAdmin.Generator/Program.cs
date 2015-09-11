@@ -1,5 +1,4 @@
-﻿using SmartAdmin.Generator.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,26 +15,41 @@ namespace SmartAdmin.Generator
 
         static void Main(string[] args)
         {
+            // Header...
             WriteHeader();
             TimeSleep(MILLISECONDS);
 
-            // Question 1
-            WriteToConsole("Deseja iniciar a geração de contextos da aplicação ?");
-            WriteToConsole("Responda (S ou N)");
+            // Ask...
+            WriteToConsole("Para gerar contexto completo digite: 1");
+            WriteToConsole("Para gerar somente camada de dados digite: 2");
 
-            var acceptQuestionContext = ReadFromConsole();
-                    
-            if (acceptQuestionContext.ToUpper() == "S")
+            var AnswerQuestion = String.Empty;
+
+            // Verify...
+            do { 
+
+                AnswerQuestion = ReadFromConsole();
+                if ((AnswerQuestion == "1") || (AnswerQuestion == "2") || (AnswerQuestion == "3")) { break; }
+
+            } while ((AnswerQuestion != "1") || (AnswerQuestion != "2") || (AnswerQuestion != "3"));
+
+            // Processing...
+            MakeProcess(AnswerQuestion);
+        }
+
+        //ok
+        private static void MakeProcess(string AnswerQuestion)
+        {
+            if (AnswerQuestion == "1")
             {
                 // Start here!
                 Console.ForegroundColor = ConsoleColor.Gray;
 
                 MakeModelsWithDataAnnotation();
-                MakeDataAnnotations();
                 MakeBase();
-                MakeMappers();  
+                MakeMappers();
                 MakeContext();
-                MakeRepository();                 
+                MakeRepository();
                 MakeUnitOfWork();
                 MakeDomain();
 
@@ -44,15 +58,30 @@ namespace SmartAdmin.Generator
                 WriteToConsole("Processo executado com sucesso!");
                 ReadFromConsole();
             }
-            else
+            else if (AnswerQuestion == "2")
             {
-                WriteToConsole("Processo abortado pelo usuário, pressione Enter para sair!");
-                var keyExit = Console.ReadKey();
+                // Start here!
+                Console.ForegroundColor = ConsoleColor.Gray;
 
-                while (keyExit.Key != ConsoleKey.Enter)
-                {
-                    ConsoleKeyInfo keypressInLoop = Console.ReadKey();
-                }
+                MakeModelsWithDataAnnotation();
+                MakeMappers();
+                MakeContext();
+                MakeUnitOfWork();
+
+                // Final here!
+                WriteToConsole(" ");
+                WriteToConsole("Processo executado com sucesso!");
+                ReadFromConsole();
+            }
+            else if (AnswerQuestion == "3")
+            {
+                // Final here!
+                MakeDomain();
+
+                // Final here!
+                WriteToConsole(" ");
+                WriteToConsole("Processo executado com sucesso!");
+                ReadFromConsole();
             }
         }
 
@@ -88,6 +117,8 @@ namespace SmartAdmin.Generator
                 WriteToConsole(BuildClass.BuildModelDataAnnotations(Table));
                 TimeSleep(MILLISECONDS);
             }
+
+            MakeDataAnnotations();
         }
 
         //ok

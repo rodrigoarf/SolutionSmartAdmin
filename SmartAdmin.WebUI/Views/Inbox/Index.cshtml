@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="inbox-nav-bar no-content-padding">  
+  @Html.Partial("HeaderPartial")   
+</div>
+
+<div id="inbox-content" class="inbox-body no-content-padding">  
+    <div class="inbox-side-bar">    
+        @Html.Partial("MenuPartial") 
+    </div>   
+    <div class="table-wrap custom-scroll animated fast fadeInRight">
+        @Html.Partial("GridPartial")   
+    </div> 
+</div>

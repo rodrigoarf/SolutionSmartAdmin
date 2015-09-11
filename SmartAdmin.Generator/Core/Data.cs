@@ -13,6 +13,7 @@ namespace SmartAdmin.Generator.Core
     {
         private StringBuilder TextClass;
         private EDataBase DatabaseType = EDataBase.MySql;
+        private static string MySqlDataBase = ConfigurationManager.AppSettings["MySqlDataBase"].ToString();
 
         public string BuildModel(KeyValuePair<string, ClassConfig> TableSetting)
         {
@@ -44,13 +45,78 @@ namespace SmartAdmin.Generator.Core
             {
                 if (ColumnMapper.ColumnKey != "pk")
                 {
-                    ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
-                    TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                    if (ColumnMapper.DataType == "datetime")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.DateTime> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "int")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.Int32> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "decimal")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.Decimal> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "long")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {                                   
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.long> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "longblob")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.Byte> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else
+                    {   
+                        ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                        TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                    }
                 }
-            }
-
-            TextClass.AppendLine("    }");
-            TextClass.AppendLine("}");
+            }          
             //--  
 
             var Diretory = FilePath + @"\Models\" + DataModel.ClassName;
@@ -106,26 +172,40 @@ namespace SmartAdmin.Generator.Core
             {
                 if (ColumnMapper.ColumnKey != "pk")
                 {
-                    if (ColumnMapper.IsNullable == "no")
+                    if (ColumnMapper.DataType == "longblob") //--> Tratamento somente para System.Byte[]
                     {
-                        if (ColumnMapper.MaxLenght != String.Empty)
-                            TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").IsRequired().HasMaxLength(" + ColumnMapper.MaxLenght + ");");
-                        else
+                        if (ColumnMapper.IsNullable == "no")
+                        {
                             TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").IsRequired();");
-                    }
-                    else if (ColumnMapper.IsNullable == "yes")
-                    {
-                        if (ColumnMapper.MaxLenght != String.Empty)
-                            TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").HasMaxLength(" + ColumnMapper.MaxLenght + ");");
+                        }
                         else
+                        {
                             TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ");");
+                        }
+                    }
+                    else
+                    {
+                        if (ColumnMapper.IsNullable == "no")
+                        {
+                            if (ColumnMapper.MaxLenght != String.Empty)
+                                TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").IsRequired().HasMaxLength(" + ColumnMapper.MaxLenght + ");");
+                            else
+                                TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").IsRequired();");
+                        }
+                        else if (ColumnMapper.IsNullable == "yes")
+                        {
+                            if (ColumnMapper.MaxLenght != String.Empty)
+                                TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").HasMaxLength(" + ColumnMapper.MaxLenght + ");");
+                            else
+                                TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ");");
+                        }
                     }
                 }
             }
 
             TextClass.AppendLine("");
             TextClass.AppendLine("            // Table & Column Mappings");
-            TextClass.AppendLine("            this.ToTable(\"" + TableName + "\", \"cliniccenter\");");
+            TextClass.AppendLine(String.Format("            this.ToTable(\"" + TableName + "\", \"{0}\");", MySqlDataBase));
             TextClass.AppendLine("");
 
             foreach (var ColumnMapper in TableSchema.CollectionColumn)
@@ -166,7 +246,7 @@ namespace SmartAdmin.Generator.Core
             var OutputClassDataContextName = ConfigurationManager.AppSettings["OutputClassDataContextName"].ToString();
             var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString(); 
             var SufixoModels = "Dto";
-
+            
             //--
             TextClass = new StringBuilder();
 
@@ -197,6 +277,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("");
             TextClass.AppendLine("        public " + OutputClassDataContextName + "() : base(\"Name=" + OutputClassDataContextName + "\")");
             TextClass.AppendLine("        {");
+            TextClass.AppendLine("         this.Configuration.AutoDetectChangesEnabled = false;");
+            TextClass.AppendLine("         this.Configuration.LazyLoadingEnabled = false;");
+            TextClass.AppendLine("         this.Configuration.ProxyCreationEnabled = false;");
+            TextClass.AppendLine("         this.Configuration.ValidateOnSaveEnabled = false;");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
 
@@ -214,7 +298,7 @@ namespace SmartAdmin.Generator.Core
             {
                 var Model = item.Value; 
                 TextClass.AppendLine("             modelBuilder.Configurations.Add(new " + Model.ClassName + "Mapper());");
-            }
+            }    
 
             TextClass.AppendLine("        }");
             TextClass.AppendLine("    }");
@@ -274,7 +358,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            this._dbSet = context.Set<TEntity>();");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
-            TextClass.AppendLine("        public void AddItem(TEntity entity)");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que salva uma entidade"); 
+            TextClass.AppendLine("        /// </summary>");
+            TextClass.AppendLine("        public void Save(TEntity entity)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
             TextClass.AppendLine("            {");
@@ -300,7 +387,89 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            }");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
-            TextClass.AppendLine("        public TEntity AddGetItem(TEntity entity)");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que atualiza uma entidade");
+            TextClass.AppendLine("        /// </summary>");
+            TextClass.AppendLine("        public void Edit(TEntity entity)");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            var entry = _context.Entry<TEntity>(entity);");
+            TextClass.AppendLine("            var pkey = _dbSet.Create().GetType().GetProperty(\"ID\").GetValue(entity);");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("            if (entry.State ==EntityState.Detached)");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                var set = _context.Set<TEntity>();");
+            TextClass.AppendLine("                TEntity attachedEntity = set.Find(pkey);");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                if (attachedEntity != null)");
+            TextClass.AppendLine("                {");
+            TextClass.AppendLine("                    var attachedEntry = _context.Entry(attachedEntity);");
+            TextClass.AppendLine("                    attachedEntry.CurrentValues.SetValues(entity);");
+            TextClass.AppendLine("                }");
+            TextClass.AppendLine("                else");
+            TextClass.AppendLine("                {");
+            TextClass.AppendLine("                    entry.State = EntityState.Modified;");
+            TextClass.AppendLine("                }");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("            try");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                _context.SaveChanges();");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("            catch (System.Data.Entity.Validation.DbEntityValidationException ex)");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                StringBuilder sb = new StringBuilder();");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                foreach (var failure in ex.EntityValidationErrors)");
+            TextClass.AppendLine("                {");
+            TextClass.AppendLine("                    sb.AppendFormat(\"{0} Falha da validação \", failure.Entry.Entity.GetType());");
+            TextClass.AppendLine("                    foreach (var error in failure.ValidationErrors)");
+            TextClass.AppendLine("                    {");
+            TextClass.AppendLine("                        sb.AppendFormat(\"- {0} : {1}\", error.PropertyName, error.ErrorMessage);");
+            TextClass.AppendLine("                        sb.AppendLine();");
+            TextClass.AppendLine("                    }");
+            TextClass.AppendLine("                }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                throw new System.Data.Entity.Validation.DbEntityValidationException(\"Erros da validação da Entidade: \" + sb.ToString(), ex);");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que deleta uma entidade, isto é exclui definitivamente da tabela");
+            TextClass.AppendLine("        /// </summary>");
+            TextClass.AppendLine("        public void Delete(TEntity entity)");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            try");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                _dbSet.Add(entity);");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                if (_context.Entry(entity).State == EntityState.Detached)");
+            TextClass.AppendLine("                    _dbSet.Attach(entity);");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                _dbSet.Remove(entity);");
+            TextClass.AppendLine("                _context.SaveChanges();");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("            catch (System.Data.Entity.Validation.DbEntityValidationException ex)");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                StringBuilder sb = new StringBuilder();");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                foreach (var failure in ex.EntityValidationErrors)");
+            TextClass.AppendLine("                {");
+            TextClass.AppendLine("                    sb.AppendFormat(\"{0} Falha da validação \", failure.Entry.Entity.GetType());");
+            TextClass.AppendLine("                    foreach (var error in failure.ValidationErrors)");
+            TextClass.AppendLine("                    {");
+            TextClass.AppendLine("                        sb.AppendFormat(\"- {0} : {1}\", error.PropertyName, error.ErrorMessage);");
+            TextClass.AppendLine("                        sb.AppendLine();");
+            TextClass.AppendLine("                    }");
+            TextClass.AppendLine("                }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("                throw new System.Data.Entity.Validation.DbEntityValidationException(\"Erros da validação da Entidade: \" + sb.ToString(), ex);");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que salva uma entidade e retorna a mesma salva");
+            TextClass.AppendLine("        /// </summary>");
+            TextClass.AppendLine("        public TEntity SaveGetItem(TEntity entity)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
             TextClass.AppendLine("            {");
@@ -328,7 +497,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            }");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
-            TextClass.AppendLine("        public void AddAll(List<TEntity> entity)");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que salva uma lista de entidades");
+            TextClass.AppendLine("        /// </summary>");
+            TextClass.AppendLine("        public void SaveAll(List<TEntity> entity)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
             TextClass.AppendLine("            {");
@@ -356,79 +528,9 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            }");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
-            TextClass.AppendLine("        public void Edit(TEntity entity)");
-            TextClass.AppendLine("        {");
-            TextClass.AppendLine("            var entry = _context.Entry<TEntity>(entity);");
-            TextClass.AppendLine("            var pkey = _dbSet.Create().GetType().GetProperty(\"Id\").GetValue(entity);");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("            if (entry.State == System.Data.Entity.EntityState.Detached)");
-            TextClass.AppendLine("            {");
-            TextClass.AppendLine("                var set = _context.Set<TEntity>();");
-            TextClass.AppendLine("                TEntity attachedEntity = set.Find(pkey);");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                if (attachedEntity != null)");
-            TextClass.AppendLine("                {");
-            TextClass.AppendLine("                    var attachedEntry = _context.Entry(attachedEntity);");
-            TextClass.AppendLine("                    attachedEntry.CurrentValues.SetValues(entity);");
-            TextClass.AppendLine("                }");
-            TextClass.AppendLine("                else");
-            TextClass.AppendLine("                {");
-            TextClass.AppendLine("                    entry.State = System.Data.Entity.EntityState.Modified;");
-            TextClass.AppendLine("                }");
-            TextClass.AppendLine("            }");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("            try");
-            TextClass.AppendLine("            {");
-            TextClass.AppendLine("                _context.SaveChanges();");
-            TextClass.AppendLine("            }");
-            TextClass.AppendLine("            catch (System.Data.Entity.Validation.DbEntityValidationException ex)");
-            TextClass.AppendLine("            {");
-            TextClass.AppendLine("                StringBuilder sb = new StringBuilder();");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                foreach (var failure in ex.EntityValidationErrors)");
-            TextClass.AppendLine("                {");
-            TextClass.AppendLine("                    sb.AppendFormat(\"{0} Falha da validação \", failure.Entry.Entity.GetType());");
-            TextClass.AppendLine("                    foreach (var error in failure.ValidationErrors)");
-            TextClass.AppendLine("                    {");
-            TextClass.AppendLine("                        sb.AppendFormat(\"- {0} : {1}\", error.PropertyName, error.ErrorMessage);");
-            TextClass.AppendLine("                        sb.AppendLine();");
-            TextClass.AppendLine("                    }");
-            TextClass.AppendLine("                }");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                throw new System.Data.Entity.Validation.DbEntityValidationException(\"Erros da validação da Entidade: \" + sb.ToString(), ex);");
-            TextClass.AppendLine("            }");
-            TextClass.AppendLine("        }");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("        public void Delete(TEntity entity)");
-            TextClass.AppendLine("        {");
-            TextClass.AppendLine("            try");
-            TextClass.AppendLine("            {");
-            TextClass.AppendLine("                _dbSet.Add(entity);");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                if (_context.Entry(entity).State == System.Data.Entity.EntityState.Detached)");
-            TextClass.AppendLine("                    _dbSet.Attach(entity);");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                _dbSet.Remove(entity);");
-            TextClass.AppendLine("                _context.SaveChanges();");
-            TextClass.AppendLine("            }");
-            TextClass.AppendLine("            catch (System.Data.Entity.Validation.DbEntityValidationException ex)");
-            TextClass.AppendLine("            {");
-            TextClass.AppendLine("                StringBuilder sb = new StringBuilder();");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                foreach (var failure in ex.EntityValidationErrors)");
-            TextClass.AppendLine("                {");
-            TextClass.AppendLine("                    sb.AppendFormat(\"{0} Falha da validação \", failure.Entry.Entity.GetType());");
-            TextClass.AppendLine("                    foreach (var error in failure.ValidationErrors)");
-            TextClass.AppendLine("                    {");
-            TextClass.AppendLine("                        sb.AppendFormat(\"- {0} : {1}\", error.PropertyName, error.ErrorMessage);");
-            TextClass.AppendLine("                        sb.AppendLine();");
-            TextClass.AppendLine("                    }");
-            TextClass.AppendLine("                }");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                throw new System.Data.Entity.Validation.DbEntityValidationException(\"Erros da validação da Entidade: \" + sb.ToString(), ex);");
-            TextClass.AppendLine("            }");
-            TextClass.AppendLine("        }");
-            TextClass.AppendLine("");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que deleta uma lsita de entidades, isto é exclui definitivamente da tabela");
+            TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void DeleteAll(Expression<Func<TEntity, bool>> filter = null)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            IQueryable<TEntity> query = _dbSet;");
@@ -440,6 +542,9 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            _context.SaveChanges();");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que retorna uma entidade, mediante uma expressão lambda");
+            TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public TEntity GetItem(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
@@ -449,7 +554,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("                if (filter != null)");
             TextClass.AppendLine("                    query = query.Where(filter);");
             TextClass.AppendLine("");
-            TextClass.AppendLine("                return query.ToList()[0];");
+            TextClass.AppendLine("                return query.ToList().FirstOrDefault();");
             TextClass.AppendLine("            }");
             TextClass.AppendLine("            catch (System.Data.Entity.Validation.DbEntityValidationException ex)");
             TextClass.AppendLine("            {");
@@ -469,6 +574,9 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            }");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que retorna uma lista de entidades, mediante uma expressão lambda");
+            TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public virtual List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
@@ -501,6 +609,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("");
             TextClass.AppendLine("            }");
             TextClass.AppendLine("        }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        /// <summary>");
+            TextClass.AppendLine("        /// Método genérico que exclui o objeto da memória Garbage Collector");
+            TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void Dispose()");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            _dbSet = null;");
@@ -737,9 +849,64 @@ namespace SmartAdmin.Generator.Core
             {
                 if (ColumnMapper.ColumnKey != "pk")
                 {
-                    ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
-                    TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
-                }
+                    if (ColumnMapper.DataType == "datetime")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.DateTime> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "int")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.Int32> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "decimal")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.Decimal> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "long")
+                    {
+                        if (ColumnMapper.IsNullable == "yes")
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public Nullable<System.long> " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                        else
+                        {
+                            ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                            TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                        }
+                    }
+                    else
+                    {
+                        ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
+                        TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
+                    }
+                }                   
             }
 
             TextClass.AppendLine("    }");

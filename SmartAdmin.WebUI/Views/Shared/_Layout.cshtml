@@ -22,14 +22,37 @@
 		<link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
 		<link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="~/Content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+         
+        <style>
+            .smart-admin-loading {                  
+                overflow: hidden;
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 9999;
+                -webkit-overflow-scrolling: touch;
+                outline: 0;
+                background: #FFF;
+                opacity: 0.75;
+                text-align:center; 
+            }
+            .smart-admin-loading:before {
+                content: "";
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+            }
 
-
-
-
+            .smart-admin-loading img {
+                vertical-align: middle;
+            }
+        </style>
 	</head>
 
-	<!-- Possible Classes
 
+	<!-- Possible Classes 
 		* 'smart-skin-{SKIN#}'
 		* 'smart-rtl'         - Switch theme mode to RTL (will be avilable from version SmartAdmin 1.5)
 		* 'menu-on-top'       - Switch to top navigation (no DOM change required)
@@ -40,8 +63,10 @@
 		* 'fixed-footer'      - Fixes footer
 		* 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
 	-->
-	<body class="fixed-navigation">
-                  
+	<body>
+        <div id="smart-admin-loading" class="smart-admin-loading" style="display:none;" >
+            <img src="~/Content/img/loader/loader2.gif" />
+        </div>     
 		<!-- #HEADER -->
 		<header id="header">
 			 @Html.Partial("_HeaderPartial")	
@@ -82,8 +107,10 @@
 			<script src="~/Content/js/demo.min.js"></script>
 			<script src="~/Content/js/app.min.js"></script> 
 			<!-- END SCRIPTS -->
-
-			<div id="content">@RenderBody()</div>
+           
+			<div id="content">                           
+                @RenderBody()
+			</div>
 		</div>
 		<!-- END #MAIN PANEL -->
 
@@ -99,54 +126,9 @@
 			  @Html.Partial("_WidgetPartial")  
 		</div>
 
-
 		<!--[if IE 8]>
 			<h1>Seu navegador está desatualizado, por favor atualize seu navegador, indo para www.microsoft.com/download</h1>
 		<![endif]--> 
-@*		<script>
-		    $(document).ready(function () {
 
-		        var theme = $('#theme').val();
-
-		        if ((theme != null) || (theme != undefined)) {
-		            //alert('smart-style-0');
-		            var body = $('body');
-		            body.removeAttr("class");
-		            body.addClass("fixed-navigation desktop-detected smart-style-0");
-		        } else
-		        {
-		            var theme = $('#theme').val();
-		            var body = $('body');
-		            body.removeAttr("class");
-		            body.addClass("fixed-navigation desktop-detected " + theme);
-		        }
-
-		        $('#smart-style-0').click(function () {
-
-		            $('#theme').val('smart-style-0');
-
-		        });
-
-		        $('#smart-style-1').click(function () {
-
-		            $('#theme').val('smart-style-1');
-
-		        });
-
-		        $('#smart-style-2').click(function () {
-
-		            $('#theme').val('smart-style-2');
-
-		        });
-
-		        $('#smart-style-3').click(function () {
-
-		            $('#theme').val('smart-style-3');
-
-		        });
-
-		    });
-		</script>*@
-       
 	</body>
 </html>

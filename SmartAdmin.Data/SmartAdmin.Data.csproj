@@ -30,15 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SolutionWebSite\Agilecore.WebUI\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,19 +47,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\SmartAdminContext.cs" />
+    <Compile Include="Models\Acesso\AcessoDto.cs" />
+    <Compile Include="Models\Acesso\AcessoDtoValidator.cs" />
+    <Compile Include="Models\Acesso\AcessoMapper.cs" />
     <Compile Include="Models\Base.cs" />
-    <Compile Include="Models\Complexidade\ComplexidadeDto.cs" />
-    <Compile Include="Models\Complexidade\ComplexidadeDtoValidator.cs" />
-    <Compile Include="Models\Complexidade\ComplexidadeMapper.cs" />
+    <Compile Include="Models\Contato\ContatoDto.cs" />
+    <Compile Include="Models\Contato\ContatoDtoValidator.cs" />
+    <Compile Include="Models\Contato\ContatoMapper.cs" />
+    <Compile Include="Models\EmailNewletter\EmailNewletterDto.cs" />
+    <Compile Include="Models\EmailNewletter\EmailNewletterDtoValidator.cs" />
+    <Compile Include="Models\EmailNewletter\EmailNewletterMapper.cs" />
+    <Compile Include="Models\EnvioNewletter\EnvioNewletterDto.cs" />
+    <Compile Include="Models\EnvioNewletter\EnvioNewletterDtoValidator.cs" />
+    <Compile Include="Models\EnvioNewletter\EnvioNewletterMapper.cs" />
+    <Compile Include="Models\Inbox\InboxDto.cs" />
+    <Compile Include="Models\Inbox\InboxDtoValidator.cs" />
+    <Compile Include="Models\Inbox\InboxMapper.cs" />
+    <Compile Include="Models\MenuUsuario\MenuUsuarioDto.cs" />
+    <Compile Include="Models\MenuUsuario\MenuUsuarioDtoValidator.cs" />
+    <Compile Include="Models\MenuUsuario\MenuUsuarioMapper.cs" />
     <Compile Include="Models\Menu\MenuDto.cs" />
     <Compile Include="Models\Menu\MenuDtoValidator.cs" />
     <Compile Include="Models\Menu\MenuMapper.cs" />
-    <Compile Include="Models\Permissao\PermissaoDto.cs" />
-    <Compile Include="Models\Permissao\PermissaoDtoValidator.cs" />
-    <Compile Include="Models\Permissao\PermissaoMapper.cs" />
-    <Compile Include="Models\TipoComplexidade\TipoComplexidadeDto.cs" />
-    <Compile Include="Models\TipoComplexidade\TipoComplexidadeDtoValidator.cs" />
-    <Compile Include="Models\TipoComplexidade\TipoComplexidadeMapper.cs" />
+    <Compile Include="Models\TipoContato\TipoContatoDto.cs" />
+    <Compile Include="Models\TipoContato\TipoContatoDtoValidator.cs" />
+    <Compile Include="Models\TipoContato\TipoContatoMapper.cs" />
+    <Compile Include="Models\TipoNewletter\TipoNewletterDto.cs" />
+    <Compile Include="Models\TipoNewletter\TipoNewletterDtoValidator.cs" />
+    <Compile Include="Models\TipoNewletter\TipoNewletterMapper.cs" />
     <Compile Include="Models\Usuario\UsuarioDto.cs" />
     <Compile Include="Models\Usuario\UsuarioDtoValidator.cs" />
     <Compile Include="Models\Usuario\UsuarioMapper.cs" />

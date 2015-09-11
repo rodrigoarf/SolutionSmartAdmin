@@ -1,13 +1,18 @@
-﻿<form action="" id="checkout-form" class="smart-form">
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.UsuarioDto
+@using (Html.BeginForm("Save", "Usuario", FormMethod.Post, new { @id = "smart-form-create", @class = "smart-form" }))
+{
+    <input type="hidden" name="ID" value="@(Model.ID)" />
     <fieldset>
         <div class="row">
             <div class="col-sm-2">
                 <img style="margin: 0px 10px 5px 10px; border: 6px solid #e3e3e3; width: 150px; height: 150px;" src="~/Content/img/avatars/sunny-big.png" />
             </div>
-            <div class="col-sm-2">
-                <h1>Antonio <span class="semi-bold">Rodrigo</span>
+            <div class="col-sm-10">           
+                <h1>@Model.NOME Clodoaldo <br> <small>Usuário Administrador</small></h1>   
+                @*<h1>Antonio <span class="semi-bold">Rodrigo</span>
                     <br>
-                    <small>CEO, SmartAdmin</small></h1>
+                    <small>CEO, SmartAdmin</small></h1>*@
             </div>
         </div>
     </fieldset>
@@ -16,7 +21,7 @@
             <section class="col col-6">
                 <label class="input">
                     <i class="icon-prepend fa fa-user"></i>
-                    <input type="text" name="fname" placeholder="Nome completo do usuário" />
+                     @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome completo do usuário" })
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Nome completo do usuário
                     </b>
@@ -27,7 +32,7 @@
             <section class="col col-6">
                 <label class="input">
                     <i class="icon-prepend fa fa-envelope-o"></i>
-                    <input type="email" name="email" placeholder="E-mail de contato">
+                     @HtmlControls.TextBox("EMAIL", new { @value = Model.EMAIL, @placeholder = "E-mail de contato" })
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> E-mail de contato
                     </b>
@@ -38,7 +43,7 @@
             <section class="col col-3">
                 <label class="input">
                     <i class="icon-prepend fa fa-phone"></i>
-                    <input type="tel" name="phone" placeholder="Telefone" data-mask="(99)9999-9999" class="phonemask">
+                     @HtmlControls.TextBox("TELEFONE", new { @value = Model.TELEFONE, @placeholder = "Telefone de contato", @class="phonemask"  })
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Informe seu telefone
                     </b>
@@ -47,20 +52,72 @@
             <section class="col col-3">
                 <label class="input">
                     <i class="icon-prepend fa fa-phone"></i>
-                    <input type="tel" name="phone" placeholder="Celular" data-mask="(99)99999-9999" class="mobilemask">
-                    <b class="tooltip tooltip-bottom-right">
+                     @HtmlControls.TextBox("CELULAR", new { @value = Model.CELULAR, @placeholder = "Celular de contato", @class="phonemask" })
+                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Informe seu celular
                     </b>
                 </label>
             </section>
         </div>
-    </fieldset>
-    <fieldset>
         <div class="row">
             <section class="col col-3">
                 <label class="select">
-                    <select name="country">
-                        <option value="0" selected="" disabled="">País</option>
+                    @HtmlControls.DropDownListCustomSexo("SEXO")
+                    <i></i>
+                </label>
+            </section>
+        </div>
+    </fieldset>
+    <fieldset> 
+        <div class="row">
+            <section class="col col-6">
+                <label for="address" class="input">
+                    @HtmlControls.TextBox("ENDERECO", new { @value = Model.ENDERECO, @placeholder = "Informe seu Endereco" })
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i> Informe seu endereço
+                    </b>
+                </label>
+            </section>
+        </div>   
+        <div class="row">
+            <section class="col col-3">
+                <label class="input">
+                    @HtmlControls.TextBox("BAIRRO", new { @value = Model.BAIRRO, @placeholder = "Informe seu Bairro" })
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i> Informe seu Bairro
+                    </b>
+                </label>
+            </section>  
+            <section class="col col-3">
+                <label class="input">
+                    @HtmlControls.TextBox("CIDADE", new { @value = Model.CIDADE, @placeholder = "Informe sua Cidade" })
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i> Informe sua Cidade
+                    </b>
+                </label>
+            </section>
+        </div> 
+        <div class="row">  
+            <section class="col col-3">
+                <label class="input">
+                    @HtmlControls.TextBox("CEP", new { @value = Model.CEP, @placeholder = "Cep", @class = "cep" })
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i>Informe seu cep
+                    </b>
+                </label>
+            </section>   
+            <section class="col col-3">
+                <label class="select">
+                    @HtmlControls.DropDownListCustomUF("UF",EInputUF.SP)
+                    <i></i>
+                </label>
+            </section>
+        </div>  
+        <div class="row">
+            <section class="col col-3">
+                <label class="select">
+                    <select id="PAIS" name="PAIS">
+                        <option value="">País</option>
                         <option value="244">Aaland Islands</option>
                         <option value="1">Afghanistan</option>
                         <option value="2">Albania</option>
@@ -313,66 +370,23 @@
                     </select>
                     <i></i>
                 </label>
-            </section>
-
-            <section class="col col-3">
-                <label class="input">
-                    <input type="text" name="city" placeholder="Cidade">
-                    <b class="tooltip tooltip-bottom-right">
-                        <i class="fa fa-warning txt-color-teal"></i> Informe sua cidade
-                    </b>
-                </label>
-            </section>
+            </section> 
         </div>
-        <div class="row">
-            <section class="col col-3">
-                <label class="input">
-                    <input type="text" name="Cep" placeholder="Cep">
-                    <b class="tooltip tooltip-bottom-right">
-                        <i class="fa fa-warning txt-color-teal"></i> Informe seu cep
-                    </b>
-                </label>
-            </section>
-        </div>
-
-        <div class="row">
-            <section class="col col-6">
-                <label for="address" class="input">
-                    <input type="text" name="address" placeholder="Endereço">
-                    <b class="tooltip tooltip-bottom-right">
-                        <i class="fa fa-warning txt-color-teal"></i> Informe seu endereço
-                    </b>
-                </label>
-            </section>
-        </div>
-
-        <div class="row">
-            <section class="col col-6">
-                <label class="textarea">
-                    <i class="icon-prepend fa fa-question-circle"></i>
-                    <textarea rows="3" name="info" placeholder="Informação adicional"></textarea>
-                    <b class="tooltip tooltip-bottom-right">
-                        <i class="fa fa-warning txt-color-teal"></i> Qualquer informação adicional
-                    </b>
-                </label>
-            </section>
-        </div>
-
-    </fieldset>
+    </fieldset>   
     <fieldset>
         <div class="row">
-        <section class="col col-3">
-            <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
-                <input type="text" name="USUARIO" id="USUARIO" placeholder="Usuário de acesso" tabindex="1" readonly="true">
-            </label>
-        </section>
+            <section class="col col-3">
+                <label class="input">
+                    <i class="icon-prepend fa fa-user"></i>
+                    @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Usuário de acesso", @readonly="true" })
+                </label>
+            </section>
         </div>
         <div class="row">
             <section class="col col-3">
                 <label class="input">                    
                     <i class="icon-prepend fa fa-lock"></i>
-                    <input type="password" name="SENHA" id="SENHA" placeholder="Senha de acesso" tabindex="2">
+                    @HtmlControls.Password("SENHA", new { @value = string.Empty, @placeholder = "Senha de acesso" })
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Senha de acesso
                     </b>
@@ -381,11 +395,12 @@
         </div>
     </fieldset>
     <footer>
-        <button type="submit" class="btn btn-warning">
+        <button id="btnSaveUsuario" type="submit" class="btn btn-warning">
             Salvar
         </button>
-        <button type="button" class="btn btn-primary">
+        <a href="/Usuario/Index" class="btn btn-primary">
             Voltar
-        </button>
+        </a>
     </footer>
-</form>
+}
+

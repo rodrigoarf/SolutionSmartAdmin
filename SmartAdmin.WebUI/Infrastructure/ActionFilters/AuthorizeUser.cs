@@ -11,6 +11,17 @@ namespace SmartAdmin.WebUI.Infrastructure.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            //var CurrentCache = new SmartAdmin.WebUI.Infrastructure.Cache.CacheManeger();
+            //CurrentCache.Save(UsuarioDominio.ID.ToString(), UsuarioDominio, 120);
+
+            //if (CurrentCache.Find(UsuarioDominio.ID.ToString()))
+            //{
+            //    CurrentCache.Delete(UsuarioDominio.ID.ToString());
+
+            //}   
+
+
+
             //var HttpContext = filterContext.HttpContext;
 
             //if (HttpContext.Session[Utilities.SESSION_USUARIO_LOGADO] == null)

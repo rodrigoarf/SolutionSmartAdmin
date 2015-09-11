@@ -7,10 +7,15 @@ using System.Runtime.Caching;
 namespace SmartAdmin.WebUI.Infrastructure.Cache
 {
     /// <summary>
+    /// Caching enables you to store data in memory for rapid access. Applications can access the cache and not have to retrieve 
+    /// the data from the original source whenever the data is accessed. This avoids repeated queries for data, and it can improve 
+    /// performance and scalability. In addition, caching makes data available when the data source is temporarily unavailable.
+    /// 
     /// Microsoft Enterprise Library Caching Application Block Pattern.
+    /// https://msdn.microsoft.com/en-us/library/ff477235.aspx
     /// http://stackoverflow.com/questions/17653124/how-to-cache-database-tables-to-prevent-many-database-queries-in-asp-net-c-sharp
     /// </summary>
-    public class CacheManeger : ICache
+    public class CacheManager : ICache
     {          
         private ObjectCache Cache
         {
@@ -20,12 +25,12 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
             }
         }
 
-        public T Get<T>(string Key)
+        public TEntity Get<TEntity>(string Key)
         {
-            return (T)Cache[Key];
+            return (TEntity)Cache[Key];
         }
 
-        public void Set(string Key, object Data, int CacheTime)
+        public void Save(string Key, object Data, int CacheTime)
         {
             if (Data == null)
             {
@@ -38,12 +43,12 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
             Cache.Add(new CacheItem(Key, Data), policy);
         }
 
-        public bool IsSet(string Key)
+        public bool Find(string Key)
         {
             return (Cache.Contains(Key));
         }
 
-        public void Remove(string Key)
+        public void Delete(string Key)
         {
             Cache.Remove(Key);
         }
@@ -52,7 +57,7 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
         {
             foreach (var item in Cache)
             {
-                Remove(item.Key);
+                Delete(item.Key);
             }
         }  
     }

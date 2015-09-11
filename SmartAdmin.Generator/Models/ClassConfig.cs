@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartAdmin.Generator.Models
 {
-    public class ClassConfig
+    public sealed class ClassConfig
     {
         public string ClassName { get; set; }
         public string NameSpaceDto { get; set; }

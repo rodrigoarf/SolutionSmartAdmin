@@ -6,7 +6,7 @@
 
         var input = $(this);
 
-        if (input.attr('name') == 'USUARIO') {
+        if (input.attr('name') == 'LOGIN') {
             if ($(this).val() == '') {
                 PrintAlert('Você deve preencher o campo Usuário!');
                 validation = false;

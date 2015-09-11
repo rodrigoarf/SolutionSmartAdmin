@@ -44,25 +44,30 @@
       <HintPath>..\..\SolutionSmartClinic\Clinic.WebUI\bin\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
-      <HintPath>..\..\SolutionSmartClinic\Clinic.WebUI\bin\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\SolutionSmartClinic\Clinic.WebUI\bin\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rodrigo\Desktop\DLLs\MySql\v4\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    <Reference Include="MySql.Data.Entity, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rodrigo\Desktop\DLLs\MySql\v4\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SolutionSmartClinic\Clinic.WebUI\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\Agilecore.WebUI\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\Agilecore.WebUI\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
@@ -133,6 +138,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Acesso\AcessoController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Inbox\InboxController.cs" />
+    <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
     <Compile Include="Infrastructure\ActionFilters\AuthorizeUser.cs" />
     <Compile Include="Infrastructure\Cache\Cache.cs" />
     <Compile Include="Infrastructure\Cache\CacheExtensions.cs" />
@@ -293,6 +302,9 @@
     <Content Include="Content\img\jqueryui\ui-icons_f0ad4e_256x240.png" />
     <Content Include="Content\img\jqueryui\ui-icons_f6cf3b_256x240.png" />
     <Content Include="Content\img\jqueryui\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\img\loader\loader1.gif" />
+    <Content Include="Content\img\loader\loader2.gif" />
+    <Content Include="Content\img\loader\loader3.gif" />
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\logo-blacknwhite.png" />
     <Content Include="Content\img\logo-blue.png" />
@@ -794,6 +806,7 @@
     <Content Include="Content\js\plugin\x-editable\x-editable.min.js" />
     <Content Include="Content\js\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Content\js\speech\voicecommand.min.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\sound\bigbox.mp3" />
     <Content Include="Content\sound\license.txt" />
     <Content Include="Content\sound\messagebox.mp3" />
@@ -806,11 +819,14 @@
     <Content Include="Script\Boleto\Index.js" />
     <Content Include="Script\Banco\Index.js" />
     <Content Include="Script\Historico\Index.js" />
-    <Content Include="Script\Login\Registro.js" />
+    <Content Include="Script\Login\Create.js" />
     <Content Include="Script\Login\Index.js" />
     <Content Include="Script\Menu\Create.js" />
     <Content Include="Script\Usuario\Edit.js" />
     <Content Include="Script\Usuario\Index.js" />
+    <Content Include="Templates\Email\index003.htm" />
+    <Content Include="Templates\Email\index002.htm" />
+    <Content Include="Templates\Email\index001.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -822,6 +838,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Templates\Email\Image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -951,6 +968,52 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Banco\GridPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartAdmin.Data\SmartAdmin.Data.csproj">
+      <Project>{8451c4fb-9d96-4d82-8172-473022a93d03}</Project>
+      <Name>SmartAdmin.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartAdmin.Domain\SmartAdmin.Domain.csproj">
+      <Project>{bb1a26fc-c3ff-401c-84a0-cb5d66a891fd}</Project>
+      <Name>SmartAdmin.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Acesso\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Acesso\GraficoPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Login\RememberPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu\EditPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Newsletter\Templates.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Newsletter\Grupos.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Newsletter\Campanhas.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\GridPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\HeaderPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\MenuPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -13,11 +13,16 @@ namespace SmartAdmin.Generator
         {
             var Storage = new Dictionary<string, ClassConfig>();
 
-            Storage.Add("SCP_USUARIO", new ClassConfig() { ClassName = "Usuario", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
-            Storage.Add("SCP_MENU", new ClassConfig() { ClassName = "Menu", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
-            Storage.Add("SCP_PERM_USUARIO", new ClassConfig() { ClassName = "Permissao", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
-            Storage.Add("SCP_COMPLEXIDADE", new ClassConfig() { ClassName = "Complexidade", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
-            Storage.Add("SCP_TIPO_COMPLEXIDADE", new ClassConfig() { ClassName = "TipoComplexidade", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("USUARIO", new ClassConfig() { ClassName = "Usuario", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("TIPO_NEWSLETTER", new ClassConfig() { ClassName = "TipoNewletter", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("EMAIL_NEWSLETTER", new ClassConfig() { ClassName = "EmailNewletter", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("ENVIO_NEWSLETTER", new ClassConfig() { ClassName = "EnvioNewletter", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("ACESSO", new ClassConfig() { ClassName = "Acesso", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("TIPO_CONTATO", new ClassConfig() { ClassName = "TipoContato", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("CONTATO", new ClassConfig() { ClassName = "Contato", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("MENU", new ClassConfig() { ClassName = "Menu", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("MENU_USUARIO", new ClassConfig() { ClassName = "MenuUsuario", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("INBOX", new ClassConfig() { ClassName = "Inbox", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
 
             return (Storage);
         }

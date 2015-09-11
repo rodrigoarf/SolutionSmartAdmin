@@ -14,6 +14,68 @@ namespace SmartAdmin.Generator.Core
         private StringBuilder TextClass;
         private EDataBase DatabaseType = EDataBase.MySql;
 
+        public string BuildBase()
+        {
+            var FilePath = ConfigurationManager.AppSettings["OutputClassDomainModels"].ToString();
+            var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString();
+
+            //--
+            TextClass = new StringBuilder();
+
+            TextClass.AppendLine("using System;");
+            TextClass.AppendLine("using System.Text;");
+            TextClass.AppendLine("using System.Collections;");
+            TextClass.AppendLine("using System.Collections.Generic;");
+            TextClass.AppendLine("using System.Linq;");
+            TextClass.AppendLine("using System.ComponentModel.DataAnnotations.Schema;");
+            TextClass.AppendLine("using System.Threading.Tasks;");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("namespace " + ProjectName + ".Dto");
+            TextClass.AppendLine("{");
+            TextClass.AppendLine("    public class Base");
+            TextClass.AppendLine("    {");
+            TextClass.AppendLine("        protected Guid? IdObject { get; set; }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        public int ID { get; set; }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        public Base()");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            IdObject = Guid.NewGuid();");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("");
+            TextClass.AppendLine("        [NotMapped]");
+            TextClass.AppendLine("        public Guid? IDLOGIC");
+            TextClass.AppendLine("        {");
+            TextClass.AppendLine("            get");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                return IdObject;");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("            set");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                IdObject = value;");
+            TextClass.AppendLine("            }");
+            TextClass.AppendLine("        }");
+            TextClass.AppendLine("    }");
+            TextClass.AppendLine("}");
+            //--
+
+            var FileName = "Base.cs";
+            var FullName = FilePath + @"\Models\" + FileName;
+            var Directorio = new DirectoryInfo(FilePath);
+
+            if (!Directorio.Exists)
+                Directorio.Create();
+
+            using (TextWriter Writer = File.CreateText(FullName))
+            {
+                Writer.WriteLine(TextClass.ToString());
+            }
+
+            TextClass.Clear();
+
+            return ("> " + FileName);
+        }
+
         public string BuildDomain(string TableName, ClassConfig DataModel)
         {
             var FilePath = ConfigurationManager.AppSettings["OutputClassDomain"].ToString();
@@ -42,32 +104,32 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        private " + ProjectName + ".Data.UnitOfWork _unitOfWork = new " + ProjectName + ".Data.UnitOfWork();");
             TextClass.AppendLine("");
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        /// Salva um objeto");
+            TextClass.AppendLine("        /// Salva um objeto<T>");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void Save(" + DataModel.ClassName + Sufixo + " model)");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("            _unitOfWork." + DataModel.ClassName + "Repository.AddItem(model);");
+            TextClass.AppendLine("            _unitOfWork." + DataModel.ClassName + "Repository.Save(model);");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        /// Salva e retorna um objeto");
+            TextClass.AppendLine("        /// Salva e retorna o objeto<T> salvo");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public " + DataModel.ClassName + Sufixo + " SaveGetItem(" + DataModel.ClassName + Sufixo + " model)");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("           var retorno = _unitOfWork." + DataModel.ClassName + "Repository.AddGetItem(model);");
+            TextClass.AppendLine("           var retorno = _unitOfWork." + DataModel.ClassName + "Repository.SaveGetItem(model);");
             TextClass.AppendLine("           return (retorno);");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        /// Salva uma lista de objetos");
+            TextClass.AppendLine("        /// Salva uma lista de objetos List<T>");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void SaveAll(List<" + DataModel.ClassName + Sufixo + "> model)");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("            _unitOfWork." + DataModel.ClassName + "Repository.AddAll(model);");
+            TextClass.AppendLine("            _unitOfWork." + DataModel.ClassName + "Repository.SaveAll(model);");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        /// Salva a edição de um objeto");
+            TextClass.AppendLine("        /// Salva a edição de um objeto<T>");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void Edit(" + DataModel.ClassName + Sufixo + " model)");
             TextClass.AppendLine("        {");
@@ -75,7 +137,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        /// Retorna um único objeto buscado por expressão Lambda");
+            TextClass.AppendLine("        /// Retorna um único objeto<T> buscado por expressão Lambda");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public " + DataModel.ClassName + Sufixo + " GetItem(Expression<Func<" + DataModel.ClassName + Sufixo + ", bool>> filter)");
             TextClass.AppendLine("        {");
@@ -85,7 +147,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        /// Retorna um objeto do tipo List(T) de objetos buscados pela expressão Lambda");
+            TextClass.AppendLine("        /// Retorna uma lista List(T) de objetos buscados pela expressão Lambda");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public List<" + DataModel.ClassName + Sufixo + "> GetList(Expression<Func<" + DataModel.ClassName + Sufixo + ", bool>> filter)");
             TextClass.AppendLine("        {");
@@ -110,7 +172,7 @@ namespace SmartAdmin.Generator.Core
                     TextClass.AppendLine("        }");
                     TextClass.AppendLine("");
                     TextClass.AppendLine("        /// <summary>");
-                    TextClass.AppendLine("        /// Anativa um objeto para visualização");
+                    TextClass.AppendLine("        /// Ativa um objeto para visualização");
                     TextClass.AppendLine("        /// </summary>");
                     TextClass.AppendLine("        public void ToActive(int Id)");
                     TextClass.AppendLine("        {");
@@ -123,7 +185,7 @@ namespace SmartAdmin.Generator.Core
             }
 
             TextClass.AppendLine("        /// <summary>");
-            TextClass.AppendLine("        ///  Distroe objeto e recursos não gerenciados liberando memória");
+            TextClass.AppendLine("        ///  Distroe o objeto e recursos não gerenciados liberando memória");
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void Dispose()");
             TextClass.AppendLine("        {");
@@ -165,25 +227,9 @@ namespace SmartAdmin.Generator.Core
                 TextClass.Clear();
             }
 
-
-            //var Diretorio = new DirectoryInfo(FilePath + @"\Models\" + DataModel.ClassName);
-
-            //if (!Diretorio.Exists)
-            //    Diretorio.Create();
-
-            //using (TextWriter Writer = File.CreateText(FullName))
-            //{
-            //    Writer.WriteLine(TextClass.ToString());
-            //}
-
-            //TextClass.Clear();
-
-            //--
-            //BuildDomainExtension(DataModel, FilePath, Sufixo);
-
             return ("> " + FileName);
 
-        }
+        }   
 
         public string BuildUnitOfWork(Dictionary<string, ClassConfig> GroupTables)
         {

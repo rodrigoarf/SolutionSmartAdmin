@@ -14,16 +14,14 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
 
         public static T Get<T>(this ICache CacheManager, string Key, int CacheTime, Func<T> Acquire)
         {
-            if (CacheManager.IsSet(Key))
+            if (CacheManager.Find(Key))
             {
                 return CacheManager.Get<T>(Key);
             }
             else
             {
-                var result = Acquire();
-
-                CacheManager.Set(Key, result, CacheTime);
-
+                var result = Acquire(); 
+                CacheManager.Save(Key, result, CacheTime);
                 return result;
             }
         }

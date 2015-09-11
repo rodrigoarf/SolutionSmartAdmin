@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SmartAdmin.WebUI.Controllers.Banco
 {
-    public class BancoController : Controller
+    public class BancoController : BaseController
     {
         public ActionResult Index()
         {

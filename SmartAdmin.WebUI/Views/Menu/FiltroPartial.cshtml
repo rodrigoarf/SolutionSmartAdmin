@@ -1,25 +1,30 @@
-﻿<header>
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.MenuDto
+<header>
     <span class="widget-icon"><i class="fa fa-edit"></i></span>
     <h2>Busca por Menus</h2>
 </header>
 <div>
     <div class="widget-body no-padding">
-        @using (Html.BeginForm("Index", "Menu", FormMethod.Post, new { @id = "smart-form-filter" }))
-        {
-            <div class="smart-form">
+        <div class="smart-form">
+            @using (Html.BeginForm("Load", "Menu", FormMethod.Post, new { @id = "smart-form-filter" }))
+            {
                 <fieldset>
                     <div class="row">
-                        <section class="col col-2">
-                            <label class="label">Menus Cadastrados</label>
+                        <section class="col col-3">
+                            <label class="label">Nome do menu</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome do menu" })
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i>Informe o nome ou parte do nome do menu 
+                                </b>
+                            </label>
+                        </section>
+                        <section class="col col-3">
+                            <label class="label">Status do usuário</label>
                             <label class="select">
-                                <select name="ativo">
-                                    <option value="0" selected="" disabled="">(Todos)</option>
-                                    <option value="0001">Menu 0001</option>
-                                    <option value="0002">Menu 0002</option>
-                                    <option value="0003">Menu 0003</option>
-                                    <option value="0004">Menu 0004</option>
-                                    <option value="0005">Menu 0005</option>
-                                </select>
+                                @HtmlControls.DropDownListCustomStatus("STATUS", EInputStatus.None)
                                 <i></i>
                             </label>
                         </section>
@@ -29,14 +34,11 @@
                     <button type="submit" class="btn btn-sm btn-primary">
                         <i class="fa fa-search"></i> Buscar
                     </button>
-                    <a class="btn btn-lg btn-success">
-                        <i class="fa fa-print"></i> Imprimir
-                    </a>                
                     <a class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modal-menu-create">
                         <i class="fa fa-cog"></i> Inserir     
                     </a>
-                </footer>
-            </div> 
-        }
+                </footer>    
+            }
+        </div>
     </div>
 </div>

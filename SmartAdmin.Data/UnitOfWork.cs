@@ -15,10 +15,15 @@ namespace SmartAdmin.Data
         private bool _disposed = false;
 
         private Repository<UsuarioDto> _usuarioRepository;
+        private Repository<TipoNewletterDto> _tiponewletterRepository;
+        private Repository<EmailNewletterDto> _emailnewletterRepository;
+        private Repository<EnvioNewletterDto> _envionewletterRepository;
+        private Repository<AcessoDto> _acessoRepository;
+        private Repository<TipoContatoDto> _tipocontatoRepository;
+        private Repository<ContatoDto> _contatoRepository;
         private Repository<MenuDto> _menuRepository;
-        private Repository<PermissaoDto> _permissaoRepository;
-        private Repository<ComplexidadeDto> _complexidadeRepository;
-        private Repository<TipoComplexidadeDto> _tipocomplexidadeRepository;
+        private Repository<MenuUsuarioDto> _menuusuarioRepository;
+        private Repository<InboxDto> _inboxRepository;
 
         public Repository<UsuarioDto> UsuarioRepository
         {
@@ -30,6 +35,84 @@ namespace SmartAdmin.Data
                 }
 
                 return _usuarioRepository;
+            }
+        }
+
+        public Repository<TipoNewletterDto> TipoNewletterRepository
+        {
+            get
+            {
+                if (this._tiponewletterRepository == null)
+                {
+                    this._tiponewletterRepository = new Repository<TipoNewletterDto>(_context);
+                }
+
+                return _tiponewletterRepository;
+            }
+        }
+
+        public Repository<EmailNewletterDto> EmailNewletterRepository
+        {
+            get
+            {
+                if (this._emailnewletterRepository == null)
+                {
+                    this._emailnewletterRepository = new Repository<EmailNewletterDto>(_context);
+                }
+
+                return _emailnewletterRepository;
+            }
+        }
+
+        public Repository<EnvioNewletterDto> EnvioNewletterRepository
+        {
+            get
+            {
+                if (this._envionewletterRepository == null)
+                {
+                    this._envionewletterRepository = new Repository<EnvioNewletterDto>(_context);
+                }
+
+                return _envionewletterRepository;
+            }
+        }
+
+        public Repository<AcessoDto> AcessoRepository
+        {
+            get
+            {
+                if (this._acessoRepository == null)
+                {
+                    this._acessoRepository = new Repository<AcessoDto>(_context);
+                }
+
+                return _acessoRepository;
+            }
+        }
+
+        public Repository<TipoContatoDto> TipoContatoRepository
+        {
+            get
+            {
+                if (this._tipocontatoRepository == null)
+                {
+                    this._tipocontatoRepository = new Repository<TipoContatoDto>(_context);
+                }
+
+                return _tipocontatoRepository;
+            }
+        }
+
+        public Repository<ContatoDto> ContatoRepository
+        {
+            get
+            {
+                if (this._contatoRepository == null)
+                {
+                    this._contatoRepository = new Repository<ContatoDto>(_context);
+                }
+
+                return _contatoRepository;
             }
         }
 
@@ -46,42 +129,29 @@ namespace SmartAdmin.Data
             }
         }
 
-        public Repository<PermissaoDto> PermissaoRepository
+        public Repository<MenuUsuarioDto> MenuUsuarioRepository
         {
             get
             {
-                if (this._permissaoRepository == null)
+                if (this._menuusuarioRepository == null)
                 {
-                    this._permissaoRepository = new Repository<PermissaoDto>(_context);
+                    this._menuusuarioRepository = new Repository<MenuUsuarioDto>(_context);
                 }
 
-                return _permissaoRepository;
+                return _menuusuarioRepository;
             }
         }
 
-        public Repository<ComplexidadeDto> ComplexidadeRepository
+        public Repository<InboxDto> InboxRepository
         {
             get
             {
-                if (this._complexidadeRepository == null)
+                if (this._inboxRepository == null)
                 {
-                    this._complexidadeRepository = new Repository<ComplexidadeDto>(_context);
+                    this._inboxRepository = new Repository<InboxDto>(_context);
                 }
 
-                return _complexidadeRepository;
-            }
-        }
-
-        public Repository<TipoComplexidadeDto> TipoComplexidadeRepository
-        {
-            get
-            {
-                if (this._tipocomplexidadeRepository == null)
-                {
-                    this._tipocomplexidadeRepository = new Repository<TipoComplexidadeDto>(_context);
-                }
-
-                return _tipocomplexidadeRepository;
+                return _inboxRepository;
             }
         }
 
@@ -99,10 +169,15 @@ namespace SmartAdmin.Data
                 {
                     _context.Dispose();
                     _usuarioRepository = null;
+                    _tiponewletterRepository = null;
+                    _emailnewletterRepository = null;
+                    _envionewletterRepository = null;
+                    _acessoRepository = null;
+                    _tipocontatoRepository = null;
+                    _contatoRepository = null;
                     _menuRepository = null;
-                    _permissaoRepository = null;
-                    _complexidadeRepository = null;
-                    _tipocomplexidadeRepository = null;
+                    _menuusuarioRepository = null;
+                    _inboxRepository = null;
                 }
             }
             _disposed = true;

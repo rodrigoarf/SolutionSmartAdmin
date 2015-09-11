@@ -12,11 +12,12 @@ namespace SmartAdmin.Dto
     [MetadataType(typeof(MenuDtoValidator))]
     public class MenuDto : Base
     {
-        public System.Int32 COD_SUBMENU { get; set; }
         public System.String NOME { get; set; }
         public System.String CONTROLLER { get; set; }
         public System.String ACTION { get; set; }
-        public System.String ICON { get; set; }
+        public System.String DESCRICAO { get; set; }
+        public Nullable<System.DateTime> DTH_CADASTRO { get; set; }
+        public System.String ICONE { get; set; }
         public System.String STATUS { get; set; }
     }
 }

@@ -16,34 +16,32 @@ namespace SmartAdmin.Domain
         private SmartAdmin.Data.UnitOfWork _unitOfWork = new SmartAdmin.Data.UnitOfWork();
 
         /// <summary>
-        /// Salva um objeto
+        /// Salva um objeto<T>
         /// </summary>
         public void Save(MenuDto model)
         {
-            _unitOfWork.MenuRepository.AddItem(model);
-            //kjhkjkhjkhkhkhk
+            _unitOfWork.MenuRepository.Save(model);
         }
 
         /// <summary>
-        /// Salva e retorna um objeto
+        /// Salva e retorna o objeto<T> salvo
         /// </summary>
         public MenuDto SaveGetItem(MenuDto model)
         {
-            ///uiuihiuhihiuhuiu
-           var retorno = _unitOfWork.MenuRepository.AddGetItem(model);
+           var retorno = _unitOfWork.MenuRepository.SaveGetItem(model);
            return (retorno);
         }
 
         /// <summary>
-        /// Salva uma lista de objetos
+        /// Salva uma lista de objetos List<T>
         /// </summary>
         public void SaveAll(List<MenuDto> model)
         {
-            _unitOfWork.MenuRepository.AddAll(model);
+            _unitOfWork.MenuRepository.SaveAll(model);
         }
 
         /// <summary>
-        /// Salva a edição de um objeto
+        /// Salva a edição de um objeto<T>
         /// </summary>
         public void Edit(MenuDto model)
         {
@@ -51,7 +49,7 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
-        /// Retorna um único objeto buscado por expressão Lambda
+        /// Retorna um único objeto<T> buscado por expressão Lambda
         /// </summary>
         public MenuDto GetItem(Expression<Func<MenuDto, bool>> filter)
         {
@@ -61,7 +59,7 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
-        /// Retorna um objeto do tipo List(T) de objetos buscados pela expressão Lambda
+        /// Retorna uma lista List(T) de objetos buscados pela expressão Lambda
         /// </summary>
         public List<MenuDto> GetList(Expression<Func<MenuDto, bool>> filter)
         {
@@ -69,7 +67,6 @@ namespace SmartAdmin.Domain
             collection = _unitOfWork.MenuRepository.GetList(filter);
             return (collection);
         }
-
         /// <summary>
         /// Inativa um objeto para visualização
         /// </summary>
@@ -81,7 +78,7 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
-        /// Anativa um objeto para visualização
+        /// Ativa um objeto para visualização
         /// </summary>
         public void ToActive(int Id)
         {
@@ -91,7 +88,7 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
-        ///  Distroe objeto e recursos não gerenciados liberando memória
+        ///  Distroe o objeto e recursos não gerenciados liberando memória
         /// </summary>
         public void Dispose()
         {

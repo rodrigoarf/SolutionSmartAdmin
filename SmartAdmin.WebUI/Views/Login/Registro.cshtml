@@ -41,7 +41,7 @@
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <h5 class="about-heading">Sobre o Clinic Center</h5>
                             <p>
-                                Visite nosso <a href="www.codedeck.com.br/cliniccenter" target="_blank">wesite</a> e tire dúvidas, veja manual online
+                                Visite nosso <a href="www.agilecore.com.br/smartadmin" target="_blank">wesite</a> e tire dúvidas, veja manual online
 					   da plataforma Clinic Center, pesquise assuntos em nosso forum de usuários da plataforma.
                             </p>
                         </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="well no-padding">     
-                       @{Html.RenderPartial("FormRegisterPartial");}    
+                       @{Html.RenderPartial("FormRegisterPartial", new SmartAdmin.Dto.UsuarioDto());}    
                     </div>
                 </div>
             </div>

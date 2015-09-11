@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using SmartAdmin.Generator.Models;
 using CodeGenerator.Connections;
+using System.Configuration;
+using System.Data;
 
 namespace SmartAdmin.Generator.Core
 {
     public class Functions
     {
+        private static string MySqlDataBase = ConfigurationManager.AppSettings["MySqlDataBase"].ToString();
+
         public static TableMapper GetTableSchema(string TableName, EDataBase DataBaseType)
         {
             try
@@ -168,7 +172,7 @@ namespace SmartAdmin.Generator.Core
                         "FROM " +
                                 "INFORMATION_SCHEMA.COLUMNS A " +
                         "WHERE " +
-                                "A.TABLE_SCHEMA = 'cliniccenter' AND A.TABLE_NAME = '" + TableName + "' " +
+                                "A.TABLE_SCHEMA = '" + MySqlDataBase + "' AND A.TABLE_NAME = '" + TableName + "' " +
                         "ORDER BY " +
                                 "A.ORDINAL_POSITION ASC";
 
@@ -190,13 +194,64 @@ namespace SmartAdmin.Generator.Core
                         Column.ColumnKey = Conexao.Ler("COLUMN_KEY").ToString();
 
                         CollectionColumnMapper.Add(Column);
+
+                        //--> Nova Implementação
+                        //var Relation = new List<TableRelationship>();
+                        //Relation.Add(GetRelationship(TableName, Column.ColumnName, ETypeFind.All));
+                        //TableMapper.CollectionRelationship = Relation;
                     }
 
                     TableMapper.CollectionColumn = CollectionColumnMapper;
                 }
             }
             return (TableMapper);
-        }    
+        }
+
+        public static TableRelationship GetRelationship(string TableName, string ColumnName, ETypeFind TypeFind)
+        {
+            var Query = string.Format(@"SELECT * FROM
+	                                        (SELECT CASE A.CONSTRAINT_NAME WHEN 'PRIMARY' THEN 'PK' ELSE 'FK' END AS KEY_TYPE,
+		                                           UPPER(A.TABLE_NAME) AS TABLE_FK, 
+		                                           UPPER(A.COLUMN_NAME) AS COLUMN_FK,
+		                                           UPPER(A.REFERENCED_TABLE_NAME) AS TABLE_PK,
+		                                           UPPER(A.REFERENCED_COLUMN_NAME) AS COLUMN_PK 
+	                                          FROM 
+		                                           INFORMATION_SCHEMA.KEY_COLUMN_USAGE A, 
+		                                           INFORMATION_SCHEMA.TABLE_CONSTRAINTS B 
+	                                         WHERE 
+		                                           A.TABLE_SCHEMA = '{0}' AND
+		                                           UPPER(A.TABLE_NAME) = UPPER(B.TABLE_NAME) AND 
+		                                           UPPER(A.TABLE_SCHEMA) = UPPER(B.TABLE_SCHEMA) AND
+		                                           UPPER(A.CONSTRAINT_NAME) = UPPER(B.CONSTRAINT_NAME)) AA 
+                                                   WHERE 1=1 ", MySqlDataBase);
+
+            switch (TypeFind)
+            {
+                case ETypeFind.PK:
+                    Query += string.Format(@" AND AA.TABLE_PK = '{0}' AND AA.COLUMN_PK = '{1}' AND AA.KEY_TYPE = 'PK'", TableName, ColumnName);
+                    break;
+                case ETypeFind.FK:
+                    Query += string.Format(@" AND AA.TABLE_FK = '{0}' AND AA.COLUMN_FK = '{1}' AND AA.KEY_TYPE = 'FK'", TableName, ColumnName);
+                    break;
+            }
+
+            var Relation = new TableRelationship();
+            using (var Conexao = new ConnectMySql(Query))
+            {
+                if (Conexao.Open())
+                {
+                    while (Conexao.LerRegistro())
+                    {        
+                        Relation.KeyType = Conexao.Ler("KEY_TYPE").ToString();
+                        Relation.TableFK = Conexao.Ler("TABLE_FK").ToString();
+                        Relation.ColumnFK = Conexao.Ler("COLUMN_FK").ToString();
+                        Relation.TablePK = Conexao.Ler("TABLE_PK").ToString();
+                        Relation.ColumnPK = Conexao.Ler("COLUMN_PK").ToString();
+                    }
+                }
+            }  
+            return (Relation);
+        } 
     }
 
     public enum EDataBase
@@ -204,6 +259,20 @@ namespace SmartAdmin.Generator.Core
         MySql,
         SqlServer,
         Oracle
-    }    
+    }
+
+    public enum ETypeFind
+    {
+        PK,
+        FK,
+        All
+    }  
+
+    public enum ERelationship
+    {
+        OneToOne,
+        OneToMany,
+        ManyToMany
+    }   
 
 }

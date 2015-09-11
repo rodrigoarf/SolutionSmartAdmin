@@ -32,6 +32,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,12 +42,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Complexidade\Complexidade.cs" />
+    <Compile Include="Helpers\Email.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\Pagination\IPagedList.cs" />
+    <Compile Include="Helpers\Pagination\PagedList.cs" />
+    <Compile Include="Helpers\Pagination\Pager.cs" />
+    <Compile Include="Helpers\Pagination\PagerOptions.cs" />
+    <Compile Include="Helpers\Pagination\PagerOptionsBuilder.cs" />
+    <Compile Include="Helpers\Pagination\PaginationModel.cs" />
+    <Compile Include="Helpers\Pagination\PagingExtensions.cs" />
+    <Compile Include="Helpers\Pagination\RouteValueDictionaryExtensions.cs" />
+    <Compile Include="Models\Acesso\Acesso.cs" />
+    <Compile Include="Models\Contato\Contato.cs" />
+    <Compile Include="Models\EmailNewletter\EmailNewletter.cs" />
+    <Compile Include="Models\EnvioNewletter\EnvioNewletter.cs" />
+    <Compile Include="Models\Inbox\Inbox.cs" />
+    <Compile Include="Models\MenuUsuario\MenuUsuario.cs" />
     <Compile Include="Models\Menu\Menu.cs" />
-    <Compile Include="Models\Permissao\Permissao.cs" />
-    <Compile Include="Models\TipoComplexidade\TipoComplexidade.cs" />
+    <Compile Include="Models\TipoContato\TipoContato.cs" />
+    <Compile Include="Models\TipoNewletter\TipoNewletter.cs" />
     <Compile Include="Models\Usuario\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Cryptography.cs" />
+    <Compile Include="Security\Senha.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

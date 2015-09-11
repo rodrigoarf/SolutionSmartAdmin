@@ -9,10 +9,15 @@ namespace SmartAdmin.Domain
     public class UnitOfWork : IDisposable
     {
         private Usuario _usuarioDomain;
+        private TipoNewletter _tiponewletterDomain;
+        private EmailNewletter _emailnewletterDomain;
+        private EnvioNewletter _envionewletterDomain;
+        private Acesso _acessoDomain;
+        private TipoContato _tipocontatoDomain;
+        private Contato _contatoDomain;
         private Menu _menuDomain;
-        private Permissao _permissaoDomain;
-        private Complexidade _complexidadeDomain;
-        private TipoComplexidade _tipocomplexidadeDomain;
+        private MenuUsuario _menuusuarioDomain;
+        private Inbox _inboxDomain;
 
         public Usuario UsuarioDomain
         {
@@ -24,6 +29,84 @@ namespace SmartAdmin.Domain
                 }
 
                 return _usuarioDomain;
+            }
+        }
+
+        public TipoNewletter TipoNewletterDomain
+        {
+            get
+            {
+                if (this._tiponewletterDomain == null)
+                {
+                    this._tiponewletterDomain = new TipoNewletter();
+                }
+
+                return _tiponewletterDomain;
+            }
+        }
+
+        public EmailNewletter EmailNewletterDomain
+        {
+            get
+            {
+                if (this._emailnewletterDomain == null)
+                {
+                    this._emailnewletterDomain = new EmailNewletter();
+                }
+
+                return _emailnewletterDomain;
+            }
+        }
+
+        public EnvioNewletter EnvioNewletterDomain
+        {
+            get
+            {
+                if (this._envionewletterDomain == null)
+                {
+                    this._envionewletterDomain = new EnvioNewletter();
+                }
+
+                return _envionewletterDomain;
+            }
+        }
+
+        public Acesso AcessoDomain
+        {
+            get
+            {
+                if (this._acessoDomain == null)
+                {
+                    this._acessoDomain = new Acesso();
+                }
+
+                return _acessoDomain;
+            }
+        }
+
+        public TipoContato TipoContatoDomain
+        {
+            get
+            {
+                if (this._tipocontatoDomain == null)
+                {
+                    this._tipocontatoDomain = new TipoContato();
+                }
+
+                return _tipocontatoDomain;
+            }
+        }
+
+        public Contato ContatoDomain
+        {
+            get
+            {
+                if (this._contatoDomain == null)
+                {
+                    this._contatoDomain = new Contato();
+                }
+
+                return _contatoDomain;
             }
         }
 
@@ -40,42 +123,29 @@ namespace SmartAdmin.Domain
             }
         }
 
-        public Permissao PermissaoDomain
+        public MenuUsuario MenuUsuarioDomain
         {
             get
             {
-                if (this._permissaoDomain == null)
+                if (this._menuusuarioDomain == null)
                 {
-                    this._permissaoDomain = new Permissao();
+                    this._menuusuarioDomain = new MenuUsuario();
                 }
 
-                return _permissaoDomain;
+                return _menuusuarioDomain;
             }
         }
 
-        public Complexidade ComplexidadeDomain
+        public Inbox InboxDomain
         {
             get
             {
-                if (this._complexidadeDomain == null)
+                if (this._inboxDomain == null)
                 {
-                    this._complexidadeDomain = new Complexidade();
+                    this._inboxDomain = new Inbox();
                 }
 
-                return _complexidadeDomain;
-            }
-        }
-
-        public TipoComplexidade TipoComplexidadeDomain
-        {
-            get
-            {
-                if (this._tipocomplexidadeDomain == null)
-                {
-                    this._tipocomplexidadeDomain = new TipoComplexidade();
-                }
-
-                return _tipocomplexidadeDomain;
+                return _inboxDomain;
             }
         }
 
@@ -94,10 +164,15 @@ namespace SmartAdmin.Domain
                 if (disposing)
                 {
                     _usuarioDomain.Dispose();
+                    _tiponewletterDomain.Dispose();
+                    _emailnewletterDomain.Dispose();
+                    _envionewletterDomain.Dispose();
+                    _acessoDomain.Dispose();
+                    _tipocontatoDomain.Dispose();
+                    _contatoDomain.Dispose();
                     _menuDomain.Dispose();
-                    _permissaoDomain.Dispose();
-                    _complexidadeDomain.Dispose();
-                    _tipocomplexidadeDomain.Dispose();
+                    _menuusuarioDomain.Dispose();
+                    _inboxDomain.Dispose();
                 }
             }
             _disposed = true;

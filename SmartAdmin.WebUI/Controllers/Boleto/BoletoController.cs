@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SmartAdmin.WebUI.Controllers.Boleto
 {
-    public class BoletoController : Controller
+    public class BoletoController : BaseController
     {
         public ActionResult Index()
         {

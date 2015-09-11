@@ -8,14 +8,10 @@ namespace SmartAdmin.WebUI.Infrastructure.Cache
 {
     public interface ICache
     {
-        T Get<T>(string Key);
-
-        void Set(string Key, object Data, int CacheTime);
-
-        bool IsSet(string Key);
-
-        void Remove(string Key);
-
+        TEntity Get<TEntity>(string Key);  
+        void Save(string Key, object Data, int CacheTime);
+        bool Find(string Key);  
+        void Delete(string Key); 
         void Clear();
     }
 }

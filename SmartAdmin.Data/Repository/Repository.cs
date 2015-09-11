@@ -23,7 +23,10 @@ namespace SmartAdmin.Data.Generic
             this._dbSet = context.Set<TEntity>();
         }
 
-        public void AddItem(TEntity entity)
+        /// <summary>
+        /// Método genérico que salva uma entidade
+        /// </summary>
+        public void Save(TEntity entity)
         {
             try
             {
@@ -49,7 +52,89 @@ namespace SmartAdmin.Data.Generic
             }
         }
 
-        public TEntity AddGetItem(TEntity entity)
+        /// <summary>
+        /// Método genérico que atualiza uma entidade
+        /// </summary>
+        public void Edit(TEntity entity)
+        {
+            var entry = _context.Entry<TEntity>(entity);
+            var pkey = _dbSet.Create().GetType().GetProperty("ID").GetValue(entity);
+
+            if (entry.State ==EntityState.Detached)
+            {
+                var set = _context.Set<TEntity>();
+                TEntity attachedEntity = set.Find(pkey);
+
+                if (attachedEntity != null)
+                {
+                    var attachedEntry = _context.Entry(attachedEntity);
+                    attachedEntry.CurrentValues.SetValues(entity);
+                }
+                else
+                {
+                    entry.State = EntityState.Modified;
+                }
+            }
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} Falha da validação ", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new System.Data.Entity.Validation.DbEntityValidationException("Erros da validação da Entidade: " + sb.ToString(), ex);
+            }
+        }
+
+        /// <summary>
+        /// Método genérico que deleta uma entidade, isto é exclui definitivamente da tabela
+        /// </summary>
+        public void Delete(TEntity entity)
+        {
+            try
+            {
+                _dbSet.Add(entity);
+
+                if (_context.Entry(entity).State == EntityState.Detached)
+                    _dbSet.Attach(entity);
+
+                _dbSet.Remove(entity);
+                _context.SaveChanges();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} Falha da validação ", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new System.Data.Entity.Validation.DbEntityValidationException("Erros da validação da Entidade: " + sb.ToString(), ex);
+            }
+        }
+
+        /// <summary>
+        /// Método genérico que salva uma entidade e retorna a mesma salva
+        /// </summary>
+        public TEntity SaveGetItem(TEntity entity)
         {
             try
             {
@@ -77,7 +162,10 @@ namespace SmartAdmin.Data.Generic
             }
         }
 
-        public void AddAll(List<TEntity> entity)
+        /// <summary>
+        /// Método genérico que salva uma lista de entidades
+        /// </summary>
+        public void SaveAll(List<TEntity> entity)
         {
             try
             {
@@ -105,79 +193,9 @@ namespace SmartAdmin.Data.Generic
             }
         }
 
-        public void Edit(TEntity entity)
-        {
-            var entry = _context.Entry<TEntity>(entity);
-            var pkey = _dbSet.Create().GetType().GetProperty("Id").GetValue(entity);
-
-            if (entry.State == System.Data.Entity.EntityState.Detached)
-            {
-                var set = _context.Set<TEntity>();
-                TEntity attachedEntity = set.Find(pkey);
-
-                if (attachedEntity != null)
-                {
-                    var attachedEntry = _context.Entry(attachedEntity);
-                    attachedEntry.CurrentValues.SetValues(entity);
-                }
-                else
-                {
-                    entry.State = System.Data.Entity.EntityState.Modified;
-                }
-            }
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
-            {
-                StringBuilder sb = new StringBuilder();
-
-                foreach (var failure in ex.EntityValidationErrors)
-                {
-                    sb.AppendFormat("{0} Falha da validação ", failure.Entry.Entity.GetType());
-                    foreach (var error in failure.ValidationErrors)
-                    {
-                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-                        sb.AppendLine();
-                    }
-                }
-
-                throw new System.Data.Entity.Validation.DbEntityValidationException("Erros da validação da Entidade: " + sb.ToString(), ex);
-            }
-        }
-
-        public void Delete(TEntity entity)
-        {
-            try
-            {
-                _dbSet.Add(entity);
-
-                if (_context.Entry(entity).State == System.Data.Entity.EntityState.Detached)
-                    _dbSet.Attach(entity);
-
-                _dbSet.Remove(entity);
-                _context.SaveChanges();
-            }
-            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
-            {
-                StringBuilder sb = new StringBuilder();
-
-                foreach (var failure in ex.EntityValidationErrors)
-                {
-                    sb.AppendFormat("{0} Falha da validação ", failure.Entry.Entity.GetType());
-                    foreach (var error in failure.ValidationErrors)
-                    {
-                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-                        sb.AppendLine();
-                    }
-                }
-
-                throw new System.Data.Entity.Validation.DbEntityValidationException("Erros da validação da Entidade: " + sb.ToString(), ex);
-            }
-        }
-
+        /// <summary>
+        /// Método genérico que deleta uma lsita de entidades, isto é exclui definitivamente da tabela
+        /// </summary>
         public void DeleteAll(Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = _dbSet;
@@ -189,6 +207,9 @@ namespace SmartAdmin.Data.Generic
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Método genérico que retorna uma entidade, mediante uma expressão lambda
+        /// </summary>
         public TEntity GetItem(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
             try
@@ -198,7 +219,7 @@ namespace SmartAdmin.Data.Generic
                 if (filter != null)
                     query = query.Where(filter);
 
-                return query.ToList()[0];
+                return query.ToList().FirstOrDefault();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
@@ -218,6 +239,9 @@ namespace SmartAdmin.Data.Generic
             }
         }
 
+        /// <summary>
+        /// Método genérico que retorna uma lista de entidades, mediante uma expressão lambda
+        /// </summary>
         public virtual List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
             try
@@ -250,6 +274,10 @@ namespace SmartAdmin.Data.Generic
 
             }
         }
+
+        /// <summary>
+        /// Método genérico que exclui o objeto da memória Garbage Collector
+        /// </summary>
         public void Dispose()
         {
             _dbSet = null;

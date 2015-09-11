@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<SmartAdmin.Dto.UsuarioDto>  
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
@@ -13,7 +15,7 @@
         <div class="row">
             <article class="col-sm-12">
                 <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
-                    @{Html.RenderPartial("FiltroPartial");}
+                    @Html.Partial("FiltroPartial", new SmartAdmin.Dto.UsuarioDto())
                 </div>
             </article>
         </div>
@@ -22,18 +24,88 @@
     <div class="col-md-12">
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-12">
-                <div class="jarviswidget jarviswidget-color-blueDark">
-                    @{Html.RenderPartial("GridPartial");}
+                <div id="Grid" class="jarviswidget jarviswidget-color-blueDark">
+                   @Html.Partial("GridPartial", Model)
                 </div>
             </article>
         </div>
     </div>
 </div>
 
- <!-- #modal-usuario-create -->
+<!-- #modal-usuario-create -->
 <div class="modal fade" id="modal-usuario-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    @{Html.RenderPartial("CreatePartial");}
-</div> 
+    @Html.Partial("CreatePartial", new SmartAdmin.Dto.UsuarioDto())
+</div>
 
- <!-- #script this page -->
+<!-- #script this page -->
 <script src="~/Script/Usuario/Index.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    runAllForms()
+
+    $(document).ready(function () {
+        pagefunction();
+    });        
+
+</script>
+
+
+
+
+
+@*<script> 
+
+    $(window).load(function () {
+
+        var formData = {
+            'NOME': $('input[name=NOME]').val(),
+            'STATUS': $('select[name=STATUS] option:selected').val(),
+            'DATA': $('input[name=DATA]').val()
+        };
+
+        LoadAjaxData(formData);
+
+    });
+
+
+    $('#btnBuscar').click(function () {
+
+        var formData = {
+            'NOME': $('input[name=NOME]').val(),
+            'STATUS': $('select[name=STATUS] option:selected').val(),
+            'DATA': $('input[name=DATA]').val()
+        };
+
+        LoadAjaxData(formData);
+
+    });
+     
+
+    function LoadAjaxData(formData) {
+        $.ajax({
+            type: "POST",
+            url: '/Usuario/Load',
+            cache: false,
+            async: false,
+            data: formData,
+            dataType: "html",
+            processData: true,
+            global: false,
+            beforeSend: function (xhr) {
+                $('#smart-admin-loading').fadeIn(150);
+            },
+            complete: function () {
+                $('#smart-admin-loading').fadeOut(150);
+            }
+        })
+        .always(function (data) {
+            $('#Grid').html(data);
+        })
+        .done(function (data) {/*...*/ })
+        .fail(function () {
+            alert("error");
+            return false;
+        });
+    }
+
+</script>*@
