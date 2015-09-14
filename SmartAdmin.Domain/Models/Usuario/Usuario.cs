@@ -20,7 +20,14 @@ namespace SmartAdmin.Domain
         /// </summary>
         public void Save(UsuarioDto model)
         {
-            _unitOfWork.UsuarioRepository.Save(model);
+            try
+            {
+                _unitOfWork.UsuarioRepository.Save(model);
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }               
         }
 
         /// <summary>
@@ -104,7 +111,7 @@ namespace SmartAdmin.Domain
         /// <summary>
         /// Verifica se existe o objeto passado somente para login. Este metodo retorna um objeto pois sera colocando em Sessão se existe, por isso nao retorna true ou false. 
         /// </summary>
-        public UsuarioDto LoginChecker(UsuarioDto Model)
+        public UsuarioDto Authentication(UsuarioDto Model)
         {
             var Criptografia = new SmartAdmin.Domain.Security.Cryptography();
             Model.SENHA = Criptografia.Encrypt(Model.SENHA);

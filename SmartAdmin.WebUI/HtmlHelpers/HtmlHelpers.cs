@@ -272,7 +272,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
 
-        public static MvcHtmlString DropDownListCustomSexo(string Id, object HtmlAtributes = null)
+        public static MvcHtmlString DropDownListCustomSexo(string Id, EInputSexo DefaultValue, bool AbbreviateLabel, object HtmlAtributes = null)
         {
             var Atributes = String.Empty;
 
@@ -286,9 +286,19 @@ namespace SmartAdmin.WebUI.HtmlHelpers
 
             var HtmlControl = new StringBuilder();
             HtmlControl.Append(String.Format("<select id=\"{0}\" name=\"{0}\" {1}>", Id, Atributes));
-            HtmlControl.Append("<option value=\"\" selected=\"true\" disabled=\"true\">Sexo...</option>");
-            HtmlControl.Append("<option value=\"M\">Masculino</option>");
-            HtmlControl.Append("<option value=\"F\">Feminino</option>");
+            HtmlControl.Append("<option value=\"\" " + ((DefaultValue == EInputSexo.None) ? "selected" : string.Empty) + ">Sexo...</option>");
+
+            if (AbbreviateLabel)
+            {
+                HtmlControl.Append("<option value=\"M\" " + ((DefaultValue == EInputSexo.M) ? "selected" : string.Empty) + ">M</option>");
+                HtmlControl.Append("<option value=\"F\" " + ((DefaultValue == EInputSexo.F) ? "selected" : string.Empty) + ">F</option>");
+            }
+            else
+            {
+                HtmlControl.Append("<option value=\"M\" " + ((DefaultValue == EInputSexo.F) ? "selected" : string.Empty) + ">Masculino</option>");
+                HtmlControl.Append("<option value=\"F\" " + ((DefaultValue == EInputSexo.M) ? "selected" : string.Empty) + ">Feminino</option>");
+            }
+
             HtmlControl.Append("</select>");
 
             return (new MvcHtmlString(HtmlControl.ToString()));
@@ -383,7 +393,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
 
             var HtmlControl = new StringBuilder();
             HtmlControl.Append(String.Format("<select id=\"{0}\" name=\"{0}\" {1}>", Id, Atributes));
-            HtmlControl.Append("<option value=\"\">Estado...</option>");
+            HtmlControl.Append("<option value=\"\" " + ((DefaultValue == EInputUF.None) ? "selected" : string.Empty) + ">Estado...</option>");
             HtmlControl.Append("<option value=\"AC\" " + ((DefaultValue == EInputUF.AC) ? "selected" : string.Empty) + ">AC</option>");
             HtmlControl.Append("<option value=\"AL\" " + ((DefaultValue == EInputUF.AL) ? "selected" : string.Empty) + ">AL</option>");
             HtmlControl.Append("<option value=\"AM\" " + ((DefaultValue == EInputUF.AM) ? "selected" : string.Empty) + ">AM</option>");
@@ -569,6 +579,16 @@ namespace SmartAdmin.WebUI.HtmlHelpers
     }
 
     /// <summary>
+    /// Define status padrão de um combo-box
+    /// </summary>
+    public enum EInputSexo
+    {   
+        None,
+        M,
+        F        
+    }
+
+    /// <summary>
     /// Definição meses abreviados
     /// </summary>
     public enum EInputMounths { 
@@ -623,7 +643,8 @@ namespace SmartAdmin.WebUI.HtmlHelpers
     /// Definição estados brasileiros
     /// </summary>
     public enum EInputUF
-    {
+    { 
+        None,
         AC, // Acre
         AL, // Alagoas
         AP, // Amapá

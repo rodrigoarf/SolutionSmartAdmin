@@ -5,12 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using SmartAdmin.Dto;
 using SmartAdmin.Domain;
-using PagedList;
+using SmartAdmin.WebUI.Infrastructure.Session;
+using SmartAdmin.WebUI.Infrastructure.ActionFilters;
+using PagedList;  
 
 namespace SmartAdmin.WebUI.Controllers
 {
     public class MenuController : BaseController
     {
+        [AuthorizedUser]
         public ActionResult Index(int? Page)
         {
             var MenuDominio = unitOfWork.MenuDomain;
@@ -19,13 +22,15 @@ namespace SmartAdmin.WebUI.Controllers
             return View(Collection.ToPagedList(CurrentPage, PageSize));
         }
 
+        [AuthorizedUser]
         public ActionResult Edit(int Id)
         {
             var MenuDominio = unitOfWork.MenuDomain;
             return View(MenuDominio.GetItem(_ => _.ID == Id));
         } 
-
+                    
         [HttpPost]
+        [AuthorizedUser]
         public ActionResult Save(MenuDto Model)
         {
             if (ModelState.IsValid)
@@ -37,6 +42,7 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [HttpPost]
+        [AuthorizedUser]
         public ActionResult Load(MenuDto Model)
         {
             var MenuDominio = unitOfWork.UsuarioDomain;
@@ -49,6 +55,14 @@ namespace SmartAdmin.WebUI.Controllers
 
             return View("Index", Collection.ToPagedList(1, PageSize));
         } 
+
+        [ChildActionOnly]
+        public ActionResult MainMenu()
+        {
+            var Session = new SessionManager();
+            var Model = Session.GetAdministrator();
+            return View("~/Views/Shared/_MenuPartial.cshtml", Model);
+        }
 
     }
 }

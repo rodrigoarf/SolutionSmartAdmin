@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using SmartAdmin.Domain;
 using SmartAdmin.Domain.Security;
 using SmartAdmin.Domain.Helpers;
+using SmartAdmin.WebUI.Infrastructure.Session;
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -22,8 +23,9 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         public ActionResult Registro()
-        {                     
-            return View();
+        {
+            ViewBag.Mensagem = TempData["Mensagem"] as String;
+            return View(new SmartAdmin.Dto.UsuarioDto() { NOME= "Antonio Rodrigo Fernanes", EMAIL="rodrigwerewo_arf@hotmail.com", BAIRRO="Rio Acima", CEP = "1811190", CIDADE="Votorantim", NUMERO=123, ENDERECO="Av Octavio Costa",LOGIN="rodrwerigo",SENHA="rodrigo", SEXO="M"});
         }
 
         [HttpPost]
@@ -31,18 +33,18 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var unitOfWork = new SmartAdmin.Domain.UnitOfWork(); 
-                var UsuarioDominio = unitOfWork.UsuarioDomain.LoginChecker(Model);
+                var unitOfWork = new SmartAdmin.Domain.UnitOfWork();
+                var UsuarioLogado = unitOfWork.UsuarioDomain.Authentication(Model);
 
-                if (UsuarioDominio != null)
+                if (UsuarioLogado != null)
                 {
                     //--> Acesso
                     var AcessoDominio = unitOfWork.AcessoDomain;
                     AcessoDominio.Save(GetUserInformation(String.Empty)); 
 
-                    //--> Cache
-                    var CurrentCache = new SmartAdmin.WebUI.Infrastructure.Cache.CacheManager();
-                    CurrentCache.Save(UsuarioDominio.ID.ToString(), UsuarioDominio, 120);
+                    //--> Session
+                    var Session = new SessionManager();                       
+                    Session.Start(new Administrator() { Usuario = UsuarioLogado });
                   
                     return (RedirectToAction("Index", "Menu"));
                 }
@@ -60,9 +62,31 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(UsuarioDto Model)
+        public ActionResult SaveForApproval(UsuarioDto Model)
         {
+            try
+            {
+                var UsuarioDominio = unitOfWork.UsuarioDomain;
+                var ModelExists = UsuarioDominio.IsExists(Model);
 
+                if (ModelExists == null)
+                {
+                    Model.STATUS = "A";
+                    UsuarioDominio.Save(Model);
+                    TempData["Mensagem"] = String.Format("Usuário <span style='color:#10e4ea;'>{0}</span> salvo com sucesso!", Model.LOGIN);
+                    return (RedirectToAction("Registro"));
+                }
+                else
+                {
+                    TempData["Mensagem"] = String.Format("Login ou E-mail informado ja inexistente no sistema, infome outro login ou e-mail!");
+                    return (RedirectToAction("Registro"));
+                }
+            }
+            catch (Exception Ex)
+            {
+                TempData["Mensagem"] = Ex.InnerException.InnerException.Message;
+                return (RedirectToAction("Registro"));
+            }
         }
 
         [HttpPost]

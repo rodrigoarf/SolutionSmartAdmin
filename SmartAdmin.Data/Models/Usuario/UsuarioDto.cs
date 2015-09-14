@@ -27,6 +27,7 @@ namespace SmartAdmin.Dto
         public System.String CIDADE { get; set; }
         public System.String UF { get; set; }
         public System.String BAIRRO { get; set; }
+        public Nullable<System.Decimal> NUMERO { get; set; }
     }
 }
 

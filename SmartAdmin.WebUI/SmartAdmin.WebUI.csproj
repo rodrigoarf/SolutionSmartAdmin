@@ -142,7 +142,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Inbox\InboxController.cs" />
     <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
-    <Compile Include="Infrastructure\ActionFilters\AuthorizeUser.cs" />
+    <Compile Include="Infrastructure\ActionFilters\AuthorizedUser.cs" />
     <Compile Include="Infrastructure\Cache\Cache.cs" />
     <Compile Include="Infrastructure\Cache\CacheExtensions.cs" />
     <Compile Include="Infrastructure\Cache\ICache.cs" />
@@ -156,6 +156,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\HtmlHelpers.cs" />
+    <Compile Include="Infrastructure\Session\Administrator.cs" />
+    <Compile Include="Infrastructure\Session\ISessionOperation.cs" />
+    <Compile Include="Infrastructure\Session\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -819,6 +822,7 @@
     <Content Include="Script\Boleto\Index.js" />
     <Content Include="Script\Banco\Index.js" />
     <Content Include="Script\Historico\Index.js" />
+    <Content Include="Script\Login\Registro.js" />
     <Content Include="Script\Login\Create.js" />
     <Content Include="Script\Login\Index.js" />
     <Content Include="Script\Menu\Create.js" />

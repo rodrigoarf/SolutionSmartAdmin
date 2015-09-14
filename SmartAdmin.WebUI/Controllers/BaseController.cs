@@ -37,7 +37,7 @@ namespace SmartAdmin.WebUI.Controllers
             //Model.DOMINIO = (String.IsNullOrWhiteSpace(System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName) ? System.Environment.MachineName : System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName);
 
             return Model;
-        }
+        }    
 
     }
 }

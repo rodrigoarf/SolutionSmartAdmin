@@ -5,11 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using SmartAdmin.Dto;
+using SmartAdmin.WebUI.Infrastructure.ActionFilters;
 
 namespace SmartAdmin.WebUI.Controllers
 {
     public class HistoricoController : BaseController
     {
+        [AuthorizedUser]
         public ActionResult Index(int? Page)
         {  
             var DataInicial = DateTime.Now.AddMonths(2);
@@ -40,6 +42,7 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [HttpPost]
+        [AuthorizedUser]
         public ActionResult Index(bool clear)
         {
             if (clear == true)
@@ -50,6 +53,7 @@ namespace SmartAdmin.WebUI.Controllers
             return View();
         }
 
+        [AuthorizedUser]
         public ActionResult Limpar()
         {
             return View();

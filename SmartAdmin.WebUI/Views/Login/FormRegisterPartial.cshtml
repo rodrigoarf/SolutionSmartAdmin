@@ -1,56 +1,61 @@
 ﻿@using SmartAdmin.WebUI.HtmlHelpers
 @model SmartAdmin.Dto.UsuarioDto
 
-@using (Html.BeginForm("Save", "Usuario", FormMethod.Post, new { @id = "smart-form-create", @class = "smart-form client-form" }))
+@using (Html.BeginForm("SaveForApproval", "Login", FormMethod.Post, new { @id = "smart-form-create", @class = "smart-form client-form" }))
 {  
-   <header>
-        Cadastro de Usuários
-    </header> 
+    <header>Cadastro de Usuários</header> 
     <fieldset>
         <section>
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Informe o Nome completo", @tabindex = "1" })
-                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu nome completo</b></label>
-        </section>          
-        <section>
+                 @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Informe o Nome completo", @tabindex = "1" })
+                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu nome completo</b>
+            </label>
+        </section>                   
+        <section class="col col-10" style="padding-left: 0px; padding-right: 5px;">
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                 @HtmlControls.TextBox("EMAIL", new { @value = Model.EMAIL, @placeholder = "Informe o E-mail", @tabindex = "2" })
+                 <i class="icon-append fa fa-envelope"></i>
+                 @HtmlControls.TextBox("EMAIL", new { @value = Model.EMAIL, @placeholder = "Informe o E-mail", @tabindex = "2", @style="text-transform:lowercase;" })
                  <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe o E-mail!</b>
             </label>
         </section>
-        <section>
-            <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("ENDERECO", new { @value = Model.ENDERECO, @placeholder = "Informe o Endereço", @tabindex = "2" })
-                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu endereço!</b></label>
+        <section class="col col-2" style="padding-right: 0px; padding-left: 5px;">
+            <label class="select">   
+                @HtmlControls.DropDownListCustomSexo("SEXO",((Model.SEXO != null) ? ((Model.SEXO == "M") ? EInputSexo.M : EInputSexo.F ) : EInputSexo.None), true, new { @tabindex = "3" })
+                <i></i>
+            </label>
+        </section> 
+        <section class="col col-10" style="padding-left: 0px; padding-right: 5px;">
+            <label class="input">                  
+                @HtmlControls.TextBox("ENDERECO", new { @value = Model.ENDERECO, @placeholder = "Informe seu endereço",  @tabindex = "4" })
+                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu endereço!</b>  
+            </label>
+        </section>
+        <section class="col col-2" style="padding-right: 0px; padding-left: 5px;">
+            <label class="input">                  
+                @HtmlControls.TextBox("NUMERO", new { @value = Model.NUMERO, @placeholder = "Nº", @class="integer", @tabindex = "5" })
+                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Número!</b></label>
         </section>
         <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("BAIRRO", new { @value = Model.BAIRRO, @placeholder = "Informe o Bairro", @tabindex = "3" })
+                @HtmlControls.TextBox("BAIRRO", new { @value = Model.BAIRRO, @placeholder = "Informe o Bairro", @tabindex = "6" })
                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu Bairro!</b>
             </label>
         </section>
         <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("CIDADE", new { @value = Model.CIDADE, @placeholder = "Informe a Cidade", @tabindex = "4" })
+                @HtmlControls.TextBox("CIDADE", new { @value = Model.CIDADE, @placeholder = "Informe a Cidade", @tabindex = "7" })
                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe sua Cidade!</b>
             </label>
         </section>
         <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
-            <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("UF", new { @value = Model.UF, @placeholder = "Informe seu UF", @tabindex = "3" })
-                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu UF!</b>
+            <label class="select">   
+                @HtmlControls.DropDownListCustomUF("UF", EInputUF.None, new { @tabindex = "8" })
+                <i></i>
             </label>
         </section>
         <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("CEP", new { @value = Model.CEP, @placeholder = "Informe seu Cep", @tabindex = "4" })
+                @HtmlControls.TextBox("CEP", new { @value = Model.CEP, @placeholder = "Informe seu Cep", @class="cep", @tabindex = "9" })
                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu Cep!</b>
             </label>
         </section>
@@ -59,99 +64,19 @@
         <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
             <label class="input">
                 <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Informe o Login", @tabindex = "5" })
+                @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Informe o Login", @tabindex = "10" })
                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe o Login!</b></label>
         </section>
         <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
             <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("SENHA", new { @value = Model.SENHA, @placeholder = "Informe a Senha", @tabindex = "6" })
-                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe a Senha!</b></label>
+                <i class="icon-append fa fa-lock"></i>
+                @HtmlControls.Password("SENHA", new { @value = Model.SENHA, @placeholder = "Informe a Senha", @tabindex = "11" })
+                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe a Senha!</b>
+            </label>
         </section>
      </fieldset>
-    <footer>
-        <button id="btnLogar" type="submit" class="btn btn-warning">Logar</button>
-    </footer>
-
-
-    @*<header>
-        Registre-se
-    </header>
-
-    <fieldset>
-        <section>
-            <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                <input type="text" name="username" placeholder="Usuário">
-                <b class="tooltip tooltip-bottom-right">Usuário de Acesso</b>
-            </label>
-        </section>
-
-        <section>
-            <label class="input">
-                <i class="icon-append fa fa-envelope"></i>
-                <input type="email" name="email" placeholder="E-mail de Contato">
-                <b class="tooltip tooltip-bottom-right">Email de Contato</b>
-            </label>
-        </section>
-
-        <section>
-            <label class="input">
-                <i class="icon-append fa fa-lock"></i>
-                <input type="password" name="password" placeholder="Senha" id="password">
-                <b class="tooltip tooltip-bottom-right">Senha de acesso ao sistema</b>
-            </label>
-        </section>
-
-        <section>
-            <label class="input">
-                <i class="icon-append fa fa-lock"></i>
-                <input type="password" name="passwordConfirm" placeholder="Confirme sua Senha">
-                <b class="tooltip tooltip-bottom-right">Repita sua senha de acesso</b>
-            </label>
-        </section>
-    </fieldset>
-
-    <fieldset>
-        <section>
-            <label class="input">
-                <i class="icon-append fa fa-user"></i>
-                <input type="text" name="firstname" placeholder="Nome completo">
-            </label>
-        </section>
-
-        <div class="row">
-            <section class="col col-6">
-                <label class="select">
-                    <select name="gender">
-                        <option value="0" selected="" disabled="">Sexo</option>
-                        <option value="1">Masculino</option>
-                        <option value="2">Feminino</option>
-                    </select>
-                    <i></i>
-                </label>
-            </section>
-        </div>
-
-        <section>
-            <label class="checkbox">
-                <input type="checkbox" name="terms" id="terms">
-                <i></i>Eu concordo com os <a href="#" data-toggle="modal" data-target="#myModal">Termos e Condições</a>
-            </label>
-        </section>
-    </fieldset>
-
-    <footer>
-        <button type="submit" class="btn btn-warning">
-            Registrar
-        </button>
-    </footer>
-
-    <div class="message">
-        <i class="fa fa-check"></i>
-        <p>
-            Thank you for your registration!
-        </p>
-    </div>*@
-
+    <footer>        
+        <button id="btnSaveUsuario" type="submit" class="btn btn-warning">Salvar</button>
+        <a href="~/Login/Index" class="btn btn-sm btn-primary">Voltar</a>
+    </footer> 
 }

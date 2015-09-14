@@ -1,12 +1,12 @@
-﻿<!-- User info -->
+﻿@model SmartAdmin.WebUI.Infrastructure.Session.Administrator
+<!-- User info -->
 <div class="login-info">
     <span>
         <!-- User image size is adjusted inside CSS, it should stay as is -->
 
-        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+        <a href="/Usuario/Edit/@Model.Usuario.ID" id="show-shortcut" data-action="toggleShortcut">
             <img src="~/Content/img/avatars/sunny.png" alt="me" class="online" />
-            <span onclick="window.location.href='/Usuario/Edit'">john.doe 
-            </span>
+            <span>@Model.Usuario.LOGIN</span>
             <i class="fa fa-angle-down"></i>
         </a>
 
@@ -60,7 +60,7 @@
 					<a href="/Historico/Index"><i class="fa fa-pencil"></i> Histórico</a>
 				</li>
 				<li>
-					<a target="_blank"><i class="fa fa-bug"></i> Bugs</a>
+					<a><i class="fa fa-bug"></i> Bugs</a>
 				</li>
 			</ul>
 		</li>

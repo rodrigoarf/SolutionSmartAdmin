@@ -30,6 +30,7 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.CIDADE).IsRequired().HasMaxLength(100);
             this.Property(_ => _.UF).IsRequired().HasMaxLength(2);
             this.Property(_ => _.BAIRRO).HasMaxLength(100);
+            this.Property(_ => _.NUMERO);
 
             // Table & Column Mappings
             this.ToTable("USUARIO", "agilecore1");
@@ -50,6 +51,7 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.CIDADE).HasColumnName("CIDADE");
             this.Property(_ => _.UF).HasColumnName("UF");
             this.Property(_ => _.BAIRRO).HasColumnName("BAIRRO");
+            this.Property(_ => _.NUMERO).HasColumnName("NUMERO");
         }
     }
 }
