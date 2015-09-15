@@ -11,15 +11,11 @@ function FormValidation(form)
     jQuery(form).validate({
         rules: {
             NOME: { required: true },
-            CONTROLLER: { required: true },
-            ACTION: { required: true },
             ICONE: { required: true },
             STATUS: { required: true }
         },
         messages: {
             NOME: { required: null },
-            CONTROLLER: { required: null },
-            ACTION: { required: null },
             ICONE: { required: null },
             STATUS: { required: null }
         },
@@ -35,14 +31,6 @@ function FormValidation(form)
                 switch (controlForm.id) {
                     case 'NOME':
                         PrintAlert('Informe o nome do menu.');
-                        return (false);
-                        break;
-                    case 'CONTROLLER':
-                        PrintAlert('Informe a Controller do menu.');
-                        return (false);
-                        break;
-                    case 'ACTION':
-                        PrintAlert('Informe a Ação do Menu.');
                         return (false);
                         break;
                     case 'ICONE':

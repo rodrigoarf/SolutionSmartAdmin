@@ -15,6 +15,7 @@ namespace SmartAdmin.Data.Mapper
             this.HasKey(t => t.ID);
 
             // Propertys
+            this.Property(_ => _.COD_MENU_PAI);
             this.Property(_ => _.NOME).IsRequired().HasMaxLength(100);
             this.Property(_ => _.CONTROLLER).HasMaxLength(100);
             this.Property(_ => _.ACTION).HasMaxLength(100);
@@ -27,6 +28,7 @@ namespace SmartAdmin.Data.Mapper
             this.ToTable("MENU", "agilecore1");
 
             this.Property(_ => _.ID).HasColumnName("COD_MENU");
+            this.Property(_ => _.COD_MENU_PAI).HasColumnName("COD_MENU_PAI");
             this.Property(_ => _.NOME).HasColumnName("NOME");
             this.Property(_ => _.CONTROLLER).HasColumnName("CONTROLLER");
             this.Property(_ => _.ACTION).HasColumnName("ACTION");

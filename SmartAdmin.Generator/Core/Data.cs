@@ -277,10 +277,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("");
             TextClass.AppendLine("        public " + OutputClassDataContextName + "() : base(\"Name=" + OutputClassDataContextName + "\")");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("         this.Configuration.AutoDetectChangesEnabled = false;");
-            TextClass.AppendLine("         this.Configuration.LazyLoadingEnabled = false;");
-            TextClass.AppendLine("         this.Configuration.ProxyCreationEnabled = false;");
-            TextClass.AppendLine("         this.Configuration.ValidateOnSaveEnabled = false;");
+            TextClass.AppendLine("             this.Configuration.AutoDetectChangesEnabled = false;");
+            TextClass.AppendLine("             this.Configuration.LazyLoadingEnabled = false;");
+            TextClass.AppendLine("             this.Configuration.ProxyCreationEnabled = false;");
+            TextClass.AppendLine("             this.Configuration.ValidateOnSaveEnabled = false;");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
 

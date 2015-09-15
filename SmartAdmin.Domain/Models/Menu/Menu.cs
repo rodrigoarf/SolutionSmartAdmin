@@ -67,6 +67,7 @@ namespace SmartAdmin.Domain
             collection = _unitOfWork.MenuRepository.GetList(filter);
             return (collection);
         }
+
         /// <summary>
         /// Inativa um objeto para visualização
         /// </summary>

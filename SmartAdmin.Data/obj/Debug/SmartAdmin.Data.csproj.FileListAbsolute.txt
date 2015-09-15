@@ -5,3 +5,4 @@ D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\EntityFramework.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Debug\EntityFramework.xml
 D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Debug\SmartAdmin.Data.dll
 D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Debug\SmartAdmin.Data.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Debug\SmartAdmin.Data.csprojResolveAssemblyReference.cache

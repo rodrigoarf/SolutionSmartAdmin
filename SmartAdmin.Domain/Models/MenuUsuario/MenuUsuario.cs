@@ -67,6 +67,7 @@ namespace SmartAdmin.Domain
             collection = _unitOfWork.MenuUsuarioRepository.GetList(filter);
             return (collection);
         }
+
         /// <summary>
         ///  Distroe o objeto e recursos não gerenciados liberando memória
         /// </summary>

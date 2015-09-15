@@ -76,6 +76,41 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Retorna uma lista de objetos de menu que o usuário tem acesso, mediante informado o Id do Usuário.
+        /// </summary>
+        public List<MenuDto> GetAllowedMenus(int Id)
+        {
+            var CollectionMenu = _unitOfWork.MenuRepository.GetList(_ => _.COD_MENU_PAI == 0 && _.STATUS == "A"); //--> Pega somente os menus pais, ativos e abilitados para o usuario corrente.
+            var CollectionMenuUsuario = _unitOfWork.MenuUsuarioRepository.GetList(_ => _.COD_USUARIO == Id);
+            var Collection = CollectionMenu.Join(CollectionMenuUsuario, x => x.ID, y => y.COD_MENU,
+                                                //(MenuDto, MenuUsuarioDto) => new { MenuDto, MenuUsuarioDto }).Where(m => m.MenuUsuarioDto.COD_USUARIO == Id)
+                                                (MenuDto, MenuUsuarioDto) => new { MenuDto, MenuUsuarioDto })
+                                                .Select (_ => new MenuDto
+                                                {
+                                                    ID = _.MenuDto.ID,
+                                                    COD_MENU_PAI = _.MenuDto.COD_MENU_PAI,
+                                                    NOME = _.MenuDto.NOME,
+                                                    CONTROLLER = _.MenuDto.CONTROLLER,
+                                                    ACTION = _.MenuDto.ACTION,
+                                                    DESCRICAO = _.MenuDto.DESCRICAO,
+                                                    DTH_CADASTRO = _.MenuDto.DTH_CADASTRO,
+                                                    ICONE = _.MenuDto.ICONE,
+                                                    STATUS = _.MenuDto.STATUS
+                                                }).ToList();
+
+            return (Collection);
+        }
+
+        /// <summary>
+        /// Retorna uma lista de objetos de submenu de Id de menu pai.
+        /// </summary>
+        public List<MenuDto> GetSubMenuFromMenu(int Id)
+        {
+            var CollectionMenu = _unitOfWork.MenuRepository.GetList(_ => _.COD_MENU_PAI == Id && _.STATUS == "A").OrderBy(_=>_.NOME).ToList(); //--> Pega somente os menus pais, ativos e abilitados para o usuario corrente.
+            return (CollectionMenu);
+        }
+
+        /// <summary>
         /// Inativa um objeto para visualização
         /// </summary>
         public void ToInactive(int Id)
@@ -149,4 +184,3 @@ namespace SmartAdmin.Domain
         }
     }
 }
-

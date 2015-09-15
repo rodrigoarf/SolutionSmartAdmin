@@ -8,11 +8,19 @@ using SmartAdmin.Domain;
 using SmartAdmin.Domain.Security;
 using SmartAdmin.Domain.Helpers;
 using SmartAdmin.WebUI.Infrastructure.Session;
+using SmartAdmin.WebUI.ModelView;
 
 namespace SmartAdmin.WebUI.Controllers
 {
     public class LoginController : BaseController
     {
+        private Usuario UsuarioDomain { get; set; }
+
+        public LoginController()
+        {
+            UsuarioDomain = new Usuario();
+        }
+
         public ActionResult Index()
         {
             var t = new SmartAdmin.Domain.Security.Cryptography();
@@ -33,18 +41,26 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var unitOfWork = new SmartAdmin.Domain.UnitOfWork();
-                var UsuarioLogado = unitOfWork.UsuarioDomain.Authentication(Model);
+                var UsuarioLogado = UsuarioDomain.Authentication(Model);
 
                 if (UsuarioLogado != null)
                 {
                     //--> Acesso
-                    var AcessoDominio = unitOfWork.AcessoDomain;
-                    AcessoDominio.Save(GetUserInformation(String.Empty)); 
+                    var AcessoDomain = new SmartAdmin.Domain.Acesso();
+                    AcessoDomain.Save(GetUserInformation(String.Empty));
+
+                    //--> Menus & Submenus
+                    var CollectionMenuMain = new List<MenuModelView>();                    
+                    foreach (var MenuMain in UsuarioDomain.GetAllowedMenus(UsuarioLogado.ID)) //--> Para cada menu pai pega os filhos e adiciona no modelo de visão
+                    {
+                       var CollectionSubMenus = UsuarioDomain.GetSubMenuFromMenu(MenuMain.ID);
+                       var CurrentMenuMain = new MenuModelView() { Menu = MenuMain, CollectionSubMenu = CollectionSubMenus }; 
+                       CollectionMenuMain.Add(CurrentMenuMain);
+                    }
 
                     //--> Session
-                    var Session = new SessionManager();                       
-                    Session.Start(new Administrator() { Usuario = UsuarioLogado });
+                    var Session = new SessionManager();
+                    Session.Start(new UsuarioModelView() { Usuario = UsuarioLogado, CollectionMenusAndSubMenus = CollectionMenuMain });   
                   
                     return (RedirectToAction("Index", "Menu"));
                 }
@@ -52,8 +68,7 @@ namespace SmartAdmin.WebUI.Controllers
                 {
                     TempData["Mensagem"] = "Usuário inexistente ou não esta ativo no sistema, contate o Administrador!";
                     return (RedirectToAction("Index", "Login"));
-                }
-
+                }  
             }
             catch (Exception Ex)
             {

@@ -1,18 +1,14 @@
-﻿@model SmartAdmin.WebUI.Infrastructure.Session.Administrator
-<!-- User info -->
+﻿@model SmartAdmin.WebUI.ModelView.UsuarioModelView
+
 <div class="login-info">
     <span>
-        <!-- User image size is adjusted inside CSS, it should stay as is -->
-
         <a href="/Usuario/Edit/@Model.Usuario.ID" id="show-shortcut" data-action="toggleShortcut">
             <img src="~/Content/img/avatars/sunny.png" alt="me" class="online" />
             <span>@Model.Usuario.LOGIN</span>
             <i class="fa fa-angle-down"></i>
         </a>
-
     </span>
 </div>
-<!-- end user info -->
 
 <nav>
     <ul>
@@ -30,43 +26,72 @@
                 </li>
             </ul>
         </li>
-		<li class="top-menu-hidden">
-			<a href="/Inbox/Index"><i class="fa fa-lg fa-fw fa-comment-o"></i> <span class="menu-item-parent">Inbox</span></a>
-		</li>
-		<li class="top-menu-hidden">
-			<a href="#"><i class="fa fa-lg fa-fw fa-envelope-o"></i> <span class="menu-item-parent">Newsletters</span></a>
-			<ul>
-				<li>
-					<a href="/Newsletter/Grupos"><i class="fa fa-users"></i> Grupos</a>
-				</li>
-				<li>
-					<a href="/Newsletter/Campanhas"><i class="fa fa-paper-plane"></i> Campanhas</a>
-				</li>
-				<li>
-					<a href="/Newsletter/Templates"><i class="fa fa-picture-o"></i> Templates</a>
-				</li>
-			</ul>
-		</li>
-		<li class="top-menu-hidden">
-			<a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Administração</span></a>
-			<ul>
-				<li>
-					<a href="/Usuario/Index"><i class="fa fa-stack-overflow"></i> Usuários</a>
-				</li>
-				<li>
-					<a href="/Menu/Index"><i class="fa fa-cube"></i> Menus</a>
-				</li>
-				<li>
-					<a href="/Historico/Index"><i class="fa fa-pencil"></i> Histórico</a>
-				</li>
-				<li>
-					<a><i class="fa fa-bug"></i> Bugs</a>
-				</li>
-			</ul>
-		</li>
-
+        <li class="top-menu-hidden">
+            <a href="/Inbox/Index"><i class="fa fa-lg fa-fw fa-comment-o"></i><span class="menu-item-parent">Inbox</span></a>
+        </li>
+        <li class="top-menu-hidden">
+            <a href="#"><i class="fa fa-lg fa-fw fa-envelope-o"></i><span class="menu-item-parent">Newsletters</span></a>
+            <ul>
+                <li>
+                    <a href="/Newsletter/Grupos"><i class="fa fa-users"></i>Grupos</a>
+                </li>
+                <li>
+                    <a href="/Newsletter/Campanhas"><i class="fa fa-paper-plane"></i>Campanhas</a>
+                </li>
+                <li>
+                    <a href="/Newsletter/Templates"><i class="fa fa-picture-o"></i>Templates</a>
+                </li>
+            </ul>
+        </li>
+        <li class="top-menu-hidden">
+            <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Administração</span></a>
+            <ul>
+                <li>
+                    <a href="/Usuario/Index"><i class="fa fa-stack-overflow"></i>Usuários</a>
+                </li>
+                <li>
+                    <a href="/Menu/Index"><i class="fa fa-cube"></i>Menus</a>
+                </li>
+                <li>
+                    <a href="/Historico/Index"><i class="fa fa-pencil"></i>Histórico</a>
+                </li>
+                <li>
+                    <a><i class="fa fa-bug"></i>Bugs</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>
 
+
+ @if (Model.CollectionMenusAndSubMenus.Count > 0)
+ { 
+     <nav>
+         <ul>
+             @foreach (var MenusAndSubMenu in Model.CollectionMenusAndSubMenus)
+             {
+                 <li>
+                     <a href="@((!String.IsNullOrEmpty(MenusAndSubMenu.Menu.CONTROLLER) ? String.Format(@"/{0}/{1}", MenusAndSubMenu.Menu.CONTROLLER, MenusAndSubMenu.Menu.ACTION) : String.Format("{0}","#")))"><i class="fa fa-lg fa-fw @MenusAndSubMenu.Menu.ICONE txt-color-blue"></i><span class="menu-item-parent">@MenusAndSubMenu.Menu.NOME</span></a>
+                     @if (MenusAndSubMenu.CollectionSubMenu.Count > 0)
+                     {
+                         <ul>
+                             @foreach (var SubMenu in MenusAndSubMenu.CollectionSubMenu)
+                             {
+                                 <li>
+                                     <a href="@String.Format(@"/{0}/{1}", SubMenu.CONTROLLER, SubMenu.ACTION)">@((!String.IsNullOrEmpty(SubMenu.ICONE)) ? Html.Raw(String.Format("<i class=\"fa {0}\"></i> {1}",SubMenu.ICONE, SubMenu.NOME)) : Html.Raw(String.Format("{1}", SubMenu.NOME)))</a>
+                                 </li>  
+                             }
+                         </ul>
+                      }
+                 </li>
+             }
+         </ul>
+     </nav>
+ }
+
 <span class="minifyme" data-action="minifyMenu"><i class="fa fa-arrow-circle-left hit"></i></span>
+
+
+
+
 

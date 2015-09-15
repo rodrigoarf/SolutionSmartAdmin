@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SmartAdmin.WebUI.ModelView;
 
 namespace SmartAdmin.WebUI.Infrastructure.Session
 {
-    public class SessionManager : ISessionOperation<Administrator>
+    public class SessionManager : ISessionOperation<UsuarioModelView>
     {
         /// <summary>
         /// Inicia uma sessão de acesso autorizado a aplicação.
         /// </summary>
-        public void Start(Administrator Model)
+        public void Start(UsuarioModelView Model)
         {
             HttpContext.Current.Session["SmartAdminSession"] = Model;
         }
@@ -49,10 +50,10 @@ namespace SmartAdmin.WebUI.Infrastructure.Session
         /// <summary>
         /// Retorna o objeto Administrator da armazenado na sessão atual.
         /// </summary>
-        public Administrator GetAdministrator()
+        public UsuarioModelView GetUsuario()
         {
-           var Model = (Administrator)HttpContext.Current.Session["SmartAdminSession"];
-           return (Model);
+            var Model = (UsuarioModelView)HttpContext.Current.Session["SmartAdminSession"];
+            return (Model);
         }
     }
 }

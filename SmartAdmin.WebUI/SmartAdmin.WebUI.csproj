@@ -156,7 +156,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\HtmlHelpers.cs" />
-    <Compile Include="Infrastructure\Session\Administrator.cs" />
+    <Compile Include="ModelView\MenuModelView.cs" />
+    <Compile Include="ModelView\UsuarioModelView.cs" />
     <Compile Include="Infrastructure\Session\ISessionOperation.cs" />
     <Compile Include="Infrastructure\Session\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -841,7 +842,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Templates\Email\Image\" />
   </ItemGroup>
   <ItemGroup>

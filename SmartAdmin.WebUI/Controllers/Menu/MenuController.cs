@@ -17,7 +17,7 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult Index(int? Page)
         {
             var MenuDominio = unitOfWork.MenuDomain;
-            var Collection = MenuDominio.GetList(_ => _.ID > 0);
+            var Collection = MenuDominio.GetList(_ => _.COD_MENU_PAI == 0);
             var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
             return View(Collection.ToPagedList(CurrentPage, PageSize));
         }
@@ -49,7 +49,8 @@ namespace SmartAdmin.WebUI.Controllers
             var Collection = MenuDominio.GetList(_ => _.ID > 0); // Default Search
 
             if (!String.IsNullOrEmpty(Model.NOME))
-                Collection.Where(_ => _.NOME.Contains(Model.NOME)).ToList();   
+                Collection.Where(_ => _.NOME.Contains(Model.NOME)).ToList();
+   
             if (!String.IsNullOrEmpty(Model.STATUS))
                 Collection.Where(_ => _.STATUS == Model.STATUS).ToList();
 
@@ -60,7 +61,7 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult MainMenu()
         {
             var Session = new SessionManager();
-            var Model = Session.GetAdministrator();
+            var Model = Session.GetUsuario();
             return View("~/Views/Shared/_MenuPartial.cshtml", Model);
         }
 
