@@ -13,10 +13,10 @@
                         <tr>
                             <th class="text-center" style="vertical-align: top;">Nome</th>
                             <th class="text-center" style="vertical-align: top;">E-mail</th>
-                            <th class="text-center" style="vertical-align: top; width: 90px;">Login</th>
-                            <th class="text-center" style="vertical-align: top; width: 90px;">Cadastro</th>
+                            <th class="text-center" style="vertical-align: top; width: 130px;">Login</th>
+                            <th class="text-center" style="vertical-align: top; width: 130px;">Cadastro</th>
                             <th class="text-center" style="vertical-align: top; width: 90px;">Status</th>
-                            <th class="text-center" style="vertical-align: top; width: 90px;">Ações</th>
+                            <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,10 +36,8 @@
                     </tbody>
                 </table>
             </div>
-            <footer class="text-center" style="padding-top: 25px; padding-bottom: 25px;">        
-                    @Html.PagedListPager(Model, Page => Url.Action("Index", new {Page}),PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
-                    new PagedListRenderOptions { LinkToPreviousPageFormat="<i class=\"fa fa-chevron-left\"></i>", LinkToNextPageFormat = "<i class=\"fa fa-chevron-right\"></i>", Display = PagedListDisplayMode.IfNeeded, DisplayLinkToNextPage = PagedListDisplayMode.Always},
-                    new System.Web.Mvc.Ajax.AjaxOptions {OnSuccess = "OnPageChanged"}))      
+            <footer class="text-center" style="padding-top: 25px; padding-bottom: 25px;">
+                @Html.Partial("_PaginationPartial", Model)
             </footer>
         </div>
     </div>

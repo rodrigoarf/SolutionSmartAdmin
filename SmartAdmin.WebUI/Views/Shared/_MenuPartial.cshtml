@@ -2,7 +2,7 @@
 
 <div class="login-info">
     <span>
-        <a href="/Usuario/Edit/@Model.Usuario.ID" id="show-shortcut" data-action="toggleShortcut">
+        <a href="/Usuario/Edit/@Model.Usuario.ID">
             <img src="~/Content/img/avatars/sunny.png" alt="me" class="online" />
             <span>@Model.Usuario.LOGIN</span>
             <i class="fa fa-angle-down"></i>
@@ -71,14 +71,14 @@
              @foreach (var MenusAndSubMenu in Model.CollectionMenusAndSubMenus)
              {
                  <li>
-                     <a href="@((!String.IsNullOrEmpty(MenusAndSubMenu.Menu.CONTROLLER) ? String.Format(@"/{0}/{1}", MenusAndSubMenu.Menu.CONTROLLER, MenusAndSubMenu.Menu.ACTION) : String.Format("{0}","#")))"><i class="fa fa-lg fa-fw @MenusAndSubMenu.Menu.ICONE txt-color-blue"></i><span class="menu-item-parent">@MenusAndSubMenu.Menu.NOME</span></a>
+                     <a href="@((!String.IsNullOrEmpty(MenusAndSubMenu.Menu.CONTROLLER) ? String.Format(@"{0}/{1}", MenusAndSubMenu.Menu.CONTROLLER, MenusAndSubMenu.Menu.ACTION) : String.Format("{0}","#")))"><i class="fa fa-lg fa-fw @MenusAndSubMenu.Menu.ICONE txt-color-blue"></i><span class="menu-item-parent">@MenusAndSubMenu.Menu.NOME</span></a>
                      @if (MenusAndSubMenu.CollectionSubMenu.Count > 0)
                      {
                          <ul>
                              @foreach (var SubMenu in MenusAndSubMenu.CollectionSubMenu)
                              {
                                  <li>
-                                     <a href="@String.Format(@"/{0}/{1}", SubMenu.CONTROLLER, SubMenu.ACTION)">@((!String.IsNullOrEmpty(SubMenu.ICONE)) ? Html.Raw(String.Format("<i class=\"fa {0}\"></i> {1}",SubMenu.ICONE, SubMenu.NOME)) : Html.Raw(String.Format("{1}", SubMenu.NOME)))</a>
+                                     <a href="@String.Format(@"{0}/{1}", SubMenu.CONTROLLER, SubMenu.ACTION)">@((!String.IsNullOrEmpty(SubMenu.ICONE)) ? Html.Raw(String.Format("<i class=\"fa {0}\"></i> {1}",SubMenu.ICONE, SubMenu.NOME)) : Html.Raw(String.Format("{1}", SubMenu.NOME)))</a>
                                  </li>  
                              }
                          </ul>

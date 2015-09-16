@@ -10,9 +10,8 @@ using SmartAdmin.WebUI.HtmlHelpers;
 namespace SmartAdmin.WebUI.Controllers
 {
     public class BaseController : Controller
-    {
-        public SmartAdmin.Domain.UnitOfWork unitOfWork = new SmartAdmin.Domain.UnitOfWork();
-        public int PageSize = 100;
+    {           
+        public int PageSize = 50;
 
         public AcessoDto GetUserInformation(string Screen)
         {

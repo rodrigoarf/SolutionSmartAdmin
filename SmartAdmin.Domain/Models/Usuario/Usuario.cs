@@ -68,7 +68,7 @@ namespace SmartAdmin.Domain
         /// <summary>
         /// Retorna uma lista List(T) de objetos buscados pela expressão Lambda
         /// </summary>
-        public List<UsuarioDto> GetList(Expression<Func<UsuarioDto, bool>> filter)
+        public List<UsuarioDto> GetList(Expression<Func<UsuarioDto, bool>> filter = null)
         {
             List<UsuarioDto> collection;
             collection = _unitOfWork.UsuarioRepository.GetList(filter);

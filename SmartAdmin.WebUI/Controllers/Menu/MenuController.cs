@@ -16,7 +16,7 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public ActionResult Index(int? Page)
         {
-            var MenuDominio = unitOfWork.MenuDomain;
+            var MenuDominio = new Menu(); 
             var Collection = MenuDominio.GetList(_ => _.COD_MENU_PAI == 0);
             var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
             return View(Collection.ToPagedList(CurrentPage, PageSize));
@@ -25,7 +25,7 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public ActionResult Edit(int Id)
         {
-            var MenuDominio = unitOfWork.MenuDomain;
+            var MenuDominio = new Menu(); 
             return View(MenuDominio.GetItem(_ => _.ID == Id));
         } 
                     
@@ -35,7 +35,7 @@ namespace SmartAdmin.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var MenuDominio = unitOfWork.MenuDomain; 
+                var MenuDominio = new Menu(); 
                 if (Model.ID > 0) { MenuDominio.Edit(Model); } else { MenuDominio.Save(Model); }  
             }
             return RedirectToAction("Index", new { Page = 1 });
@@ -45,14 +45,17 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public ActionResult Load(MenuDto Model)
         {
-            var MenuDominio = unitOfWork.UsuarioDomain;
-            var Collection = MenuDominio.GetList(_ => _.ID > 0); // Default Search
+            var MenuDominio = new Menu();
+            var Collection = new List<MenuDto>();
 
             if (!String.IsNullOrEmpty(Model.NOME))
-                Collection.Where(_ => _.NOME.Contains(Model.NOME)).ToList();
-   
+                Collection = MenuDominio.GetList(null).Where(_ => _.NOME.Contains(Model.NOME)).ToList();
+
             if (!String.IsNullOrEmpty(Model.STATUS))
-                Collection.Where(_ => _.STATUS == Model.STATUS).ToList();
+                Collection = MenuDominio.GetList(null).Where(_ => _.STATUS == Model.STATUS).ToList();
+
+            if (String.IsNullOrEmpty(Model.NOME) && (String.IsNullOrEmpty(Model.STATUS)))
+                Collection = MenuDominio.GetList(_ => _.ID > 0).OrderBy(_=>_.NOME).ToList();
 
             return View("Index", Collection.ToPagedList(1, PageSize));
         } 

@@ -12,7 +12,7 @@ namespace SmartAdmin.WebUI.Controllers.Acesso
         [AuthorizedUser]
         public ActionResult Index()
         {
-            var AcessoDomain = unitOfWork.AcessoDomain;
+            var AcessoDomain = new SmartAdmin.Domain.Acesso();
             var Collection = AcessoDomain.GetList(_ => _.COD_USUARIO > 0).OrderByDescending(AcessoDto => AcessoDto.DTH_ACESSO);
             return View(Collection);
         }     

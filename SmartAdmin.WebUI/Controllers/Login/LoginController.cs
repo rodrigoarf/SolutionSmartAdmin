@@ -81,7 +81,7 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var UsuarioDominio = unitOfWork.UsuarioDomain;
+                var UsuarioDominio = new Usuario();
                 var ModelExists = UsuarioDominio.IsExists(Model);
 
                 if (ModelExists == null)
@@ -109,7 +109,7 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {   
-                var UsuarioDominio = unitOfWork.UsuarioDomain;
+                var UsuarioDominio = new Usuario();
                 var ModelExists = UsuarioDominio.IsExists(Model);
 
                 if (ModelExists != null)

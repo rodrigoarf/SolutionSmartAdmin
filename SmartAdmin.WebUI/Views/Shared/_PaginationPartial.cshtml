@@ -1,0 +1,6 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Object>  
+
+@Html.PagedListPager(Model, Page => Url.Action("Index", new {Page}),PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+new PagedListRenderOptions { LinkToPreviousPageFormat="<i class=\"fa fa-chevron-left\"></i>", LinkToNextPageFormat = "<i class=\"fa fa-chevron-right\"></i>", Display = PagedListDisplayMode.IfNeeded, DisplayLinkToNextPage = PagedListDisplayMode.Always},
+new System.Web.Mvc.Ajax.AjaxOptions {OnSuccess = "OnPageChanged"}))   

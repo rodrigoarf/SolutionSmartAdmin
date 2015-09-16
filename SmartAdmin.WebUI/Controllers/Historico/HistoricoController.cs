@@ -17,8 +17,8 @@ namespace SmartAdmin.WebUI.Controllers
             var DataInicial = DateTime.Now.AddMonths(2);
             var DataTermino = DateTime.Now;
             
-            var AcessoDominio = unitOfWork.AcessoDomain;
-            var UsuarioDominio = unitOfWork.UsuarioDomain;
+            var AcessoDominio = new SmartAdmin.Domain.Acesso();
+            var UsuarioDominio = new SmartAdmin.Domain.Usuario();
 
             var CollectionAcesso = AcessoDominio.GetList(_ => _.DTH_ACESSO >= DataInicial || _.DTH_ACESSO <= DataTermino).Take(5000).ToList();
             var CollectionUsuario = UsuarioDominio.GetList(_ => _.STATUS == "A").Take(5000).ToList();
