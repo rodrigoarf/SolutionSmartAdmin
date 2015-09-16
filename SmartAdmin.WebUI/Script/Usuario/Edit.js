@@ -13,7 +13,7 @@ pagefunction();
 
 
 $('#btnSaveUsuario').click(function () {
-    jQuery('#smart-form-create').validate({
+    jQuery('#smart-form-edit').validate({
         rules: {
             NOME: { required: true },
             EMAIL: { required: true, email: true },
@@ -21,6 +21,7 @@ $('#btnSaveUsuario').click(function () {
             //TELEFONE: { required: true },
             CELULAR: { required: true },
             ENDERECO: { required: true },
+            NUMERO: { required: true, maxlength: 5 },
             BAIRRO: { required: true },
             CIDADE: { required: true },
             CEP: { required: true, maxlength: 8 },
@@ -35,6 +36,7 @@ $('#btnSaveUsuario').click(function () {
             //TELEFONE: { required: null },
             CELULAR: { required: null },
             ENDERECO: { required: null },
+            NUMERO: { required: null },
             BAIRRO: { required: null },
             CIDADE: { required: null },
             CEP: { required: null },
@@ -42,8 +44,8 @@ $('#btnSaveUsuario').click(function () {
             PAIS: { required: null },
             STATUS: { required: null }
         },
-        highlight: null,
-        unhighlight: null,
+        //highlight: null,
+        //unhighlight: null,
         invalidHandler: function (event, validator) {
             var erros = validator.numberOfInvalids();
             var singularPlural = erros > 1 ? 'campos' : 'campos';
@@ -74,6 +76,10 @@ $('#btnSaveUsuario').click(function () {
                         break;
                     case 'ENDERECO':
                         PrintAlert('Informe o endereço.');
+                        return (false);
+                        break;
+                    case 'NUMERO':
+                        PrintAlert('Informe o número.');
                         return (false);
                         break;
                     case 'BAIRRO':

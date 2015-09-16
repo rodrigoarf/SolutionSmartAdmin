@@ -43,6 +43,8 @@
 
     runAllForms()
 
+   @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)
+
     $(document).ready(function () {
         pagefunction();
     });        

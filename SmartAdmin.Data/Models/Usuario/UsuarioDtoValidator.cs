@@ -20,10 +20,6 @@ namespace SmartAdmin.Dto
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         [StringLength(100, ErrorMessage = "A descrição deve ter no máximo 100 caracteres.")]
-        public System.String SENHA { get; set; }
-
-        [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [StringLength(100, ErrorMessage = "A descrição deve ter no máximo 100 caracteres.")]
         public System.String EMAIL { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]

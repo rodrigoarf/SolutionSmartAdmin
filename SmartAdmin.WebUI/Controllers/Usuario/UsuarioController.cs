@@ -16,9 +16,10 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult Index(int? Page)
         {
             var UsuarioDominio = new Usuario();
-            var Model = UsuarioDominio.GetList(_ => _.ID > 0);
-
+            var Model = UsuarioDominio.GetList(_ => _.ID > 0);              
             var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
+
+            ViewBag.Mensagem = TempData["Mensagem"] as String;
             return View(Model.ToPagedList(CurrentPage, PageSize));
         }
 
@@ -49,7 +50,27 @@ namespace SmartAdmin.WebUI.Controllers
             return View("Index", Collection.ToPagedList(1, PageSize));     
         }
 
+        [HttpPost]
+        [AuthorizedUser]
+        public ActionResult Save(UsuarioDto Model)
+        {
+            var UsuarioDomain = new Usuario();
+            var ModelCheck = UsuarioDomain.GetItem(_=>_.LOGIN == Model.LOGIN && _.EMAIL == Model.EMAIL && _.ID != Model.ID);
 
+            if (ModelCheck != null)
+            {
+                TempData["Mensagem"] = string.Format("O <span style='color:#10e4ea;'>email</span> ou <span style='color:#10e4ea;'>login</span> informado ja estão cadastrados por outro usuário!");
+                return (RedirectToAction("Index", "Usuario"));
+            }
+            else
+            {
+                UsuarioDomain.Edit(Model);
+
+                TempData["Mensagem"] = string.Format("Informações <span style='color:#10e4ea;'>atualizadas</span> com sucesso!");
+                return (RedirectToAction("Index", "Usuario"));
+            }
+        }
+                
         #region Webcam methods
 
         [AuthorizedUser]
@@ -73,7 +94,6 @@ namespace SmartAdmin.WebUI.Controllers
             return (ByteArray);
         }
 
-        #endregion   
- 
+        #endregion       
     }
 }

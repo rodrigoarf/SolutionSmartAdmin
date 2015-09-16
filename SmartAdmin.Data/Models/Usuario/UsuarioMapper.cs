@@ -17,7 +17,7 @@ namespace SmartAdmin.Data.Mapper
             // Propertys
             this.Property(_ => _.NOME).IsRequired().HasMaxLength(200);
             this.Property(_ => _.LOGIN).IsRequired().HasMaxLength(20);
-            this.Property(_ => _.SENHA).IsRequired().HasMaxLength(100);
+            this.Property(_ => _.SENHA).HasMaxLength(100);
             this.Property(_ => _.EMAIL).IsRequired().HasMaxLength(100);
             this.Property(_ => _.DTH_CRIACAO);
             this.Property(_ => _.DTH_CANCELAMENTO);
@@ -31,6 +31,7 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.UF).IsRequired().HasMaxLength(2);
             this.Property(_ => _.BAIRRO).HasMaxLength(100);
             this.Property(_ => _.NUMERO);
+            this.Property(_ => _.CPF_CNPJ).HasMaxLength(30);
 
             // Table & Column Mappings
             this.ToTable("USUARIO", "agilecore1");
@@ -52,6 +53,7 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.UF).HasColumnName("UF");
             this.Property(_ => _.BAIRRO).HasColumnName("BAIRRO");
             this.Property(_ => _.NUMERO).HasColumnName("NUMERO");
+            this.Property(_ => _.CPF_CNPJ).HasColumnName("CPF_CNPJ");
         }
     }
 }

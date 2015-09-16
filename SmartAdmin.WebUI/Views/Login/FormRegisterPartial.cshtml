@@ -3,6 +3,7 @@
 
 @using (Html.BeginForm("SaveForApproval", "Login", FormMethod.Post, new { @id = "smart-form-create", @class = "smart-form client-form" }))
 {  
+    @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "A"})
     <header>Cadastro de Usuários</header> 
     <fieldset>
         <section>

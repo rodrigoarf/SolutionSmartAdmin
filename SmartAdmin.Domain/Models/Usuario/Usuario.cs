@@ -22,6 +22,9 @@ namespace SmartAdmin.Domain
         {
             try
             {
+                var Crypt = new SmartAdmin.Domain.Security.Cryptography();
+                model.SENHA = Crypt.Encrypt(model.SENHA);
+
                 _unitOfWork.UsuarioRepository.Save(model);
             }
             catch (Exception Ex)
@@ -52,6 +55,17 @@ namespace SmartAdmin.Domain
         /// </summary>
         public void Edit(UsuarioDto model)
         {
+            if (model.SENHA == null)
+            {
+                var CurrentPass = _unitOfWork.UsuarioRepository.GetItem(_ => _.ID == model.ID).SENHA;
+                model.SENHA = CurrentPass;
+            }
+            else
+            {
+                var Crypt = new SmartAdmin.Domain.Security.Cryptography();
+                model.SENHA = Crypt.Encrypt(model.SENHA);
+            }    
+
             _unitOfWork.UsuarioRepository.Edit(model);
         }
 

@@ -86,7 +86,6 @@ namespace SmartAdmin.WebUI.Controllers
 
                 if (ModelExists == null)
                 {
-                    Model.STATUS = "A";
                     UsuarioDominio.Save(Model);
                     TempData["Mensagem"] = String.Format("Usuário <span style='color:#10e4ea;'>{0}</span> salvo com sucesso!", Model.LOGIN);
                     return (RedirectToAction("Registro"));
