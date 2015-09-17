@@ -33,7 +33,8 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult Registro()
         {
             ViewBag.Mensagem = TempData["Mensagem"] as String;
-            return View(new SmartAdmin.Dto.UsuarioDto() { NOME= "Antonio Rodrigo Fernanes", EMAIL="rodrigwerewo_arf@hotmail.com", BAIRRO="Rio Acima", CEP = "1811190", CIDADE="Votorantim", NUMERO=123, ENDERECO="Av Octavio Costa",LOGIN="rodrwerigo",SENHA="rodrigo", SEXO="M"});
+            var Model = TempData["Model"] as UsuarioDto;
+            return View((Model == null) ? new SmartAdmin.Dto.UsuarioDto() : Model);
         }
 
         [HttpPost]
@@ -82,7 +83,7 @@ namespace SmartAdmin.WebUI.Controllers
             try
             {
                 var UsuarioDominio = new Usuario();
-                var ModelExists = UsuarioDominio.IsExists(Model);
+                var ModelExists = UsuarioDominio.IsExistsByDocument(Model.CPF_CNPJ.Trim());
 
                 if (ModelExists == null)
                 {
@@ -92,13 +93,15 @@ namespace SmartAdmin.WebUI.Controllers
                 }
                 else
                 {
-                    TempData["Mensagem"] = String.Format("Login ou E-mail informado ja inexistente no sistema, infome outro login ou e-mail!");
+                    TempData["Mensagem"] = String.Format("Documento informado ja inexistente no sistema, infome outro login ou e-mail!");
+                    TempData["Model"] = Model;
                     return (RedirectToAction("Registro"));
                 }
             }
             catch (Exception Ex)
             {
                 TempData["Mensagem"] = Ex.InnerException.InnerException.Message;
+                TempData["Model"] = Model;
                 return (RedirectToAction("Registro"));
             }
         }

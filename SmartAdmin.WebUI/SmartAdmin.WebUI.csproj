@@ -774,6 +774,7 @@
     <Content Include="Content\js\plugin\jquery-form\jquery-form.min.js" />
     <Content Include="Content\js\plugin\jquery-nestable\jquery.nestable.min.js" />
     <Content Include="Content\js\plugin\jquery-touch\jquery.ui.touch-punch.min.js" />
+    <Content Include="Content\js\plugin\jquery-valida-document\valida.document.js" />
     <Content Include="Content\js\plugin\jquery-validate\jquery.validate.min.js" />
     <Content Include="Content\js\plugin\jquery-icheck\jquery.icheck.js" />
     <Content Include="Content\js\plugin\jquery-webcam\jquery.webcam.js" />

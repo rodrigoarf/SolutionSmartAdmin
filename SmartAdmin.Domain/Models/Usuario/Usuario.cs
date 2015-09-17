@@ -145,11 +145,24 @@ namespace SmartAdmin.Domain
         }    
 
         /// <summary>
-        /// Verifica se existe o objeto no banco de dados retorna somente true ou false. 
+        /// Verifica se existe o objeto no banco de dados retorna true (existe) ou false (não existe). 
         /// </summary>
         public UsuarioDto IsExists(UsuarioDto Model)
         {
             var Retorno = GetItem(_ => _.LOGIN == Model.LOGIN || _.EMAIL == Model.EMAIL);
+
+            if (Retorno != null)
+                return (Retorno);
+            else
+                return (null);
+        }
+
+        /// <summary>
+        /// Verifica se existe o objeto no banco de dados pelo número de documento Cpf ou Cnpj, retorna true (existe) ou false (não existe). 
+        /// </summary>
+        public UsuarioDto IsExistsByDocument(string Document)
+        {
+            var Retorno = GetItem(_ => _.CPF_CNPJ == Document);
 
             if (Retorno != null)
                 return (Retorno);

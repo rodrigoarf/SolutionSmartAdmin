@@ -29,6 +29,7 @@ namespace SmartAdmin.Dto
         public System.String BAIRRO { get; set; }
         public Nullable<System.Decimal> NUMERO { get; set; }
         public System.String CPF_CNPJ { get; set; }
+        public System.String PAIS { get; set; }
     }
 }
 
