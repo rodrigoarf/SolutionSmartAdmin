@@ -30,6 +30,9 @@ namespace SmartAdmin.Dto
         public Nullable<System.Decimal> NUMERO { get; set; }
         public System.String CPF_CNPJ { get; set; }
         public System.String PAIS { get; set; }
+        public System.String FLAG_ADM { get; set; }
+        public System.String FOTO { get; set; }
+        public System.String COMPLEMENTO { get; set; }
     }
 }
 

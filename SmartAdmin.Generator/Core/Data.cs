@@ -109,7 +109,7 @@ namespace SmartAdmin.Generator.Core
                             ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
                             TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
                         }
-                    }
+                    }                     
                     else
                     {   
                         ColumnDataType = Functions.GetColumnType(ColumnMapper.DataType);
@@ -172,7 +172,18 @@ namespace SmartAdmin.Generator.Core
             {
                 if (ColumnMapper.ColumnKey != "pk")
                 {
-                    if (ColumnMapper.DataType == "longblob") //--> Tratamento somente para System.Byte[]
+                    if (ColumnMapper.DataType == "longblob") //--> Tratamento somente para longblob
+                    {
+                        if (ColumnMapper.IsNullable == "no")
+                        {
+                            TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ").IsRequired();");
+                        }
+                        else
+                        {
+                            TextClass.AppendLine("            this.Property(_ => _." + ColumnMapper.ColumnName + ");");
+                        }
+                    }
+                    else if (ColumnMapper.DataType == "longtext") //--> Tratamento somente para longtext
                     {
                         if (ColumnMapper.IsNullable == "no")
                         {

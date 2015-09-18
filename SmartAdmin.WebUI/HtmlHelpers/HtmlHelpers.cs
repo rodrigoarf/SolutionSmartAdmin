@@ -295,8 +295,8 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             }
             else
             {
-                HtmlControl.Append("<option value=\"M\" " + ((DefaultValue == EInputSexo.F) ? "selected" : string.Empty) + ">Masculino</option>");
-                HtmlControl.Append("<option value=\"F\" " + ((DefaultValue == EInputSexo.M) ? "selected" : string.Empty) + ">Feminino</option>");
+                HtmlControl.Append("<option value=\"M\" " + ((DefaultValue == EInputSexo.M) ? "selected" : string.Empty) + ">Masculino</option>");
+                HtmlControl.Append("<option value=\"F\" " + ((DefaultValue == EInputSexo.F) ? "selected" : string.Empty) + ">Feminino</option>");
             }
 
             HtmlControl.Append("</select>");

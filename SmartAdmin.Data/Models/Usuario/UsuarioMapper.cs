@@ -33,6 +33,9 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.NUMERO);
             this.Property(_ => _.CPF_CNPJ).HasMaxLength(30);
             this.Property(_ => _.PAIS).IsRequired().HasMaxLength(100);
+            this.Property(_ => _.FLAG_ADM).IsRequired().HasMaxLength(1);
+            this.Property(_ => _.FOTO);
+            this.Property(_ => _.COMPLEMENTO).HasMaxLength(100);
 
             // Table & Column Mappings
             this.ToTable("USUARIO", "agilecore1");
@@ -56,6 +59,9 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.NUMERO).HasColumnName("NUMERO");
             this.Property(_ => _.CPF_CNPJ).HasColumnName("CPF_CNPJ");
             this.Property(_ => _.PAIS).HasColumnName("PAIS");
+            this.Property(_ => _.FLAG_ADM).HasColumnName("FLAG_ADM");
+            this.Property(_ => _.FOTO).HasColumnName("FOTO");
+            this.Property(_ => _.COMPLEMENTO).HasColumnName("COMPLEMENTO");
         }
     }
 }

@@ -46,6 +46,10 @@ namespace SmartAdmin.Dto
         [StringLength(100, ErrorMessage = "A descrição deve ter no máximo 100 caracteres.")]
         public System.String PAIS { get; set; }
 
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [StringLength(1, ErrorMessage = "A descrição deve ter no máximo 1 caracteres.")]
+        public System.String FLAG_ADM { get; set; }
+
     }
 }
 

@@ -6,17 +6,24 @@
     @Html.HiddenFor(model => Model.ID, new { id = "ID" })
     @Html.HiddenFor(model => Model.STATUS, new { id = "STATUS" })
     @Html.HiddenFor(model => Model.DTH_CRIACAO, new { id = "DTH_CRIACAO" })
+    @Html.HiddenFor(model => Model.FOTO, new { id = "FOTO" })
+    @Html.HiddenFor(model => Model.FLAG_ADM, new { id = "FLAG_ADM" })
     <fieldset>
         <div class="row">
-            <div class="col-sm-2">
-                <img id="start-webcam" style="margin: 0px 10px 5px 10px; border: 6px solid #e3e3e3; width: 150px; height: 150px;" src="~/Content/img/avatars/sunny-big.png" />
+            <div class="col-sm-3">
+                 <img id="start-webcam" @((Model.FOTO == null) ? "src=/Content/img/avatars/sunny-big.png" : "src=" + Model.FOTO + "" )  style="margin: 0px 10px 5px 10px; border: 6px solid #e3e3e3; width: 240px; height:180px;" />
             </div>
-            <div class="col-sm-10">           
-                <h1>@Model.NOME<br/><small>Usuário Administrador</small></h1>   
+            <div class="col-sm-4">           
+                <h1>@Model.NOME<br/><small>Usuário Administrador</small></h1>
             </div>
         </div>
     </fieldset>
     <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <h1>Dados Pessois</h1>
+            </section>
+        </div>
         <div class="row">
             <section class="col col-6">
                 <label class="input">
@@ -62,7 +69,7 @@
         <div class="row">
             <section class="col col-3">
                 <label class="select">
-                    @HtmlControls.DropDownListCustomSexo("SEXO",((Model.SEXO != null) ? ((Model.SEXO == "M") ? EInputSexo.M : EInputSexo.F ) : EInputSexo.None), false, new { @tabindex = "3" })
+                    @HtmlControls.DropDownListCustomSexo("SEXO",((Model.SEXO != null) ? ((Model.SEXO == "M") ? EInputSexo.M : EInputSexo.F) : EInputSexo.None), false, new { @tabindex = "3" })
                     <i></i>
                 </label>
             </section>
@@ -77,7 +84,12 @@
             </section>
         </div>
     </fieldset>
-    <fieldset> 
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <h1>Dados de Endereço</h1>
+            </section>
+        </div> 
         <div class="row">
             <section class="col col-5">
                 <label class="input">
@@ -129,7 +141,17 @@
                     <i></i>
                 </label>
             </section>
-        </div>  
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="input">
+                    @HtmlControls.TextBox("COMPLEMENTO", new { @value = Model.COMPLEMENTO, @placeholder = "Complemento" })
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i> Complemento
+                    </b>
+                </label>
+            </section>
+        </div>
         <div class="row">
             <section class="col col-3">
                 <label class="select">
@@ -140,6 +162,11 @@
         </div>
     </fieldset>   
     <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <h1>Dados de Acesso</h1>
+            </section>
+        </div> 
         <div class="row">
             <section class="col col-3">
                 <label class="input">
@@ -153,9 +180,27 @@
                 <label class="input">                    
                     <i class="icon-prepend fa fa-lock"></i>
                     @HtmlControls.Password("SENHA", new { @value = string.Empty, @placeholder = "Senha de acesso" })
+                    <div class="note">
+                        <strong>Nota:</strong> Para alterar a senha basta inserir uma outra senha neste campo.
+                    </div>
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Senha de acesso
                     </b>
+                </label>
+            </section>
+        </div>
+    </fieldset>      
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <h1>Configurações Avançadas</h1>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-4">
+                <label class="toggle">
+                    <input id="config-adm" type="checkbox" name="checkbox-toggle" @((Model.FLAG_ADM == "S" ? "checked=checked" : string.Empty))>
+                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i> É um Administrador do Sistema ?   
                 </label>
             </section>
         </div>
@@ -174,7 +219,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" id="closeWebcam" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="gridSystemModalLabel">Foto de Perfil</h4>
       </div>
       <div class="modal-body">
@@ -183,13 +228,10 @@
                   <div class="col-md-6 text-center" style="padding:0px 4px 10px 0px;">
                       <div id="action-buttons" class="btn-group btn-group-justified">
                           <div class="btn-group">
-                              <button type="button" class="btn btn-warning" id="take-snapshot"><i class="fa fa-video-camera"></i></button>
+                              <button type="button" class="btn btn-default" id="take-snapshot"><i class="fa fa-video-camera"></i></button>
                           </div>
                           <div class="btn-group">
-                              <button type="button" class="btn btn-primary">Limpar</button>
-                          </div>
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-primary">Reconectar</button>
+                              <button type="button" class="btn btn-default" id="take-clear">Limpar</button>
                           </div>
                       </div>
                   </div>
@@ -197,127 +239,130 @@
               <div class="row">
                   <div class="col-md-6 text-center" style="padding-left: 0px;">
                       <div id="say-cheese-container"></div>
+                      <div class="note">
+                          <strong>Nota</strong> Stream de video da Webcam.
+                      </div>
+                      <h5 style="color:#76A053;"><i class="fa fa-video-camera"></i> Webcam Integrada</h5>
                   </div>
-                  <div class="col-md-6 text-center">
-                      <div id="say-cheese-snapshots"></div>
+                  <div class="col-md-6 text-center" style="padding-left: 5px;">
+                      <div id="say-cheese-container-snapshots">
+                          @*
+                          <div id="say-cheese-snapshots"></div>
+                          <div class="note" style="margin-top: 10px;">
+                              <strong>Nota</strong> Imagem para o Perfil.
+                          </div>
+                          <h5 style="color:#76A053;"><i class="fa fa-video-camera"></i> Foto de Perfil</h5>
+                          *@
+                      </div>
                   </div>
               </div>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-voltar">Voltar</button>
-        <button type="button" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-warning" id="modal-salvar">Salvar</button>
       </div>
     </div>
   </div>
 </div>
 
-<script src="~/Content/js/plugin/jquery-webcam/webcam.js"></script>
+<script src="~/Content/js/plugin/jquery-webcam/jquery-webcam.js"></script>
 <script>
-    function InitWebcam()
-    {
-        var WebCamWidth = 275;
 
-        $(function () {
-            var sayCheese = new SayCheese('#say-cheese-container', { snapshots: true, audio: false, width: WebCamWidth });
+    $(document).ready(function () {
 
-            sayCheese.on('start', function () {
-                $('#action-buttons').fadeIn('fast');
+        $('#modal-salvar').click(function () {
+            var ByteImg = $('#picture').attr("src");
+            $('#start-webcam').attr("src", ByteImg);
+            $('#FOTO').attr("value", ByteImg);
+            $('#modal-webcam').modal('hide');
 
-                $('#take-snapshot').on('click', function (evt) {
-                    $('#say-cheese-snapshots').empty();
-                    sayCheese.takeSnapshot();
-                });
-            });
-
-            sayCheese.on('error', function (error) {
-                var $alert = $('<div>');
-                $alert.addClass('alert alert-error').css('margin-top', '20px');
-
-                if (error === 'NOT_SUPPORTED') {
-                    $alert.html("<strong>:(</strong> Seu navegador não suporta vídeo ainda!");
-                } else if (error === 'AUDIO_NOT_SUPPORTED') {
-                    $alert.html("<strong>:(</strong> Seu navegador não suporta áudio ainda!");
-                } else {
-                    $alert.html("<strong>:(</strong> Você tem que clicar em 'permitir' para tentar novamente!");
-                }
-
-                $('.say-cheese').prepend($alert);
-            });
-
-            sayCheese.on('snapshot', function (snapshot) {
-                var img = document.createElement('img');
-
-                $(img).on('load', function () {
-                    $('#say-cheese-snapshots').prepend(img);
-                });
-
-                img.src = snapshot.toDataURL('image/png');   
-                img.width = WebCamWidth;
-            });
-
-            sayCheese.start();
-  
+            $('#say-cheese-container').empty();
+            $('#say-cheese-snapshots').empty();
         });
-    }
 
+        $('#modal-voltar').click(function () {
+            $('#say-cheese-container').empty();
+            $('#say-cheese-snapshots').empty();
+        });
 
-    $('#modal-voltar').click(function () {        
-        $('#say-cheese-container').empty();
-        $('#say-cheese-snapshots').empty(); 
+        $('#closeWebcam').click(function () {
+            $('#say-cheese-container').empty();
+            $('#say-cheese-snapshots').empty();
+        });
+
+        $('#start-webcam').click(function () {              
+            InitWebcam();
+            $('#say-cheese-container-snapshots').empty();
+            $('#modal-webcam').modal('show');
+        });
+
+        $('#take-clear').click(function () {
+            $('#say-cheese-container-snapshots').empty();
+        });
+
+        $('#config-adm').click(function () {
+            var check = $(this).is(":checked");
+            if (check == true) { $('#FLAG_ADM').val("S"); }
+            else { $('#FLAG_ADM').val("N"); }
+        });   
+
+        function InitWebcam() {
+            var ControlWidth = 275;
+
+            $(function () {
+                var sayCheese = new SayCheese('#say-cheese-container', { snapshots: true, audio: false, width: ControlWidth });
+
+                sayCheese.on('start', function () {
+                    $('#action-buttons').fadeIn('fast');
+                    $('#say-cheese-container-snapshots').empty();
+
+                    $('#take-snapshot').on('click', function (evt) {
+                        sayCheese.takeSnapshot();
+                    });
+                });
+
+                sayCheese.on('off', function () { 
+                    $('#closeWebcam').on('click', function (evt) {
+                        sayCheese.off();
+                    });
+
+                    $('#modal-voltar').on('click', function (evt) {
+                        sayCheese.off();
+                     });
+                });
+
+                sayCheese.on('error', function (error) {
+                    var $alert = $('<div>');
+                    $alert.addClass('alert alert-error').css('margin-top', '20px');
+                    if (error === 'NOT_SUPPORTED') {
+                        $alert.html("<strong>:(</strong> Seu navegador não suporta vídeo ainda!");
+                    } else if (error === 'AUDIO_NOT_SUPPORTED') {
+                        $alert.html("<strong>:(</strong> Seu navegador não suporta áudio ainda!");
+                    } else {
+                        $alert.html("<strong>:(</strong> Você tem que clicar em 'permitir' para tentar novamente!");
+                    } $('.say-cheese').prepend($alert);
+                });
+
+                sayCheese.on('snapshot', function (snapshot) {                      
+
+                    var HtmlCtrl = "<div id='say-cheese-snapshots'></div><div class='note' style='margin-top: 10px;'><strong>Nota</strong> Imagem para o Perfil.</div><h5 style='color:#76A053;'><i class='fa fa-video-camera'></i> Foto de Perfil</h5>";
+                    $('#say-cheese-container-snapshots').html(HtmlCtrl);
+
+                    var img = document.createElement('img');
+                    img.setAttribute('id', 'picture');
+
+                    $(img).on('load', function () {
+                        $('#say-cheese-snapshots').empty();
+                        $('#say-cheese-snapshots').prepend(img);
+                    });
+
+                    img.src = snapshot.toDataURL('image/png');
+                    img.width = ControlWidth;
+                });
+      
+                sayCheese.start();
+            });
+        }
     });
-
-
-
-
-    $('#start-webcam').click(function () {
-        
-        //$.ajax({
-        //    error: function () {
-        //        $('#info').html('<p>An error has occurred</p>');
-        //    },
-        //     success: function () {
-               
-        //    },
-        //});   
-
-        InitWebcam();
-        $('#modal-webcam').modal('show');
-
-       
-        //$("#div2").fadeIn("slow");
-        //$("#div3").fadeIn(3000);
-    });
-
-    //function InitWebcam()
-    //{
-    //    $('#container-element').empty();
-
-    //    var sayCheese = new SayCheese('#container-element', { snapshots: true, audio: false });
-
-    //    sayCheese.on('start', function () { 
-    //        var width = 250, height = 250;
-    //        sayCheese.takeSnapshot(width, height);  
-    //        $('#action-buttons').fadeIn('fast');      
-    //        $('#take-snapshot').on('click', function (evt) { sayCheese.takeSnapshot(); });
-    //        this.takeSnapshot();
-    //    }); 
-
-    //    sayCheese.on('error', function (error) {
-    //        // handle errors, such as when a user denies the request to use the webcam,
-    //        // or when the getUserMedia API isn't supported
-    //    });
-
-    //    sayCheese.on('snapshot', function (snapshot) {
-    //        //var img = document.createElement('img');   
-    //        //$(img).on('load', function () { $('#container-snapshots').prepend(img); });
-    //        //img.src = snapshot.toDataURL('image/png');
-    //    });
-
-    //    sayCheese.start();
-    //}   
-</script> 
-
-
-
-
+</script>

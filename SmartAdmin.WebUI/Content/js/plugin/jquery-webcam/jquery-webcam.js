@@ -70,7 +70,13 @@
             height = 0,
             streaming = false;
 
-        this.video = document.createElement('video'); 
+        this.video = document.createElement('video');
+
+        // Init customize for me 'Rodrigo' sponsor project
+        this.video.setAttribute('width', 275);
+        this.video.setAttribute('controls',true);
+        // End customize
+
         this.video.addEventListener('canplay', function () {
             if (!streaming) {
                 height = this.video.videoHeight / (this.video.videoWidth / width);
