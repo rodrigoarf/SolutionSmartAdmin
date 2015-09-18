@@ -1,0 +1,81 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@Model SmartAdmin.Dto.MenuDto
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Cadastrar menu</h4>
+        </div>
+        @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "smart-form-create" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.Hidden("ID","0", new { id = "ID" })
+            @Html.Hidden("COD_MENU_PAI","0", new { id = "COD_MENU_PAI" })
+            <div class="modal-body" style="padding-bottom:0px;">
+                <div class="widget-body no-padding">
+                    <div class="smart-form">
+                        <fieldset>
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-tasks"></i>
+                                        @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Menu do sistema", @tabindex = "1" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Nome do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-sitemap"></i>
+                                        @HtmlControls.TextBox("CONTROLLER", new { @value = Model.CONTROLLER, @placeholder = "Controller do menu", @tabindex = "2" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Controller do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-random"></i>
+                                        @HtmlControls.TextBox("ACTION", new { @value = Model.ACTION, @placeholder = "Action do menu", @tabindex = "3" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Action do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-leaf"></i>
+                                        @HtmlControls.TextBox("ICONE", new { @value = Model.ICONE, @placeholder = "Icone do menu", @tabindex = "4" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Icone do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>  
+
+                        </fieldset>
+                        <fieldset style="padding-bottom: 0px;">
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="select">
+                                        @HtmlControls.DropDownListCustomStatus("STATUS", EInputStatus.None)
+                                        <i></i>
+                                    </label>
+                                </section>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
+                <button type="submit" class="btn btn-md btn-warning" id="btnSaveMenu"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- scripts -->
+<script src="~/Script/Menu/Create.js"></script>

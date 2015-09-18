@@ -9,6 +9,7 @@ using SmartAdmin.Domain.Security;
 using SmartAdmin.Domain.Helpers;
 using SmartAdmin.WebUI.Infrastructure.Session;
 using SmartAdmin.WebUI.ModelView;
+using System.Web.Security;
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -38,7 +39,7 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Logar(UsuarioDto Model)
+        public ActionResult Logar(UsuarioDto Model, string Remind)
         {
             try
             {
@@ -61,7 +62,11 @@ namespace SmartAdmin.WebUI.Controllers
 
                     //--> Session
                     var Session = new SessionManager();
-                    Session.Start(new UsuarioModelView() { Usuario = UsuarioLogado, CollectionMenusAndSubMenus = CollectionMenuMain });   
+                    Session.Start(new UsuarioModelView() { Usuario = UsuarioLogado, CollectionMenusAndSubMenus = CollectionMenuMain });
+
+                    //--> Cookie
+                    CreateCookie(UsuarioLogado, Remind);
+                    //--> Cookie
                   
                     return (RedirectToAction("Index", "Menu"));
                 }
@@ -75,6 +80,22 @@ namespace SmartAdmin.WebUI.Controllers
             {
                 throw new Exception(Ex.Message);
             }
+        }
+
+        private void CreateCookie(UsuarioDto UsuarioLogado, string Remind)
+        {
+            var AuthTicket = new FormsAuthenticationTicket(
+                 1,
+                 UsuarioLogado.ID.ToString(),     //User Id
+                 DateTime.Now,                    //Initial Time 
+                 DateTime.Now.AddDays(15),        //Expiry Time 
+                 Convert.ToBoolean(Remind),       //True to Remember                      
+                 string.Empty,                    //Roles if exists 
+                 "/"                              //Path of Cookie 
+               );
+
+            HttpCookie Cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(AuthTicket));
+            Response.Cookies.Add(Cookie);
         }
 
         [HttpPost]

@@ -2,7 +2,9 @@
 @model SmartAdmin.Dto.MenuDto
 @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "smart-form-edit", @class = "smart-form" }))
 {
-    <input type="hidden" name="ID" value="@(Model.ID)" />
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(model => Model.ID, new { id = "ID" })
+    @Html.Hidden("COD_MENU_PAI","0", new { id = "COD_MENU_PAI" })
     <fieldset>
         <div class="row">
             <section class="col col-6">

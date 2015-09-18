@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Acesso\AcessoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Bugs\BugsController.cs" />
     <Compile Include="Controllers\Inbox\InboxController.cs" />
     <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
     <Compile Include="Infrastructure\ActionFilters\AuthorizedUser.cs" />
@@ -830,6 +831,7 @@
     <Content Include="Script\Login\Create.js" />
     <Content Include="Script\Login\Index.js" />
     <Content Include="Script\Menu\Create.js" />
+    <Content Include="Script\Menu\Edit.js" />
     <Content Include="Script\Usuario\Edit.js" />
     <Content Include="Script\Usuario\Index.js" />
     <Content Include="Templates\Email\index003.htm" />
@@ -1024,6 +1026,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_PaginationPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bugs\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bugs\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu\GridSubMenuPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu\CreateSubMenuPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

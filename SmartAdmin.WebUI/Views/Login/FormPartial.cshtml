@@ -3,6 +3,8 @@
 
 @using (Html.BeginForm("Logar", "Login", FormMethod.Post, new { @id = "smart-form-login", @class = "smart-form client-form" }))
 {
+    @Html.AntiForgeryToken()     
+    @Html.Hidden("Remind","false")
     <header>
         Acesso a Administração
     </header> 
@@ -27,7 +29,7 @@
         </section>
         <section>
             <label class="checkbox">
-                <input type="checkbox" name="REMEMBER" checked="">
+                <input id="REMEMBER" name="REMEMBER" type="checkbox">
                 <i></i> Permanecer conectado!</label>
         </section>
     </fieldset>

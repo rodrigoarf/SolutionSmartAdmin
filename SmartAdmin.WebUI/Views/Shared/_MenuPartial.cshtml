@@ -43,7 +43,7 @@
                 </li>
             </ul>
         </li>
-        <li class="top-menu-hidden">
+        @*<li class="top-menu-hidden">
             <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Administração</span></a>
             <ul>
                 <li>
@@ -59,7 +59,7 @@
                     <a><i class="fa fa-bug"></i>Bugs</a>
                 </li>
             </ul>
-        </li>
+        </li>*@
     </ul>
 </nav>
 
@@ -78,7 +78,7 @@
                              @foreach (var SubMenu in MenusAndSubMenu.CollectionSubMenu)
                              {
                                  <li>
-                                     <a href="@String.Format(@"{0}/{1}", SubMenu.CONTROLLER, SubMenu.ACTION)">@((!String.IsNullOrEmpty(SubMenu.ICONE)) ? Html.Raw(String.Format("<i class=\"fa {0}\"></i> {1}",SubMenu.ICONE, SubMenu.NOME)) : Html.Raw(String.Format("{1}", SubMenu.NOME)))</a>
+                                     <a href="@String.Format(@"{0}{1}", SubMenu.CONTROLLER, SubMenu.ACTION)">@((!String.IsNullOrEmpty(SubMenu.ICONE)) ? Html.Raw(String.Format("<i class=\"fa {0}\"></i> {1}",SubMenu.ICONE, SubMenu.NOME)) : Html.Raw(String.Format("{1}", SubMenu.NOME)))</a>
                                  </li>  
                              }
                          </ul>

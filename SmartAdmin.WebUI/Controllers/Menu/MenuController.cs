@@ -13,6 +13,7 @@ namespace SmartAdmin.WebUI.Controllers
 {
     public class MenuController : BaseController
     {
+        [Authorize]
         [AuthorizedUser]
         public ActionResult Index(int? Page)
         {
@@ -23,10 +24,19 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [AuthorizedUser]
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(int Id, int? Page)
         {
-            var MenuDominio = new Menu(); 
-            return View(MenuDominio.GetItem(_ => _.ID == Id));
+            var MenuDominio = new Menu();
+            var Model = MenuDominio.GetItem(_ => _.ID == Id);
+            var CollectionSubMenu = MenuDominio.GetList(_ => _.COD_MENU_PAI == Id); 
+            var ModelView = new SmartAdmin.WebUI.ModelView.MenuModelView();
+
+            ModelView.Menu = Model;
+            ModelView.CollectionSubMenu = CollectionSubMenu;
+
+            //var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
+            //ModelView.CollectionSubMenu.ToPagedList(CurrentPage, PageSize);
+            return View(ModelView); 
         } 
                     
         [HttpPost]

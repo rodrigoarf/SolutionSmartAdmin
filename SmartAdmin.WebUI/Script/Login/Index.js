@@ -2,18 +2,15 @@
 
     var validation = true;
 
-    $("#smart-form-login input").each(function (index) {
-
+    $("#smart-form-login input").each(function (index) { 
         var input = $(this);
-
         if (input.attr('name') == 'LOGIN') {
             if ($(this).val() == '') {
                 PrintAlert('Você deve preencher o campo Usuário!');
                 validation = false;
                 return (false);
             }
-        }
-
+        } 
         if (input.attr('name') == 'SENHA') {
             if ($(this).val().length < 1) {
                 PrintAlert('Você deve preencher o campo Senha!');
@@ -26,6 +23,11 @@
     if (!validation) { return (false) }
 });
 
+$('#REMEMBER').click(function () {
+    var Check = $(this).is(':checked');
+    if (Check == true) { $('#Remind').val("true"); }
+    else { $('#Remind').val("false"); }
+});
 
 function PrintAlert(alert) {
     $.SmartMessageBox({
@@ -34,3 +36,4 @@ function PrintAlert(alert) {
         buttons: '[Voltar]'
     });
 }
+
