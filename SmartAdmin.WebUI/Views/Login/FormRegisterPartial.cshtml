@@ -3,8 +3,9 @@
 
 @using (Html.BeginForm("SaveForApproval", "Login", FormMethod.Post, new { @id = "smart-form-create", @class = "smart-form client-form" }))
 {  
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "A"})
-    @Html.HiddenFor(model => model.DTH_CRIACAO, new { id= "DTH_CRIACAO", Value = DateTime.Now })
+    @Html.HiddenFor(model => model.DTH_CRIACAO, new { id= "DTH_CRIACAO", Value = DateTime.Now.ToString() })
     <header>Cadastro de Usuários</header> 
     <fieldset>
         <section>
@@ -50,8 +51,22 @@
             </label>
         </section>
         <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
-            <label class="select">   
-                @HtmlControls.DropDownListCustomUF("UF", EInputUF.None, new { @tabindex = "8" })
+            <label class="select">
+                @{
+                    var EnumResult = EInputUF.None;
+
+                    if (Model.UF == null)
+                    {
+                        EnumResult = EInputUF.None;
+                    }
+                    else
+                    {
+                        foreach (EInputUF Item in Enum.GetValues(typeof(EInputUF)))
+                        { if (Model.UF == Item.ToString()) { EnumResult = Item; } }
+                    }
+                 }
+
+                 @HtmlControls.DropDownListCustomUF("UF", EnumResult, new { @tabindex = "8" })
                 <i></i>
             </label>
         </section>
@@ -63,8 +78,8 @@
         </section>
 
         <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
-            <label class="select">   
-                @HtmlControls.DropDownListCustomPais("PAIS", null, new { @tabindex = "10" })
+            <label class="select"> 
+                 @HtmlControls.DropDownListCustomPais("PAIS", (Model.PAIS == null) ? string.Empty : Model.PAIS, new { @tabindex = "10" })
                 <i></i>
             </label>
         </section>
@@ -79,7 +94,7 @@
         <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
             <label class="input">
                 <i class="icon-append fa fa-user"></i>
-                @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Informe o Login", @tabindex = "12", @class="text-lowercase" })
+                @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Informe o Login", @tabindex = "12", @class="text-lowercase", @maxlength="14" })
                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe o Login!</b></label>
         </section>
         <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">

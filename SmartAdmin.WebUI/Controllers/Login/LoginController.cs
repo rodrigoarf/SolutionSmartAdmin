@@ -86,14 +86,27 @@ namespace SmartAdmin.WebUI.Controllers
                 var ModelExists = UsuarioDominio.IsExistsByDocument(Model.CPF_CNPJ.Trim());
 
                 if (ModelExists == null)
-                {
+                {    
+                    if (CheckInitialValues(Model))
+                    {
+                        TempData["Mensagem"] = String.Format("O campo login deve iniciar com <span style='color:#10e4ea;'>3 letras</span>, após isso números e letras são permitidos", Model.LOGIN);
+                        TempData["Model"] = Model;
+                        return (RedirectToAction("Registro"));
+                    }
+                    else if (Model.LOGIN.Length <= 7)
+                    {
+                        TempData["Mensagem"] = String.Format("O campo login contém apenas <span style='color:#10e4ea;'>{0} caracteres</span>, é esperado entre <span style='color:#10e4ea;'>7</span> e <span style='color:#10e4ea;'>14</span> caracteres.", Model.LOGIN.Length);
+                        TempData["Model"] = Model;
+                        return (RedirectToAction("Registro"));
+                    }
+                    
                     UsuarioDominio.Save(Model);
                     TempData["Mensagem"] = String.Format("Usuário <span style='color:#10e4ea;'>{0}</span> salvo com sucesso!", Model.LOGIN);
                     return (RedirectToAction("Registro"));
                 }
                 else
                 {
-                    TempData["Mensagem"] = String.Format("Documento informado ja inexistente no sistema, infome outro login ou e-mail!");
+                    TempData["Mensagem"] = String.Format("<span style='color:#10e4ea;'>Documento</span> informado ja existente no sistema, informe outro Cnpj ou Cpf!");
                     TempData["Model"] = Model;
                     return (RedirectToAction("Registro"));
                 }
@@ -104,6 +117,21 @@ namespace SmartAdmin.WebUI.Controllers
                 TempData["Model"] = Model;
                 return (RedirectToAction("Registro"));
             }
+        }
+
+        private static bool CheckInitialValues(UsuarioDto Model)
+        {
+            var CheckValues = Model.LOGIN.ToString().Substring(0, 3).ToCharArray();
+            var IsNumeric = false;
+            int Inteiro;
+
+            for (int i = 0; i < CheckValues.Length; i++)
+            {
+                IsNumeric = int.TryParse(CheckValues[i].ToString(), out Inteiro);
+                if (IsNumeric) { break; }
+            } 
+     
+            return (IsNumeric);
         }
 
         [HttpPost]

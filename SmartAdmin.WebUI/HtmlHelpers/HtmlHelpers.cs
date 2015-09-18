@@ -320,7 +320,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             HtmlControl.Append(String.Format("<select id=\"{0}\" name=\"{0}\" {1}>", Id, Atributes));
             HtmlControl.Append("<option value=\"\" " + ((String.IsNullOrEmpty(DefaultValue)) ? "selected" : string.Empty) + ">Pais...</option>");  
             HtmlControl.Append("<option value=\"Afghanistan\" " + ((!String.IsNullOrEmpty(DefaultValue)) ? ((DefaultValue == "Afghanistan") ? "selected" : string.Empty) : string.Empty) + ">Afghanistan</option>");
-            HtmlControl.Append("<option value=\"Åland Islands\" " + ((!String.IsNullOrEmpty(DefaultValue)) ? ((DefaultValue == "Åland Islands") ? "selected" : string.Empty) : string.Empty) + ">Åland Islands</option>");
+            HtmlControl.Append("<option value=\"Aland Islands\" " + ((!String.IsNullOrEmpty(DefaultValue)) ? ((DefaultValue == "Aland Islands") ? "selected" : string.Empty) : string.Empty) + ">Åland Islands</option>");
             HtmlControl.Append("<option value=\"Albania\" " + ((!String.IsNullOrEmpty(DefaultValue)) ? ((DefaultValue == "Albania") ? "selected" : string.Empty) : string.Empty) + ">Albania</option>");
             HtmlControl.Append("<option value=\"Algeria\" " + ((!String.IsNullOrEmpty(DefaultValue)) ? ((DefaultValue == "Algeria") ? "selected" : string.Empty) : string.Empty) + ">Algeria</option>");
             HtmlControl.Append("<option value=\"American Samoa\" " + ((!String.IsNullOrEmpty(DefaultValue)) ? ((DefaultValue == "American Samoa") ? "selected" : string.Empty) : string.Empty) + ">American Samoa</option>");

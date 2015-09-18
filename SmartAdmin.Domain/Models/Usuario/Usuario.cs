@@ -24,6 +24,10 @@ namespace SmartAdmin.Domain
             {
                 var Crypt = new SmartAdmin.Domain.Security.Cryptography();
                 model.SENHA = Crypt.Encrypt(model.SENHA);
+                
+                model.NOME = model.NOME.ToUpper();
+                model.EMAIL = model.EMAIL.ToLower();
+                model.LOGIN = model.LOGIN.ToLower();                      
 
                 _unitOfWork.UsuarioRepository.Save(model);
             }

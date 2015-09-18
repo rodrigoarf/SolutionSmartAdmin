@@ -2,6 +2,14 @@
 
 $('#btnSaveUsuario').click(function () {
     FormValidation('#smart-form-create');
+});  
+
+$('#LOGIN').keypress(function (e) {
+    var Regex = new RegExp("^[a-zA-Z0-9]+$");
+    var Str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (Regex.test(Str)) { return true; }
+    e.preventDefault();
+    return false;
 });
 
 function FormValidation(form) {
@@ -18,7 +26,7 @@ function FormValidation(form) {
             CEP: { required: true },
             CPF_CNPJ: { required: true },
             PAIS: { required: true },
-            LOGIN: { required: true },
+            LOGIN: { required: true, maxlength: 14 },
             SENHA: { required: true }
         },
         messages: {
@@ -225,3 +233,5 @@ jQuery.extend(jQuery.validator.messages, {
     max: null,
     min: null
 });
+
+$('#extr-page-header-space').hide();

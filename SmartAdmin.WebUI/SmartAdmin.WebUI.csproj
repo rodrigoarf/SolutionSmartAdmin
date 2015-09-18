@@ -777,9 +777,7 @@
     <Content Include="Content\js\plugin\jquery-valida-document\valida.document.js" />
     <Content Include="Content\js\plugin\jquery-validate\jquery.validate.min.js" />
     <Content Include="Content\js\plugin\jquery-icheck\jquery.icheck.js" />
-    <Content Include="Content\js\plugin\jquery-webcam\jquery.webcam.js" />
-    <Content Include="Content\js\plugin\jquery-webcam\jscam.swf" />
-    <Content Include="Content\js\plugin\jquery-webcam\jscam_canvas_only.swf" />
+    <Content Include="Content\js\plugin\jquery-webcam\webcam.js" />
     <Content Include="Content\js\plugin\js-migrate\jquery-migrate-1.2.1.min.js" />
     <Content Include="Content\js\plugin\knob\jquery.knob.min.js" />
     <Content Include="Content\js\plugin\markdown\bootstrap-markdown.min.js" />
