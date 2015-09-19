@@ -2,7 +2,7 @@
 @model PagedList.IPagedList<SmartAdmin.Dto.MenuDto>  
 <header>
     <span class="widget-icon"><i class="fa fa-edit"></i></span>
-    <h2>Menus do Sistema</h2>
+    <h2>Categorias de Menus do Sistema</h2>
 </header>
 <div>
     <div class="widget-body no-padding">
@@ -12,8 +12,6 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="vertical-align: top;">Nome do Menu</th>
-                            <th class="text-center" style="vertical-align: top; width: 200px;">Controller</th>
-                            <th class="text-center" style="vertical-align: top; width: 200px;">Action</th>
                             <th class="text-center" style="vertical-align: top; width: 90px;">Status</th>
                             <th class="text-center" style="vertical-align: top; width: 90px;">Ações</th>
                         </tr>
@@ -23,8 +21,6 @@
                         {
                             <tr>
                                 <td class="text-left">@item.NOME</td>
-                                <td class="text-left">@item.CONTROLLER</td>
-                                <td class="text-left">@item.ACTION</td>
                                 <td class="text-center">@((item.STATUS == "A") ? "Ativo" : "Inativo")</td>
                                 <td class="text-center">
                                     <a href="/Menu/Edit/@(item.ID)" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>

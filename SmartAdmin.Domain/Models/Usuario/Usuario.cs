@@ -78,12 +78,28 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Deleta um objeto
+        /// </summary>
+        public void Delete(Expression<Func<UsuarioDto, bool>> filter)
+        {
+            var model = _unitOfWork.UsuarioRepository.GetItem(filter);
+            _unitOfWork.UsuarioRepository.Delete(model);
+        }
+
+        /// <summary>
+        /// Deleta uma lista de objetos
+        /// </summary>
+        public void DeleteAll(List<UsuarioDto> collection)
+        {
+            foreach (var item in collection) { _unitOfWork.UsuarioRepository.Delete(item); }
+        }
+
+        /// <summary>
         /// Retorna um único objeto<T> buscado por expressão Lambda
         /// </summary>
         public UsuarioDto GetItem(Expression<Func<UsuarioDto, bool>> filter)
         {
-            UsuarioDto model;
-            model = _unitOfWork.UsuarioRepository.GetItem(filter);
+            var model = _unitOfWork.UsuarioRepository.GetItem(filter);
             return (model);
         }
 
@@ -92,8 +108,7 @@ namespace SmartAdmin.Domain
         /// </summary>
         public List<UsuarioDto> GetList(Expression<Func<UsuarioDto, bool>> filter = null)
         {
-            List<UsuarioDto> collection;
-            collection = _unitOfWork.UsuarioRepository.GetList(filter);
+            var collection = _unitOfWork.UsuarioRepository.GetList(filter);
             return (collection);
         }
 

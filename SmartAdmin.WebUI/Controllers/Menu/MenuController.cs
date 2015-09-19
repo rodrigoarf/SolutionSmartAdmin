@@ -34,8 +34,6 @@ namespace SmartAdmin.WebUI.Controllers
             ModelView.Menu = Model;
             ModelView.CollectionSubMenu = CollectionSubMenu;
 
-            //var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
-            //ModelView.CollectionSubMenu.ToPagedList(CurrentPage, PageSize);
             return View(ModelView); 
         } 
                     
@@ -76,6 +74,37 @@ namespace SmartAdmin.WebUI.Controllers
             var Session = new SessionManager();
             var Model = Session.GetUsuario();
             return View("~/Views/Shared/_MenuPartial.cshtml", Model);
+        }
+                          
+        [AuthorizedUser]
+        public PartialViewResult EditSubMenuPartial(int IdItem, int IdSubItem)
+        {
+            var MenuDomain = new Menu();
+            var Model = MenuDomain.GetItem(_ => _.ID == IdItem && _.COD_MENU_PAI == IdSubItem);
+            return (PartialView((Model == null) ? new MenuDto() : Model));
+        }
+
+        [AuthorizedUser]
+        public PartialViewResult DeleteSubMenuPartial(int IdItem, int IdSubItem)
+        {
+            var MenuDomain = new Menu();
+            var Model = MenuDomain.GetItem(_ => _.ID == IdItem && _.COD_MENU_PAI == IdSubItem);
+            return (PartialView((Model == null) ? new MenuDto() : Model));
+        }
+
+        [AuthorizedUser]
+        public bool Delete(int IdItem, int IdSubItem)
+        {
+            try
+            {
+                var MenuDomain = new Menu();
+                MenuDomain.Delete(_ => _.ID == IdItem && _.COD_MENU_PAI == IdSubItem);
+                return (true);
+            }
+            catch (Exception)
+            {
+                return (false);
+            }                
         }
 
     }

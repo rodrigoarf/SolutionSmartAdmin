@@ -70,7 +70,7 @@ namespace SmartAdmin.WebUI.Controllers
                 return (RedirectToAction("Index", "Usuario"));
             }
         }
-                
+              
         #region Webcam methods
 
         [AuthorizedUser]

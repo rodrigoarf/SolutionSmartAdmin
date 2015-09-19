@@ -40,15 +40,23 @@
 
 </div>
 
-<!-- #modal-menu-create -->
-<div class="modal fade" id="modal-menu-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    @Html.Partial("CreateSubMenuPartial", new SmartAdmin.Dto.MenuDto())
+<!-- #modal de criação -->
+<div class="modal fade" id="modal-submenu-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @Html.Partial("CreateSubMenuPartial", new SmartAdmin.Dto.MenuDto() { COD_MENU_PAI = Model.Menu.ID })
 </div> 
 
-<script src="~/Script/Menu/Edit.js" type="text/javascript"></script>
+<!-- #modal de edição -->
+<div class="modal fade" id="modal-submenu-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     @{Html.RenderAction("EditSubMenuPartial","Menu", new { IdItem = 0, IdSubItem = 0 }); }
+</div>   
 
-
-
+<!-- #modal de deleção -->
+<div class="modal fade" id="modal-submenu-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     @{Html.RenderAction("DeleteSubMenuPartial", "Menu", new { IdItem = 0, IdSubItem = 0 }); }
+</div>     
+      
+<!-- scripts -->
+<script src="~/Script/Menu/Index.js"></script>
 
 
 

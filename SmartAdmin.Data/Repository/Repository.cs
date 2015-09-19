@@ -105,11 +105,6 @@ namespace SmartAdmin.Data.Generic
         {
             try
             {
-                _dbSet.Add(entity);
-
-                if (_context.Entry(entity).State == EntityState.Detached)
-                    _dbSet.Attach(entity);
-
                 _dbSet.Remove(entity);
                 _context.SaveChanges();
             }

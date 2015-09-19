@@ -281,16 +281,6 @@
             $('#say-cheese-snapshots').empty();
         });
 
-        $('#modal-voltar').click(function () {
-            $('#say-cheese-container').empty();
-            $('#say-cheese-snapshots').empty();
-        });
-
-        $('#closeWebcam').click(function () {
-            $('#say-cheese-container').empty();
-            $('#say-cheese-snapshots').empty();
-        });
-
         $('#start-webcam').click(function () {              
             InitWebcam();
             $('#say-cheese-container-snapshots').empty();
@@ -330,6 +320,12 @@
                     $('#modal-voltar').on('click', function (evt) {
                         sayCheese.off();
                      });
+                });
+
+                $('#closeWebcam, #modal-voltar').on('click', function () {
+                    sayCheese.stop();
+                    $('#say-cheese-container').empty();
+                    $('#say-cheese-snapshots').empty();
                 });
 
                 sayCheese.on('error', function (error) {

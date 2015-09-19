@@ -451,11 +451,6 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
             TextClass.AppendLine("            {");
-            TextClass.AppendLine("                _dbSet.Add(entity);");
-            TextClass.AppendLine("");
-            TextClass.AppendLine("                if (_context.Entry(entity).State == EntityState.Detached)");
-            TextClass.AppendLine("                    _dbSet.Attach(entity);");
-            TextClass.AppendLine("");
             TextClass.AppendLine("                _dbSet.Remove(entity);");
             TextClass.AppendLine("                _context.SaveChanges();");
             TextClass.AppendLine("            }");

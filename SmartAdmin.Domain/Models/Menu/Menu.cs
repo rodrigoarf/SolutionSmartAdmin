@@ -49,6 +49,23 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Deleta um objeto
+        /// </summary>
+        public void Delete(Expression<Func<MenuDto, bool>> filter)
+        {
+            var model = _unitOfWork.MenuRepository.GetItem(filter);
+            _unitOfWork.MenuRepository.Delete(model);
+        }
+
+        /// <summary>
+        /// Deleta uma lista de objetos
+        /// </summary>
+        public void DeleteAll(List<MenuDto> collection)
+        {
+            foreach (var item in collection) { _unitOfWork.MenuRepository.Delete(item); }
+        }
+
+        /// <summary>
         /// Retorna um único objeto<T> buscado por expressão Lambda
         /// </summary>
         public MenuDto GetItem(Expression<Func<MenuDto, bool>> filter)

@@ -7,8 +7,8 @@
             <h4 class="modal-title" id="myModalLabel">Cadastrar menu</h4>
         </div>
         @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "smart-form-create" }))
-        {
-            <input type="hidden" name="COD_MENU_PAI" id="COD_MENU_PAI" value="0" />
+        {        
+            @Html.Hidden("COD_MENU_PAI", "0", new{ @id="COD_MENU_PAI" })
             <div class="modal-body" style="padding-bottom:0px;">
                 <div class="widget-body no-padding">
                     <div class="smart-form">
@@ -62,20 +62,13 @@
                                         <i></i>
                                     </label>
                                 </section>
-
-                                <section class="col col-6">
-                                    <label class="checkbox">
-                                        <input type="checkbox" id="MENUPAI" name="MENUPAI" checked="">
-                                        <i></i>Menu atual é um menu pai ?
-                                    </label>
-                                </section> 
                             </div>
                         </fieldset>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Voltar</button>
                 <button type="submit" class="btn btn-md btn-warning" id="btnSaveMenu"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
             </div>
         }

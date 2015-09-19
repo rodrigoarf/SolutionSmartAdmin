@@ -1,42 +1,56 @@
-﻿@using PagedList.Mvc;
-@*@model PagedList.IPagedList<SmartAdmin.WebUI.ModelView.MenuModelView>  *@
-@model SmartAdmin.WebUI.ModelView.MenuModelView
+﻿@model SmartAdmin.WebUI.ModelView.MenuModelView
 <header>
     <span class="widget-icon"><i class="fa fa-edit"></i></span>
     <h2>SubMenus do menu @(Model.Menu.NOME)</h2>
 </header>
 <div>
-    <div class="widget-body no-padding">
+    <div class="widget-body smart-form no-padding">
         <div class="smart-form">
-            <div class="table-responsive"> 
-                <table class="table table-bordered table-striped table-hover smart-form" style="border: 0;">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="vertical-align: top;">Nome do SubMenu</th>
-                            <th class="text-center" style="vertical-align: top; width: 200px;">Controller</th>
-                            <th class="text-center" style="vertical-align: top; width: 200px;">Action</th>
-                            <th class="text-center" style="vertical-align: top; width: 90px;">Status</th>
-                            <th class="text-center" style="vertical-align: top; width: 90px;">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.CollectionSubMenu)
-                        {
+            @if (Model.CollectionSubMenu.Count == 0)
+            { 
+                <div class="alert alert-info no-margin fade in">
+                    <i class="fa-fw fa fa-info"></i>
+                    Não existem <strong>submenus</strong> cadastrados para esta categoria de menu. Para inserir <strong>submenus</strong> clique no botão <strong>inserir</strong> ao lado.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover smart-form" style="border: 0;">
+                        <thead>
                             <tr>
-                                <td class="text-left">@item.NOME</td>
-                                <td class="text-left">@item.CONTROLLER</td>
-                                <td class="text-left">@item.ACTION</td>
-                                <td class="text-center">@((item.STATUS == "A") ? "Ativo" : "Inativo")</td>
-                                <td class="text-center">
-                                    <a id="menu-edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                    <a id="menu-delete"  class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>  
-                        }
-                    </tbody>
-                </table>
-            </div>
+                                <th class="text-center" style="vertical-align: top;">Nome do SubMenu</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Controller</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Action</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Status</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CollectionSubMenu)
+                            {
+                                <tr>
+                                    <td class="text-left">@item.NOME</td>
+                                    <td class="text-left">@item.CONTROLLER</td>
+                                    <td class="text-left">@item.ACTION</td>
+                                    <td class="text-center">@((item.STATUS == "A") ? "Ativo" : "Inativo")</td>
+                                    <td class="text-center">
+                                        <a onclick="OpenModalEdit('@(item.ID)','@(item.COD_MENU_PAI)');" class="btn btn-xs btn-default btnOpenModalEdit"><i class="fa fa-pencil"></i></a>
+                                        <a onclick="OpenModalDelete('@(item.ID)','@(item.COD_MENU_PAI)')" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
         </div>
+        <footer class="text-right" style="background: rgba(248,248,248,.9);">
+            <button type="submit" class="btn btn-warning btnOpenModalCreate">
+                Inserir
+            </button>
+        </footer>
     </div>
-</div> 
+</div>
+
 
