@@ -6,7 +6,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Cadastrar novo Submenu</h4>
         </div>
-        @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "smart-form-create-submenu" }))
+        @using (Html.BeginForm("SaveOrEditSubMenu", "Menu", FormMethod.Post, new { @id = "smart-form-create-submenu" }))
         {
             @Html.AntiForgeryToken();  
             @Html.HiddenFor(model => Model.COD_MENU_PAI, new { id = "COD_MENU_PAI" })
@@ -52,6 +52,9 @@
                                             <i class="fa fa-warning txt-color-teal"></i> Icone do menu no sistema 
                                         </b>
                                     </label>
+                                    <div class="note">
+                                        <strong>Nota:</strong> Insira o padrão de icone font-awesome veja a lista <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">aqui</a>.
+                                    </div>
                                 </section>  
 
                         </fieldset>

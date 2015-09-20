@@ -1,75 +1,21 @@
-﻿$('.btnOpenModalCreate').click(function () {
-    $('#modal-submenu-create').modal('show');
-});
+﻿$('#btnCreateMenuMain').click(function () {
+    FormValidation('#smart-form-create');
+});  
 
-$('#btnSaveSubMenu').click(function () {
-    FormValidation('#smart-form-create-submenu');
-});
-
-$('#btnEditSubMenu').click(function () {
-    FormValidation('#smart-form-edit-submenu');
-});
-
-function OpenModalDelete(IdItem, IdSubItem)
-{
-    $.ajax({
-        url: '/Menu/DeleteSubMenuPartial?IdItem=' + IdItem + '&IdSubItem=' + IdSubItem,
-        cache: false,
-        success: function (html) {
-            //console.log(html);
-            $("#modal-submenu-delete").html(html);
-            $("#modal-submenu-delete").modal('show');
-
-            // delegate On
-            $("#modal-submenu-delete").on("click", "#btnDeleteSubMenu", function () {
-                $.ajax({
-                    url: '/Menu/Delete?IdItem=' + IdItem + '&IdSubItem=' + IdSubItem,
-                    cache: false,
-                    success: function (html) {
-                        console.log(html);                           
-                        //$("#modal-submenu-delete").modal('hide');
-                    }
-                });
-            });
-
-
-        }
-    });
-}
-
-function OpenModalEdit(IdItem, IdSubItem)
-{
-    $.ajax({
-        url: '/Menu/EditSubMenuPartial?IdItem=' + IdItem + '&IdSubItem=' + IdSubItem,
-        cache: false,
-        success: function (html) {
-            //console.log(html);
-            $("#modal-submenu-edit").html(html);
-            $("#modal-submenu-edit").modal('show');              
-
-            // delegate On
-            $("#modal-submenu-edit").on("click", "#btnSaveSubMenu", function () {
-                FormValidation('#smart-form-edit-submenu');
-            });   
-        }
-    });
-}
-
-   
 function FormValidation(form)
 {
     jQuery(form).validate({
         rules: {
             NOME: { required: true },
-            CONTROLLER: { required: true },
-            ACTION: { required: true },
+            //CONTROLLER: { required: true },
+            //ACTION: { required: true },
             ICONE: { required: true },
             STATUS: { required: true }
         },
         messages: {
             NOME: { required: null },
-            CONTROLLER: { required: null },
-            ACTION: { required: null },
+            //CONTROLLER: { required: null },
+            //ACTION: { required: null },
             ICONE: { required: null },
             STATUS: { required: null }
         },
@@ -87,14 +33,14 @@ function FormValidation(form)
                         PrintAlert('Informe o <span style=\"color:#10e4ea;\">Nome</span> do menu.');
                         return (false);
                         break;
-                    case 'CONTROLLER':
-                        PrintAlert('Informe a <span style=\"color:#10e4ea;\">Controller</span> do menu.');
-                        return (false);
-                        break;
-                    case 'ACTION':
-                        PrintAlert('Informe a <span style=\"color:#10e4ea;\">Action</span> do menu.');
-                        return (false);
-                        break;
+                        //case 'CONTROLLER':
+                        //    PrintAlert('Informe a <span style=\"color:#10e4ea;\">Controller</span> do menu.');
+                        //    return (false);
+                        //    break;
+                        //case 'ACTION':
+                        //    PrintAlert('Informe a <span style=\"color:#10e4ea;\">Action</span> do menu.');
+                        //    return (false);
+                        //    break;
                     case 'ICONE':
                         PrintAlert('Informe o <span style=\"color:#10e4ea;\">Icone</span>.');
                         return (false);
@@ -110,7 +56,7 @@ function FormValidation(form)
             form.submit();
         }
     });
-}    
+}
 
 function PrintAlert(alert) {
     $.SmartMessageBox({

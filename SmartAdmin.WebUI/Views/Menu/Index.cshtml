@@ -37,17 +37,5 @@
 <div class="modal fade" id="modal-menu-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     @Html.Partial("CreatePartial", new SmartAdmin.Dto.MenuDto())
 </div>
-
-<script type="text/javascript">
-
-    runAllForms()
-
-    $(document).ready(function () {
-        var pagefunction = function () {
-            $(".datemask").mask("99/99/9999");
-        };
-
-        pagefunction();
-    });        
-
-</script>
+<!-- scripts -->
+<script src="~/Script/Menu/Index.js"></script>

@@ -46,9 +46,8 @@
             }
         </div>
         <footer class="text-right" style="background: rgba(248,248,248,.9);">
-            <button type="submit" class="btn btn-warning btnOpenModalCreate">
-                Inserir
-            </button>
+            <button onclick="OpenModalCreate('0','@(Model.Menu.ID)');" type="submit" class="btn btn-warning">Inserir</button>
+            <a href="/Menu/Index" class="btn btn-primary">Voltar</a>            
         </footer>
     </div>
 </div>

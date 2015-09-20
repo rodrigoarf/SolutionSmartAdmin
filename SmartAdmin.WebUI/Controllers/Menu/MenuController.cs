@@ -43,9 +43,10 @@ namespace SmartAdmin.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var MenuDominio = new Menu(); 
-                if (Model.ID > 0) { MenuDominio.Edit(Model); } else { MenuDominio.Save(Model); }  
+                var MenuDominio = new Menu();
+                if (Model.ID > 0) { MenuDominio.Edit(Model); } else { MenuDominio.Save(Model); }
             }
+
             return RedirectToAction("Index", new { Page = 1 });
         }
 
@@ -75,6 +76,46 @@ namespace SmartAdmin.WebUI.Controllers
             var Model = Session.GetUsuario();
             return View("~/Views/Shared/_MenuPartial.cshtml", Model);
         }
+
+        [HttpPost]
+        [AuthorizedUser]
+        public ActionResult SaveOrEditSubMenu(MenuDto Model)
+        {
+            var Retorno = String.Empty;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var MenuDominio = new Menu();
+                    if (Model.ID > 0)
+                    {
+                        MenuDominio.Edit(Model);
+                        Retorno = "Menu <span style='color:#10e4ea;'>atualizado</span> com Sucesso!";
+                    }
+                    else
+                    {
+                        MenuDominio.Save(Model);
+                        Retorno = "Menu <span style='color:#10e4ea;'>salvo</span> com Sucesso!";
+                    }
+                }
+                else { Retorno = "Erro ao inserir ou atualizar menu, contate o administrador!"; }
+            }
+            catch (Exception Ex)
+            {
+                Retorno = "Erro ao executar ação de Salva ou de Editar.<br/>Erro: " + Ex.Message;
+                return Content(Retorno);
+            }
+
+            return Content(Retorno);
+        }
+
+        [AuthorizedUser]
+        public PartialViewResult CreateSubMenuPartial(int IdItem, int IdSubItem)
+        {
+            var Model = new MenuDto() { ID = IdItem, COD_MENU_PAI = IdSubItem };
+            return (PartialView(Model));
+        }
                           
         [AuthorizedUser]
         public PartialViewResult EditSubMenuPartial(int IdItem, int IdSubItem)
@@ -92,19 +133,23 @@ namespace SmartAdmin.WebUI.Controllers
             return (PartialView((Model == null) ? new MenuDto() : Model));
         }
 
+        [HttpPost]
         [AuthorizedUser]
-        public bool Delete(int IdItem, int IdSubItem)
+        public string DeleteSubMenu(int IdItem, int IdSubItem)
         {
+            var Retorno = String.Empty;
             try
             {
                 var MenuDomain = new Menu();
                 MenuDomain.Delete(_ => _.ID == IdItem && _.COD_MENU_PAI == IdSubItem);
-                return (true);
+                Retorno = "Menu <span style='color:#10e4ea;'>apagado</span> com sucesso!";
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                return (false);
-            }                
+                Retorno = "Erro ao apagar menu contate o administrador!<br/>Erro:" + Ex.Message;
+                return (Retorno);
+            } 
+            return (Retorno);
         }
 
     }

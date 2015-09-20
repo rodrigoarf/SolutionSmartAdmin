@@ -7,7 +7,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Editar Submenu</h4>
         </div>
-        @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "modal-submenu-delete" }))
+        @using (Html.BeginForm(String.Empty,String.Empty,FormMethod.Post, new { @id = "modal-submenu-delete" }))
         {
             @Html.AntiForgeryToken();  
             @Html.HiddenFor(model => Model.ID, new { id = "ID" })
