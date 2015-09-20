@@ -23,6 +23,9 @@ namespace SmartAdmin.Generator
             Storage.Add("MENU", new ClassConfig() { ClassName = "Menu", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
             Storage.Add("MENU_USUARIO", new ClassConfig() { ClassName = "MenuUsuario", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
             Storage.Add("INBOX", new ClassConfig() { ClassName = "Inbox", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("BANCO", new ClassConfig() { ClassName = "Banco", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            Storage.Add("CEDENTE", new ClassConfig() { ClassName = "Cedente", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
+            //Storage.Add("BOLETO", new ClassConfig() { ClassName = "Boleto", NameSpaceDto = "SmartAdmin.Dto", NameSpaceMapper = "SmartAdmin.Data.Mapper", NameSpaceDomain = "SmartAdmin.Domain", NameSpaceService = "SmartAdmin.Service" });
 
             return (Storage);
         }

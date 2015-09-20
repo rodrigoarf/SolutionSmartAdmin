@@ -141,14 +141,13 @@
     <Compile Include="Controllers\Acesso\AcessoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Bugs\BugsController.cs" />
+    <Compile Include="Controllers\Financeiro\FinanceiroController.cs" />
     <Compile Include="Controllers\Inbox\InboxController.cs" />
     <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
     <Compile Include="Infrastructure\ActionFilters\AuthorizedUser.cs" />
     <Compile Include="Infrastructure\Cache\Cache.cs" />
     <Compile Include="Infrastructure\Cache\CacheExtensions.cs" />
     <Compile Include="Infrastructure\Cache\ICache.cs" />
-    <Compile Include="Controllers\Banco\BancoController.cs" />
-    <Compile Include="Controllers\Boleto\BoletoController.cs" />
     <Compile Include="Controllers\Historico\HistoricoController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Menu\MenuController.cs" />
@@ -823,9 +822,7 @@
     <Content Include="Content\sound\voice_off.mp3" />
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Global.asax" />
-    <Content Include="Script\Boleto\Create.js" />
-    <Content Include="Script\Boleto\Index.js" />
-    <Content Include="Script\Banco\Index.js" />
+    <Content Include="Script\Financeiro\Banco.js" />
     <Content Include="Script\Historico\Index.js" />
     <Content Include="Script\Login\Registro.js" />
     <Content Include="Script\Login\Create.js" />
@@ -952,33 +949,6 @@
     <Content Include="Views\Historico\FiltroPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Boleto\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Boleto\DadosDoCedente.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Boleto\FiltroPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Boleto\GridPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Boleto\CreatePartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Banco\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Banco\CreatePartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Banco\FiltroPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Banco\GridPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SmartAdmin.Data\SmartAdmin.Data.csproj">
       <Project>{8451c4fb-9d96-4d82-8172-473022a93d03}</Project>
       <Name>SmartAdmin.Data</Name>
@@ -1044,6 +1014,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Menu\DeleteSubMenuPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\Boleto.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\Cedente.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\Banco.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\BoletoFiltroPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\BoletoGridPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\CedenteEditPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\BancoGridPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\BancoFiltroPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\BancoCreatePartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

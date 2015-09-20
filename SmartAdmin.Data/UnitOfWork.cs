@@ -24,6 +24,8 @@ namespace SmartAdmin.Data
         private Repository<MenuDto> _menuRepository;
         private Repository<MenuUsuarioDto> _menuusuarioRepository;
         private Repository<InboxDto> _inboxRepository;
+        private Repository<BancoDto> _bancoRepository;
+        private Repository<CedenteDto> _cedenteRepository;
 
         public Repository<UsuarioDto> UsuarioRepository
         {
@@ -155,6 +157,32 @@ namespace SmartAdmin.Data
             }
         }
 
+        public Repository<BancoDto> BancoRepository
+        {
+            get
+            {
+                if (this._bancoRepository == null)
+                {
+                    this._bancoRepository = new Repository<BancoDto>(_context);
+                }
+
+                return _bancoRepository;
+            }
+        }
+
+        public Repository<CedenteDto> CedenteRepository
+        {
+            get
+            {
+                if (this._cedenteRepository == null)
+                {
+                    this._cedenteRepository = new Repository<CedenteDto>(_context);
+                }
+
+                return _cedenteRepository;
+            }
+        }
+
         public void Dispose()
         {
             Clear(true);
@@ -178,6 +206,8 @@ namespace SmartAdmin.Data
                     _menuRepository = null;
                     _menuusuarioRepository = null;
                     _inboxRepository = null;
+                    _bancoRepository = null;
+                    _cedenteRepository = null;
                 }
             }
             _disposed = true;

@@ -50,7 +50,13 @@
     <Compile Include="Models\Acesso\AcessoDto.cs" />
     <Compile Include="Models\Acesso\AcessoDtoValidator.cs" />
     <Compile Include="Models\Acesso\AcessoMapper.cs" />
+    <Compile Include="Models\Banco\BancoDto.cs" />
+    <Compile Include="Models\Banco\BancoDtoValidator.cs" />
+    <Compile Include="Models\Banco\BancoMapper.cs" />
     <Compile Include="Models\Base.cs" />
+    <Compile Include="Models\Cedente\CedenteDto.cs" />
+    <Compile Include="Models\Cedente\CedenteDtoValidator.cs" />
+    <Compile Include="Models\Cedente\CedenteMapper.cs" />
     <Compile Include="Models\Contato\ContatoDto.cs" />
     <Compile Include="Models\Contato\ContatoDtoValidator.cs" />
     <Compile Include="Models\Contato\ContatoMapper.cs" />

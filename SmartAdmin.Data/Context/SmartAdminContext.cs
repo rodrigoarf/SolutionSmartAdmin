@@ -38,6 +38,8 @@ namespace SmartAdmin.Data.Context
         public DbSet<MenuDto> Menu { get; set; }
         public DbSet<MenuUsuarioDto> MenuUsuario { get; set; }
         public DbSet<InboxDto> Inbox { get; set; }
+        public DbSet<BancoDto> Banco { get; set; }
+        public DbSet<CedenteDto> Cedente { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -51,6 +53,8 @@ namespace SmartAdmin.Data.Context
              modelBuilder.Configurations.Add(new MenuMapper());
              modelBuilder.Configurations.Add(new MenuUsuarioMapper());
              modelBuilder.Configurations.Add(new InboxMapper());
+             modelBuilder.Configurations.Add(new BancoMapper());
+             modelBuilder.Configurations.Add(new CedenteMapper());
         }
     }
 }

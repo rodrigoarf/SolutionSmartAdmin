@@ -53,6 +53,8 @@
     <Compile Include="Helpers\Pagination\PagingExtensions.cs" />
     <Compile Include="Helpers\Pagination\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Models\Acesso\Acesso.cs" />
+    <Compile Include="Models\Banco\Banco.cs" />
+    <Compile Include="Models\Cedente\Cedente.cs" />
     <Compile Include="Models\Contato\Contato.cs" />
     <Compile Include="Models\EmailNewletter\EmailNewletter.cs" />
     <Compile Include="Models\EnvioNewletter\EnvioNewletter.cs" />
