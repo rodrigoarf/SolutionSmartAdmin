@@ -376,8 +376,11 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            try");
             TextClass.AppendLine("            {");
-            TextClass.AppendLine("                _dbSet.Add(entity);");
-            TextClass.AppendLine("                _context.SaveChanges();");
+            TextClass.AppendLine("                if (entity != null)");
+            TextClass.AppendLine("                {");
+            TextClass.AppendLine("                    _dbSet.Remove(entity);");
+            TextClass.AppendLine("                    _context.SaveChanges();");
+            TextClass.AppendLine("                } ");
             TextClass.AppendLine("            }");
             TextClass.AppendLine("            catch (System.Data.Entity.Validation.DbEntityValidationException ex)");
             TextClass.AppendLine("            {");

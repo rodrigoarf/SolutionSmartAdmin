@@ -39,3 +39,14 @@
 </div>
 <!-- scripts -->
 <script src="~/Script/Menu/Index.js"></script>
+<script>
+    @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)
+
+    function PrintAlert(alert) {
+        $.SmartMessageBox({
+            title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',
+            content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
+            buttons: '[Voltar]'
+        });
+    }
+</script>

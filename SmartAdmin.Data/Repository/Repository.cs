@@ -105,8 +105,11 @@ namespace SmartAdmin.Data.Generic
         {
             try
             {
-                _dbSet.Remove(entity);
-                _context.SaveChanges();
+                if (entity != null)
+                {
+                    _dbSet.Remove(entity);
+                    _context.SaveChanges();
+                } 
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
@@ -118,7 +121,7 @@ namespace SmartAdmin.Data.Generic
                     foreach (var error in failure.ValidationErrors)
                     {
                         sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-                        sb.AppendLine();
+                        sb.AppendFormat("<br/>");
                     }
                 }
 

@@ -9,6 +9,7 @@
         @using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { @id = "smart-form-create" }))
         {        
             @Html.Hidden("COD_MENU_PAI", "0", new{ @id="COD_MENU_PAI" })
+            @Html.Hidden("DTH_CADASTRO", DateTime.Now, new { id = "DTH_CADASTRO" })
             <div class="modal-body" style="padding-bottom:0px;">
                 <div class="widget-body no-padding">
                     <div class="smart-form">

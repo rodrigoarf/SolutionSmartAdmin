@@ -20,6 +20,7 @@ namespace SmartAdmin.Domain
         /// </summary>
         public void Save(BancoDto model)
         {
+            model.NOME = model.NOME.ToUpper();
             model.SIGLA = model.SIGLA.ToUpper();
             _unitOfWork.BancoRepository.Save(model);
         }

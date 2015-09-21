@@ -4,7 +4,6 @@
 @using (Html.BeginForm("Save", "Usuario", FormMethod.Post, new { @id = "smart-form-edit", @class = "smart-form" }))
 {
     @Html.HiddenFor(model => Model.ID, new { id = "ID" })
-    @Html.HiddenFor(model => Model.STATUS, new { id = "STATUS" })
     @Html.HiddenFor(model => Model.DTH_CRIACAO, new { id = "DTH_CRIACAO" })
     @Html.HiddenFor(model => Model.FOTO, new { id = "FOTO" })
     @Html.HiddenFor(model => Model.FLAG_ADM, new { id = "FLAG_ADM" })
@@ -166,7 +165,16 @@
             <section class="col col-6">
                 <h1>Dados de Acesso</h1>
             </section>
-        </div> 
+        </div>
+
+        <div class="row">
+            <section class="col col-3">
+                <label class="select">
+                     @HtmlControls.DropDownListCustomStatus("STATUS", ((Model.STATUS == "A") ? EInputStatus.Ativo : EInputStatus.Inativo))
+                    <i></i>
+                </label>
+            </section>
+        </div>
         <div class="row">
             <section class="col col-3">
                 <label class="input">

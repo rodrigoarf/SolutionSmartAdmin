@@ -10,6 +10,7 @@
         {
             @Html.AntiForgeryToken();  
             @Html.HiddenFor(model => Model.COD_MENU_PAI, new { id = "COD_MENU_PAI" })
+            @Html.Hidden("DTH_CADASTRO", DateTime.Now, new { id = "DTH_CADASTRO" })
             <div class="modal-body" style="padding-bottom:0px;">
                 <div class="widget-body no-padding">
                     <div class="smart-form">

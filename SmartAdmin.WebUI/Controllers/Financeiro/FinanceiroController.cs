@@ -27,14 +27,14 @@ namespace SmartAdmin.WebUI.Controllers.Financeiro
         {
             var CedenteDomain = new Cedente();
             var Model = CedenteDomain.GetItem(_ => _.ID == 1000);
-            return View(Model);
+            return View((Model==null)?new CedenteDto(): Model);
         }
 
         [AuthorizedUser]
-        public ActionResult Banco(int? Page)
+        public ActionResult Banco(int? Page, UsuarioDto Model = null)
         {
             var BancoDomain = new Banco();
-            var Collection = BancoDomain.GetList(_=>_.ID > 0);  
+            var Collection = (Model.NOME == null) ? BancoDomain.GetList(_ => _.ID > 0) : BancoDomain.GetList(_ => _.NOME.Contains(Model.NOME.ToUpper()));  
             var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
 
             ViewBag.Mensagem = (TempData["Mensagem"] as String);
@@ -60,9 +60,8 @@ namespace SmartAdmin.WebUI.Controllers.Financeiro
             }
         }
 
-        [HttpPost]
         [AuthorizedUser]
-        public ActionResult DeleteBanco(int Id)
+        public ActionResult DeletaBanco(int Id)
         {
             try
             {

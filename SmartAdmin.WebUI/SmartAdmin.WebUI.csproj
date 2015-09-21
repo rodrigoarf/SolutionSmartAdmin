@@ -823,6 +823,7 @@
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Global.asax" />
     <Content Include="Script\Financeiro\Banco.js" />
+    <Content Include="Script\Financeiro\Cedente.js" />
     <Content Include="Script\Historico\Index.js" />
     <Content Include="Script\Login\Registro.js" />
     <Content Include="Script\Login\Create.js" />

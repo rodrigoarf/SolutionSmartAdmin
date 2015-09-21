@@ -20,6 +20,8 @@ namespace SmartAdmin.WebUI.Controllers
             var MenuDominio = new Menu(); 
             var Collection = MenuDominio.GetList(_ => _.COD_MENU_PAI == 0);
             var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
+
+            ViewBag.Mensagem = TempData["Mensagem"] as String;
             return View(Collection.ToPagedList(CurrentPage, PageSize));
         }
 
@@ -58,13 +60,13 @@ namespace SmartAdmin.WebUI.Controllers
             var Collection = new List<MenuDto>();
 
             if (!String.IsNullOrEmpty(Model.NOME))
-                Collection = MenuDominio.GetList(null).Where(_ => _.NOME.Contains(Model.NOME)).ToList();
+                Collection = MenuDominio.GetList(null).Where(_ => _.NOME.Contains(Model.NOME) && _.COD_MENU_PAI == 0).ToList();
 
             if (!String.IsNullOrEmpty(Model.STATUS))
-                Collection = MenuDominio.GetList(null).Where(_ => _.STATUS == Model.STATUS).ToList();
+                Collection = MenuDominio.GetList(null).Where(_ => _.STATUS == Model.STATUS && _.COD_MENU_PAI == 0).ToList();
 
             if (String.IsNullOrEmpty(Model.NOME) && (String.IsNullOrEmpty(Model.STATUS)))
-                Collection = MenuDominio.GetList(_ => _.ID > 0).OrderBy(_=>_.NOME).ToList();
+                Collection = MenuDominio.GetList(_ => _.ID > 0 && _.COD_MENU_PAI == 0).OrderBy(_=>_.NOME).ToList();
 
             return View("Index", Collection.ToPagedList(1, PageSize));
         } 
@@ -150,6 +152,25 @@ namespace SmartAdmin.WebUI.Controllers
                 return (Retorno);
             } 
             return (Retorno);
+        }
+                   
+        [AuthorizedUser]
+        public ActionResult DeletaMenu(int IdItem)
+        {
+            try
+            {
+                var MenuDomain = new Menu();
+                MenuDomain.Delete(_ => _.COD_MENU_PAI == IdItem && _.ID > 0);//<-- deleta primeiro os filho
+                MenuDomain.Delete(_ => _.ID == IdItem && _.COD_MENU_PAI == 0);//<-- deleta por ultimo o pai
+
+                TempData["Mensagem"] = "Categoria de menu <span style='color:#10e4ea;'>apaga</span> com sucesso!";
+                return (RedirectToAction("Index", "Menu"));
+            }
+            catch
+            {
+                TempData["Mensagem"] = "Erro ao apagar menu ";
+                return (RedirectToAction("Index","Menu"));
+            }
         }
 
     }
