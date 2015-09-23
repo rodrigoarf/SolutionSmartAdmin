@@ -70,6 +70,79 @@ namespace SmartAdmin.WebUI.Controllers
                 return (RedirectToAction("Index", "Usuario"));
             }
         }
+
+        [HttpPost]
+        [AuthorizedUser]
+        public ActionResult SavePermission(UsuarioDto Model)
+        {
+            var UsuarioDomain = new Usuario();
+            var ModelCheck = UsuarioDomain.GetItem(_ => _.LOGIN == Model.LOGIN && _.EMAIL == Model.EMAIL && _.ID != Model.ID);
+
+            if (ModelCheck != null)
+            {
+                TempData["Mensagem"] = string.Format("O <span style='color:#10e4ea;'>email</span> ou <span style='color:#10e4ea;'>login</span> informado ja estão cadastrados por outro usuário!");
+                return (RedirectToAction("Index", "Usuario"));
+            }
+            else
+            {
+                UsuarioDomain.Edit(Model);
+
+                TempData["Mensagem"] = string.Format("Informações <span style='color:#10e4ea;'>atualizadas</span> com sucesso!");
+                return (RedirectToAction("Index", "Usuario"));
+            }
+        }
+
+        public ActionResult SaveMenuPermission(SmartAdmin.WebUI.ModelView.PermissionModelView Model)
+        {
+
+            var t = Model.CollectionMenus;
+
+            //var teste = form.AllKeys.Where(_ =>_.StartsWith("MenuItems"));
+
+            return (RedirectToAction("Index", "Usuario"));
+        }
+
+        [AuthorizedUser]
+        public PartialViewResult PermissionMenuPartial(int Id)
+        {
+            var UsuarioDomain = new Usuario();
+            var Model = UsuarioDomain.GetItem(_ => _.ID == Id);
+
+            var MenuDomain = new Menu();
+            var Collection = MenuDomain.GetList(_=>_.STATUS=="A" && _.COD_MENU_PAI == 0);
+
+            var MenuUsuarioDomain = new MenuUsuario();
+            var CollectionAllowed = MenuUsuarioDomain.GetList(_ => _.COD_USUARIO == Id);
+
+            var CheckboxList = new List<SmartAdmin.WebUI.ModelView.CheckBoxes>();
+            bool retorno=false;
+            foreach (var item in Collection)
+	        {
+                foreach (var itemAllowed in CollectionAllowed)
+                {
+                    if (item.ID == itemAllowed.COD_MENU)
+                    {
+                        retorno = true;
+                        break;
+                    }
+                    else 
+                    {
+                        retorno = false;
+                        continue;
+                    }
+                    //if (retorno) { break; }
+                }
+
+                CheckboxList.Add(new SmartAdmin.WebUI.ModelView.CheckBoxes() { ID = item.ID, Text = item.NOME, Value = item.ID.ToString(), Checked = retorno });
+	        }
+
+            var ModelView = new SmartAdmin.WebUI.ModelView.PermissionModelView();
+            ModelView.ID = Model.ID;
+            ModelView.NOME = Model.NOME;
+            ModelView.CollectionMenus = CheckboxList;
+
+            return (PartialView("PermissionMenuPartial", ModelView));
+        }
               
         #region Webcam methods
 

@@ -32,9 +32,9 @@
                                     <td class="text-center">@item.ID</td>
                                     <td class="text-left">@item.NOME</td>
                                     <td class="text-center">@((item.STATUS == "A")? "Ativo" : "Inativo")</td>
-                                    <td class="text-center">
-                                         <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                         <a href="/Financeiro/DeletaBanco/@(item.ID)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    <td class="text-center">                                         
+                                        <a onclick="OpenModalEdit('@(item.ID)')" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                        <a href="/Financeiro/DeletaBanco/@(item.ID)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr> 
                             }

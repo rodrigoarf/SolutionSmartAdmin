@@ -1,20 +1,41 @@
 ﻿runAllForms();
 
 $('#btnSaveCedente').click(function () {
-    jQuery('#smart-form-create').validate({
+    FormValidation('#smart-form-edit');
+});
+
+function FormValidation(form)
+{
+    $(form).validate({
         rules: {
             NOME: { required: true },
-            WEBSITE: { required: true },
-            SIGLA: { required: true },
-            FLAG_TIPO: { required: true },
-            STATUS: { required: true },
+            ENDERECO: { required: true },
+            NUMERO: { required: true },
+            BAIRRO: { required: true },
+            CIDADE: { required: true },
+            UF: { required: true },
+            CEP: { required: true },
+            DTH_NASCIMENTO: { required: true },
+            COD_BANCO: { required: true },
+            NUM_AGENCIA: { required: true },
+            NUM_CONTA_CORRENTE: { required: true },
+            CPF_CNPJ: { required: true },
+            INSTRUCAO_BOLETO: { required: true }
         },
         messages: {
             NOME: { required: null },
-            WEBSITE: { required: null },
-            SIGLA: { required: null },
-            FLAG_TIPO: { required: null },
-            STATUS: { required: null },
+            ENDERECO: { required: null },
+            NUMERO: { required: null },
+            BAIRRO: { required: null },
+            CIDADE: { required: null },
+            UF: { required: null },
+            CEP: { required: null },
+            DTH_NASCIMENTO: { required: null },
+            COD_BANCO: { required: null },
+            NUM_AGENCIA: { required: null },
+            NUM_CONTA_CORRENTE: { required: null },
+            CPF_CNPJ: { required: null },
+            INSTRUCAO_BOLETO: { required: null }
         },
         //highlight: null,
         //unhighlight: null,
@@ -27,23 +48,55 @@ $('#btnSaveCedente').click(function () {
                 var controlForm = validator.errorList[i].element;
                 switch (controlForm.id) {
                     case 'NOME':
-                        PrintAlert('Informe o <span style="color:#10e4ea;">Nome</span> da agência bancaria.');
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Nome</span> completo do cedente.');
                         return (false);
                         break;
-                    case 'WEBSITE':
-                        PrintAlert('Informe o <span style="color:#10e4ea;">Website</span> da agência bancaria.');
+                    case 'ENDERECO':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Endereço</span> do cedente.');
                         return (false);
                         break;
-                    case 'SIGLA':
-                        PrintAlert('Informe o <span style="color:#10e4ea;">Sigla</span> da agência bancaria.');
+                    case 'NUMERO':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Número</span> do cedente.');
                         return (false);
                         break;
-                    case 'FLAG_TIPO':
-                        PrintAlert('Informe o tipo de <span style="color:#10e4ea;">Agência Bancaria</span>.');
+                    case 'BAIRRO':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Bairro</span>. do cedente.');
                         return (false);
                         break;
-                    case 'STATUS':
-                        PrintAlert('Informe o <span style="color:#10e4ea;">Status</span> da agência bancaria.');
+                    case 'CIDADE':
+                        PrintAlert('Informe a <span style="color:#10e4ea;">Cidade</span> do cedente.');
+                        return (false);
+                        break;
+                    case 'UF':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Estado</span> do cedente.');
+                        return (false);
+                        break;
+                    case 'CEP':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Cep</span> do cedente.');
+                        return (false);
+                        break;
+                    case 'DTH_NASCIMENTO':
+                        PrintAlert('Informe a <span style="color:#10e4ea;">Data de Nascimento</span> do cedente.');
+                        return (false);
+                        break;  
+                    case 'COD_BANCO':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Banco</span> do cedente para deposito.');
+                        return (false);
+                        break;
+                    case 'NUM_AGENCIA':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Número da agência</span> para depósito.');
+                        return (false);
+                        break;
+                    case 'NUM_CONTA_CORRENTE':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">Número da conta corrente</span> para depósito.');
+                        return (false);
+                        break;
+                    case 'CPF_CNPJ':
+                        PrintAlert('Informe o <span style="color:#10e4ea;">CPF</span> ou <span style="color:#10e4ea;">CNPJ</span> do cedente.');
+                        return (false);
+                        break;
+                    case 'INSTRUCAO_BOLETO':
+                        PrintAlert('Informe as <span style="color:#10e4ea;">Instruções</span> referente ao boleto.');
                         return (false);
                         break;
                 }
@@ -53,7 +106,7 @@ $('#btnSaveCedente').click(function () {
             form.submit();
         }
     });
-});
+}
 
 function PrintAlert(alert) {
     $.SmartMessageBox({

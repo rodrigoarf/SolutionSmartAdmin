@@ -26,8 +26,29 @@ namespace SmartAdmin.WebUI.Controllers.Financeiro
         public ActionResult Cedente()
         {
             var CedenteDomain = new Cedente();
-            var Model = CedenteDomain.GetItem(_ => _.ID == 1000);
+            var Model = CedenteDomain.GetItem(_ => _.ID == 1);
+
+            ViewBag.Mensagem = (TempData["Mensagem"] as String);
             return View((Model==null)?new CedenteDto(): Model);
+        }
+                     
+        [HttpPost]
+        [AuthorizedUser]
+        public ActionResult SaveCedente(CedenteDto Model)
+        {           
+            try
+            {
+                var CedenteDomain = new Cedente();
+                CedenteDomain.Edit(Model);
+
+                TempData["Mensagem"] = "Cedente <span style='color:#10e4ea;'>atualizado</span> com sucesso!";
+                return (RedirectToAction("Cedente", "Financeiro"));
+            }
+            catch (Exception Ex)
+            {
+                TempData["Mensagem"] = "Erro ao atualizar cedente<br/>" + Ex.Message;
+                return (RedirectToAction("Cedente", "Financeiro"));
+            }
         }
 
         [AuthorizedUser]
@@ -58,6 +79,33 @@ namespace SmartAdmin.WebUI.Controllers.Financeiro
                 TempData["Mensagem"] = "Erro ao cadastrar agência bancaria<br/>" + Ex.Message;
                 return (RedirectToAction("Banco", "Financeiro"));
             }
+        }
+
+        [HttpPost]
+        [AuthorizedUser]
+        public ActionResult EditBanco(BancoDto Model)
+        {
+            try
+            {
+                var BancoDomain = new Banco();
+                BancoDomain.Edit(Model);
+
+                TempData["Mensagem"] = "Agência Bancaria <span style='color:#10e4ea;'>atualizada</span> com sucesso";
+                return (RedirectToAction("Banco", "Financeiro"));
+            }
+            catch (Exception Ex)
+            {
+                TempData["Mensagem"] = "Erro ao cadastrar agência bancaria<br/>" + Ex.Message;
+                return (RedirectToAction("Banco", "Financeiro"));
+            }
+        }
+
+        [AuthorizedUser]
+        public PartialViewResult ModalBancoEdit(int Id)
+        {
+            var BancoDomain = new Banco();
+            var Model = BancoDomain.GetItem(_=>_.ID == Id);
+            return PartialView("BancoEditPartial", Model);
         }
 
         [AuthorizedUser]

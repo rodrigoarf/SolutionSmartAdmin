@@ -98,6 +98,30 @@ namespace SmartAdmin.WebUI.Controllers
             Response.Cookies.Add(Cookie);
         }
 
+        public ActionResult SessionUpdateObject()
+        {
+            var Session = new SessionManager();
+            var ModelView = Session.GetUsuario();
+
+            //--> Atualiza Dados do Usuário
+            var UsuarioDomain = new Usuario();
+            var UsuarioLogado = UsuarioDomain.GetItem(_ => _.ID == ModelView.Usuario.ID);
+                
+            //--> Atualiza Menus & Submenus
+            var CollectionMenuMain = new List<MenuModelView>();
+            foreach (var MenuMain in UsuarioDomain.GetAllowedMenus(ModelView.Usuario.ID)) //--> Para cada menu pai pega os filhos e adiciona no modelo de visão
+            {
+                var CollectionSubMenus = UsuarioDomain.GetSubMenuFromMenu(MenuMain.ID);
+                var CurrentMenuMain = new MenuModelView() { Menu = MenuMain, CollectionSubMenu = CollectionSubMenus };
+                CollectionMenuMain.Add(CurrentMenuMain);
+            }
+            var Id = ModelView.Usuario.ID;
+            ModelView = null;
+            Session.Start(new UsuarioModelView() { Usuario = UsuarioLogado, CollectionMenusAndSubMenus = CollectionMenuMain });
+
+            return (RedirectToAction("Edit", "Usuario", new { Id = Id }));
+        }
+
         [HttpPost]
         public ActionResult SaveForApproval(UsuarioDto Model)
         {

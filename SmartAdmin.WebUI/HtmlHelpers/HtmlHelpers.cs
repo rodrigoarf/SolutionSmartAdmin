@@ -243,7 +243,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
 
-        public static MvcHtmlString DropDownListCustom(string Id, string Name, EInputModel ModelType, object HtmlAtributes = null)
+        public static MvcHtmlString DropDownListCustom(string Id, string Name, string DefaultValue, EInputModel ModelType, object HtmlAtributes = null)
         {
             var Atributes = String.Empty;
 
@@ -257,18 +257,17 @@ namespace SmartAdmin.WebUI.HtmlHelpers
 
             var HtmlControl = new StringBuilder();
             HtmlControl.Append(String.Format("<select id=\"{0}\" name=\"{1}\" {2}>", Id, Name, Atributes));
-            HtmlControl.Append(String.Format("<option value=\"0\" selected=\"true\" disabled=\"true\">(Todos)</option>"));
-
-            //foreach (var item in Collection)
-            //{
-            //    if (item.Selected)
-            //        HtmlControl.Append(String.Format("<option value=\"{0}\" selected=\"true\" >{1}</option>", item.Value, item.Text));
-            //    else
-            //        HtmlControl.Append(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text));
-            //}
+            switch (ModelType)
+            {
+                case EInputModel.AgenciasBancarias:
+                    var BancoDomain = new SmartAdmin.Domain.Banco();
+                    var CollectionBanco = BancoDomain.GetList(_ => _.STATUS == "A");
+                    HtmlControl.AppendLine(String.Format("<option value=\"\" {0} >(Agências Bancarias)</option>", ((DefaultValue == String.Empty) || (DefaultValue == "0")) ? "selected=\"true\"" : string.Empty));
+                    foreach (var item in CollectionBanco) { HtmlControl.AppendLine(String.Format("<option value=\"{0}\" {2}>{1}</option>", item.ID, item.NOME, (item.ID == ((DefaultValue != String.Empty) ? Convert.ToInt32(DefaultValue) : 0)) ? "selected=\"true\"" : string.Empty)); }
+                    break;
+            }
 
             HtmlControl.Append("</select>");
-
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
 
@@ -767,9 +766,170 @@ namespace SmartAdmin.WebUI.HtmlHelpers
 
             var HtmlControl = new StringBuilder();
 
-            HtmlControl.Append(String.Format("<button type=\"button\" id=\"{0}\" name=\"{1}\" class=\"{2}\">", Id, Name, Atributes));
+            HtmlControl.Append(String.Format("<button type=\"button\" id=\"{0}\" name=\"{1}\" {2}>", Id, Name, Atributes));
             HtmlControl.Append(String.Format("<i class=\"fa fa-cog\"></i> {0}" + Text));
             HtmlControl.Append("</button>");
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString Link(string Id, string Text, string Href, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var HtmlControl = new StringBuilder(); 
+            HtmlControl.Append(String.Format("<a id=\"{0}\" name=\"{0}\" href=\"{1}\" {3}>{2}</a>", Id, Href, Text, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString LinkCustom(string Id, string Name, string Text, string Href, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var HtmlControl = new StringBuilder(); 
+            HtmlControl.Append(String.Format("<a id=\"{0}\" name=\"{1}\" href=\"{2}\" {4}>{3}</a>", Id, Name, Href, Text, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString LinkEncrypt(string Id, string Text, string Href, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var Encode = new SmartAdmin.Domain.Security.Cryptography();
+            Encode.Key = "love";
+
+            var HtmlControl = new StringBuilder();
+            HtmlControl.Append(String.Format("<a id=\"{0}\" name=\"{0}\" href=\"{2}\" {3}>{2}</a>", Id, Encode.Encrypt(Href), Text, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString LinkCustomEncrypt(string Id, string Name, string Text, string Href, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var Encode = new SmartAdmin.Domain.Security.Cryptography();
+            Encode.Key = "love";
+
+            var HtmlControl = new StringBuilder();
+            HtmlControl.Append(String.Format("<a id=\"{0}\" name=\"{1}\" href=\"{2}\" {4}>{3}</a>", Id, Name, Encode.Encrypt(Href), Text, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString HiddenField(string Id, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var HtmlControl = new StringBuilder();
+            HtmlControl.Append(String.Format("<input type=\"hidden\" name=\"{0}\" id=\"{0}\" {1} />", Id, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString HiddenFieldCustom(string Id, string Name, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var HtmlControl = new StringBuilder();
+            HtmlControl.Append(String.Format("<input type=\"hidden\" name=\"{1}\" id=\"{0}\" {2} />", Id, Name, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString HiddenFieldEncrypt(string Id, object Value, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var Encode = new SmartAdmin.Domain.Security.Cryptography();
+            Encode.Key = "love";
+
+            var HtmlControl = new StringBuilder();
+            HtmlControl.Append(String.Format("<input type=\"hidden\" name=\"{0}\" id=\"{0}\" value=\"{1}\" {2} />", Id, Encode.Encrypt(Value.ToString()), Atributes));
+
+            //var HashValue = System.Web.Security.MachineKey.Encode(Encoding.Unicode.GetBytes(Value.ToString()), System.Web.Security.MachineKeyProtection.Encryption);
+
+            //var HtmlControl = new StringBuilder();
+            //HtmlControl.Append(String.Format("<input type=\"hidden\" name=\"{0}\" id=\"{0}\" value=\"{1}\" {2} />", Id, HashValue, Atributes));
+
+            return (new MvcHtmlString(HtmlControl.ToString()));
+        }
+
+        public static MvcHtmlString HiddenFieldCustomEncrypt(string Id, string Name, string value, object HtmlAtributes = null)
+        {
+            var Atributes = String.Empty;
+
+            if (HtmlAtributes != null)
+            {
+                foreach (PropertyDescriptor Property in TypeDescriptor.GetProperties(HtmlAtributes))
+                {
+                    Atributes += String.Format("{0}=\"{1}\" ", Property.Name.Replace('_', '-'), Property.GetValue(HtmlAtributes));
+                }
+            }
+
+            var Encode = new SmartAdmin.Domain.Security.Cryptography();
+            Encode.Key = "love";
+
+            var HtmlControl = new StringBuilder();
+            HtmlControl.Append(String.Format("<input type=\"hidden\" name=\"{1}\" id=\"{0}\" value=\"{2}\" {3} />", Id, Name, Encode.Encrypt(value), Atributes));
 
             return (new MvcHtmlString(HtmlControl.ToString()));
         }
@@ -785,12 +945,7 @@ namespace SmartAdmin.WebUI.HtmlHelpers
     /// </summary>
     public enum EInputModel
     {
-        ModeloA,
-        ModeloB,
-        ModeloC,
-        ModeloD,
-        ModeloE,
-        ModeloF,
+        AgenciasBancarias
     }
 
     /// <summary>

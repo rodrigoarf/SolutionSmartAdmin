@@ -68,8 +68,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -144,7 +146,15 @@
     <Compile Include="Controllers\Financeiro\FinanceiroController.cs" />
     <Compile Include="Controllers\Inbox\InboxController.cs" />
     <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
-    <Compile Include="Infrastructure\ActionFilters\AuthorizedUser.cs" />
+    <Compile Include="Infrastructure\ActionFilters\AuthorizedUser\AuthorizedUser.cs" />
+    <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\HtmlExtensions.cs" />
+    <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\HttpAntiModelInjectionException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\SaltedHash.cs" />
+    <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\ValidateAntiModelInjectionAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Infrastructure\Cache\Cache.cs" />
     <Compile Include="Infrastructure\Cache\CacheExtensions.cs" />
     <Compile Include="Infrastructure\Cache\ICache.cs" />
@@ -157,6 +167,7 @@
     </Compile>
     <Compile Include="HtmlHelpers\HtmlHelpers.cs" />
     <Compile Include="ModelView\AppConfigModelView.cs" />
+    <Compile Include="ModelView\PermitionModelView.cs" />
     <Compile Include="ModelView\MenuModelView.cs" />
     <Compile Include="ModelView\UsuarioModelView.cs" />
     <Compile Include="Infrastructure\Session\ISessionOperation.cs" />
@@ -1042,6 +1053,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Financeiro\BancoCreatePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Financeiro\BancoEditPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Usuario\PermissionMenuPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

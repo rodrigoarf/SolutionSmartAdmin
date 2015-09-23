@@ -219,8 +219,7 @@ namespace SmartAdmin.Domain.Security
             Dispose(false);
         }
 
-        #endregion
-
+        #endregion  
     }
 
     /// <summary>

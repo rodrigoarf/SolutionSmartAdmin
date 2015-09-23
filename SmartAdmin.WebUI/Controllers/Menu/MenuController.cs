@@ -7,7 +7,8 @@ using SmartAdmin.Dto;
 using SmartAdmin.Domain;
 using SmartAdmin.WebUI.Infrastructure.Session;
 using SmartAdmin.WebUI.Infrastructure.ActionFilters;
-using PagedList;  
+using PagedList;
+
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -37,8 +38,8 @@ namespace SmartAdmin.WebUI.Controllers
             ModelView.CollectionSubMenu = CollectionSubMenu;
 
             return View(ModelView); 
-        } 
-                    
+        }
+
         [HttpPost]
         [AuthorizedUser]
         public ActionResult Save(MenuDto Model)

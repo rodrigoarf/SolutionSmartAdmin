@@ -1,7 +1,29 @@
 ﻿runAllForms();
 
 $('#btnSaveBanco').click(function () {
-    jQuery('#smart-form-create').validate({
+    FormValidation('#smart-form-create');
+}); 
+
+function OpenModalEdit(Id) {
+    $.ajax({
+        url: '/Financeiro/ModalBancoEdit/' + Id,
+        cache: false,
+        success: function (html) {
+            //console.log(html);
+            $("#modal-banco-edit").html(html);
+            $("#modal-banco-edit").modal('show');
+
+            //delegate On
+            $("#modal-banco-edit").on("click", "#btnEditBanco", function () {
+                FormValidation('#smart-form-edit');
+            });
+        }
+    });
+}   
+
+function FormValidation(form)
+{
+    $(form).validate({
         rules: {
             NOME: { required: true },
             WEBSITE: { required: true },
@@ -53,7 +75,7 @@ $('#btnSaveBanco').click(function () {
             form.submit();
         }
     });
-});
+}
 
 function PrintAlert(alert) {
     $.SmartMessageBox({

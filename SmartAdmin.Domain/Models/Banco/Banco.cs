@@ -22,6 +22,7 @@ namespace SmartAdmin.Domain
         {
             model.NOME = model.NOME.ToUpper();
             model.SIGLA = model.SIGLA.ToUpper();
+            model.WEBSITE = model.WEBSITE.ToLower();
             _unitOfWork.BancoRepository.Save(model);
         }
 
@@ -47,6 +48,9 @@ namespace SmartAdmin.Domain
         /// </summary>
         public void Edit(BancoDto model)
         {
+            model.NOME = model.NOME.ToUpper();
+            model.SIGLA = model.SIGLA.ToUpper();
+            model.WEBSITE = model.WEBSITE.ToLower();
             _unitOfWork.BancoRepository.Edit(model);
         }
 
