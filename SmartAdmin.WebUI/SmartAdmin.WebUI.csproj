@@ -841,6 +841,7 @@
     <Content Include="Script\Login\Index.js" />
     <Content Include="Script\Menu\Index.js" />
     <Content Include="Script\Menu\Edit.js" />
+    <Content Include="Script\Usuario\Create.js" />
     <Content Include="Script\Usuario\Edit.js" />
     <Content Include="Script\Usuario\Index.js" />
     <Content Include="Templates\Email\index003.htm" />

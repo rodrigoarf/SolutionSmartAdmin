@@ -31,7 +31,7 @@
                                 <td class="text-center">@((item.STATUS == "A") ? "Ativo" : "Inativo")</td>
                                 <td class="text-center">
                                     <a href="/Usuario/Edit/@(item.ID)" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                    <a onclick="OpenModalPermission('@(item.ID)');" class="btn btn-xs btn-info" data-target="#modal-usuario-menu" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+                                    <a onclick="OpenModalPermission('@(item.ID)');" class="btn btn-xs btn-info" data-target="#modal-usuario-menu" data-toggle="modal"><i class="fa fa-lock"></i></a>
                                 </td>
                             </tr> 
                         }

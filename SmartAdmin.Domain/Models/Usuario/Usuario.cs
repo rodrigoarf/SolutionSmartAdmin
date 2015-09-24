@@ -82,8 +82,14 @@ namespace SmartAdmin.Domain
         /// </summary>
         public void Delete(Expression<Func<UsuarioDto, bool>> filter)
         {
-            var model = _unitOfWork.UsuarioRepository.GetItem(filter);
-            _unitOfWork.UsuarioRepository.Delete(model);
+            var Collection = _unitOfWork.UsuarioRepository.GetList(filter);
+            if (Collection.Count > 0)
+            {
+                foreach (var item in Collection)
+                {
+                    _unitOfWork.UsuarioRepository.Delete(item);
+                }
+            }
         }
 
         /// <summary>

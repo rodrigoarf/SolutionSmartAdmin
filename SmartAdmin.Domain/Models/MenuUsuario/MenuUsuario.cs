@@ -69,6 +69,29 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Deleta um objeto
+        /// </summary>
+        public void Delete(Expression<Func<MenuUsuarioDto, bool>> filter)
+        {
+            var Collection = _unitOfWork.MenuUsuarioRepository.GetList(filter);
+            if (Collection.Count > 0)
+            {
+                foreach (var item in Collection)
+                {
+                    _unitOfWork.MenuUsuarioRepository.Delete(item);  
+                }
+            }            
+        }
+
+        /// <summary>
+        /// Deleta uma lista de objetos
+        /// </summary>
+        public void DeleteAll(List<MenuUsuarioDto> collection)
+        {
+            foreach (var item in collection) { _unitOfWork.MenuUsuarioRepository.Delete(item); }
+        }
+
+        /// <summary>
         ///  Distroe o objeto e recursos não gerenciados liberando memória
         /// </summary>
         public void Dispose()

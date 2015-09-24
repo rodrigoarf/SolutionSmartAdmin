@@ -93,12 +93,19 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         public ActionResult SaveMenuPermission(SmartAdmin.WebUI.ModelView.PermissionModelView Model)
-        {
+        { 
+            var MenuUsuarioDomain = new MenuUsuario();
+            MenuUsuarioDomain.Delete(_ => _.COD_USUARIO == Model.ID);
 
-            var t = Model.CollectionMenus;
-
-            //var teste = form.AllKeys.Where(_ =>_.StartsWith("MenuItems"));
-
+            var Collection = new List<MenuUsuarioDto>();
+            foreach (var item in Model.CollectionMenus) {
+                if (item.Checked == true)
+                {
+                    Collection.Add(new MenuUsuarioDto() { COD_MENU = item.ID, COD_USUARIO = Model.ID }); 
+                } 
+            }
+            
+            MenuUsuarioDomain.SaveAll(Collection);  
             return (RedirectToAction("Index", "Usuario"));
         }
 
@@ -116,6 +123,7 @@ namespace SmartAdmin.WebUI.Controllers
 
             var CheckboxList = new List<SmartAdmin.WebUI.ModelView.CheckBoxes>();
             bool retorno=false;
+
             foreach (var item in Collection)
 	        {
                 foreach (var itemAllowed in CollectionAllowed)
@@ -130,7 +138,6 @@ namespace SmartAdmin.WebUI.Controllers
                         retorno = false;
                         continue;
                     }
-                    //if (retorno) { break; }
                 }
 
                 CheckboxList.Add(new SmartAdmin.WebUI.ModelView.CheckBoxes() { ID = item.ID, Text = item.NOME, Value = item.ID.ToString(), Checked = retorno });
@@ -142,6 +149,63 @@ namespace SmartAdmin.WebUI.Controllers
             ModelView.CollectionMenus = CheckboxList;
 
             return (PartialView("PermissionMenuPartial", ModelView));
+        }
+
+        [HttpPost]
+        public ActionResult SaveForApproval(UsuarioDto Model)
+        {
+            try
+            {
+                var UsuarioDominio = new Usuario();
+                var ModelExists = UsuarioDominio.IsExistsByDocument(Model.CPF_CNPJ.Trim());
+
+                if (ModelExists == null)
+                {
+                    if (CheckInitialValues(Model))
+                    {
+                        TempData["Mensagem"] = String.Format("O campo login deve iniciar com <span style='color:#10e4ea;'>3 letras</span>, após isso números e letras são permitidos", Model.LOGIN);
+                        TempData["Model"] = Model;
+                        return (RedirectToAction("Index"));
+                    }
+                    else if (Model.LOGIN.Length <= 7)
+                    {
+                        TempData["Mensagem"] = String.Format("O campo login contém apenas <span style='color:#10e4ea;'>{0} caracteres</span>, é esperado entre <span style='color:#10e4ea;'>7</span> e <span style='color:#10e4ea;'>14</span> caracteres.", Model.LOGIN.Length);
+                        TempData["Model"] = Model;
+                        return (RedirectToAction("Index"));
+                    }
+
+                    UsuarioDominio.Save(Model);
+                    TempData["Mensagem"] = String.Format("Usuário <span style='color:#10e4ea;'>{0}</span> salvo com sucesso!", Model.LOGIN);
+                    return (RedirectToAction("Index"));
+                }
+                else
+                {
+                    TempData["Mensagem"] = String.Format("<span style='color:#10e4ea;'>Documento</span> informado ja existente no sistema, informe outro Cnpj ou Cpf!");
+                    TempData["Model"] = Model;
+                    return (RedirectToAction("Index"));
+                }
+            }
+            catch (Exception Ex)
+            {
+                TempData["Mensagem"] = Ex.InnerException.InnerException.Message;
+                TempData["Model"] = Model;
+                return (RedirectToAction("Index"));
+            }
+        }
+
+        private static bool CheckInitialValues(UsuarioDto Model)
+        {
+            var CheckValues = Model.LOGIN.ToString().Substring(0, 3).ToCharArray();
+            var IsNumeric = false;
+            int Inteiro;
+
+            for (int i = 0; i < CheckValues.Length; i++)
+            {
+                IsNumeric = int.TryParse(CheckValues[i].ToString(), out Inteiro);
+                if (IsNumeric) { break; }
+            }
+
+            return (IsNumeric);
         }
               
         #region Webcam methods

@@ -47,7 +47,17 @@ namespace SmartAdmin.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 var MenuDominio = new Menu();
-                if (Model.ID > 0) { MenuDominio.Edit(Model); } else { MenuDominio.Save(Model); }
+
+                if (Model.ID > 0) 
+                { 
+                    MenuDominio.Edit(Model);
+                    TempData["Mensagem"] = "Categoria de menu <span style='color:#10e4ea;'>atualizada</span> com sucesso!";
+                } 
+                else 
+                { 
+                    MenuDominio.Save(Model);
+                    TempData["Mensagem"] = "Categoria de menu <span style='color:#10e4ea;'>adicionada</span> com sucesso!";
+                }
             }
 
             return RedirectToAction("Index", new { Page = 1 });
@@ -145,6 +155,7 @@ namespace SmartAdmin.WebUI.Controllers
             {
                 var MenuDomain = new Menu();
                 MenuDomain.Delete(_ => _.ID == IdItem && _.COD_MENU_PAI == IdSubItem);
+
                 Retorno = "Menu <span style='color:#10e4ea;'>apagado</span> com sucesso!";
             }
             catch (Exception Ex)
@@ -160,9 +171,12 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
+                var MenuUsuarioDomain = new MenuUsuario();
+                MenuUsuarioDomain.Delete(_ => _.COD_MENU == IdItem); //<-- deleta o menu dos usuario que tem permissão para o mesmo
+                  
                 var MenuDomain = new Menu();
-                MenuDomain.Delete(_ => _.COD_MENU_PAI == IdItem && _.ID > 0);//<-- deleta primeiro os filho
-                MenuDomain.Delete(_ => _.ID == IdItem && _.COD_MENU_PAI == 0);//<-- deleta por ultimo o pai
+                MenuDomain.Delete(_ => _.COD_MENU_PAI == IdItem && _.ID > 0); //<-- deleta primeiro os filho
+                MenuDomain.Delete(_ => _.ID == IdItem && _.COD_MENU_PAI == 0); //<-- deleta por ultimo o pai
 
                 TempData["Mensagem"] = "Categoria de menu <span style='color:#10e4ea;'>apaga</span> com sucesso!";
                 return (RedirectToAction("Index", "Menu"));

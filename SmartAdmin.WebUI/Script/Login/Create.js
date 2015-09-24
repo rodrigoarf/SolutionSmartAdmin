@@ -19,11 +19,11 @@
                 var controlForm = validator.errorList[i].element;
                 switch (controlForm.id) {
                     case 'LOGIN':
-                        PrintAlert('Informe seu Login de acesso ao sistema.');
+                        PrintAlert('Informe seu <span style=\"color:#10e4ea;\">Login</span> de acesso ao sistema.');
                         return (false);
                         break;
                     case 'EMAIL':
-                        PrintAlert('Informe seu E-mail.');
+                        PrintAlert('Informe seu <span style=\"color:#10e4ea;\">E-mail</span>.');
                         return (false);
                         break;
                 }
@@ -62,23 +62,23 @@ $("#btnSaveUsuario").click(function () {
                 var controlForm = validator.errorList[i].element;
                 switch (controlForm.id) {
                     case 'LOGIN':
-                        PrintAlert('Informe o Login para acesso ao sistema.');
+                        PrintAlert('Informe o <span style=\"color:#10e4ea;\">Login</span> para acesso ao sistema.');
                         return (false);
                         break;
                     case 'NOME':
-                        PrintAlert('Informe o Nome completo do usuário.');
+                        PrintAlert('Informe o <span style=\"color:#10e4ea;\">Nome</span> completo do usuário.');
                         return (false);
                         break;
                     case 'EMAIL':
-                        PrintAlert('Informe o E-mail do usuário.');
+                        PrintAlert('Informe o <span style=\"color:#10e4ea;\">E-mail</span> do usuário.');
                         return (false);
                         break;
                     case 'SEXO':
-                        PrintAlert('Informe o Sexo do usuário.');
+                        PrintAlert('Informe o <span style=\"color:#10e4ea;\">Sexo</span> do usuário.');
                         return (false);
                         break;
                     case 'SENHA':
-                        PrintAlert('Informe a Senha de acesso');
+                        PrintAlert('Informe a <span style=\"color:#10e4ea;\">Senha</span> de acesso');
                         return (false);
                         break;
                 }

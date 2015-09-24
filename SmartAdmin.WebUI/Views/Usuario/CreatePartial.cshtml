@@ -3,53 +3,118 @@
 
 <div class="modal-dialog">
     <div class="modal-content">
-        @using (Html.BeginForm("Save", "Login", FormMethod.Post, new { @id = "smart-form-create" }))
-        {            
+          @using (Html.BeginForm("SaveForApproval", "Usuario", FormMethod.Post, new { @id = "smart-form-create" }))
+                        {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Cadastrar novo usuário</h4>
             </div>  
             <div class="modal-body" style="padding-bottom:0; margin-bottom:0;">
                 <div class="widget-body no-padding">
-                    <div class="smart-form">                         
-                        <fieldset>
-                            <section>
-                                <label class="input">
-                                    <i class="icon-append fa fa-user"></i>
-                                    @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome do usuário completo", @tabindex = "5" })
-                                    <b class="tooltip tooltip-bottom-right">Nome do usuário completo</b>
-                                </label>
-                            </section>
-                            <section>
-                                <label class="select">
-                                    @HtmlControls.DropDownListCustomSexo("SEXO", EInputSexo.None, false)
-                                    <i></i>
-                                </label>
-                            </section>
-                        </fieldset>                             
-                        <fieldset>
-                            <section>
-                                <label class="input">
-                                    <i class="icon-append fa fa-user"></i>
-                                     @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder="Login de acesso ao sistema", @style="text-transform: lowercase;", @maxlength="14", @tabindex="1" })
-                                    <b class="tooltip tooltip-bottom-right">Usuário de acesso</b>
-                                </label>
-                            </section> 
-                            <section>
-                                <label class="input">
-                                    <i class="icon-append fa fa-lock"></i>
-                                    @HtmlControls.Password("SENHA", new { @value = Model.SENHA, @placeholder="Senha de acesso ao sistema", @tabindex="2" })
-                                    <b class="tooltip tooltip-bottom-right">Senha de acesso ao sistema</b>
-                                </label>
-                            </section> 
-                            <section>
-                                <label class="input">
-                                    <i class="icon-append fa fa-envelope"></i>
-                                    @HtmlControls.TextBoxEmail("EMAIL", new { @value = Model.EMAIL, @placeholder="E-mail", @style="text-transform: lowercase;", @tabindex="4" })
-                                    <b class="tooltip tooltip-bottom-right">Email de contato</b>
-                                </label>
-                            </section>
-                        </fieldset>
+                    <div class="smart-form">                        
+                            <fieldset>
+                                <section>
+                                    <label class="input">
+                                         @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Informe o Nome completo", @tabindex = "1" })
+                                         <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu nome completo</b>
+                                    </label>
+                                </section>                   
+                                <section class="col col-10" style="padding-left: 0px; padding-right: 5px;">
+                                    <label class="input">
+                                         <i class="icon-append fa fa-envelope"></i>
+                                         @HtmlControls.TextBox("EMAIL", new { @value = Model.EMAIL, @placeholder = "Informe o E-mail", @tabindex = "2", @class="text-lowercase" })
+                                         <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe o E-mail!</b>
+                                    </label>
+                                </section>
+                                <section class="col col-2" style="padding-right: 0px; padding-left: 5px;">
+                                    <label class="select">   
+                                        @HtmlControls.DropDownListCustomSexo("SEXO",((Model.SEXO != null) ? ((Model.SEXO == "M") ? EInputSexo.M : EInputSexo.F ) : EInputSexo.None), true, new { @tabindex = "3" })
+                                        <i></i>
+                                    </label>
+                                </section> 
+                                <section class="col col-10" style="padding-left: 0px; padding-right: 5px;">
+                                    <label class="input">                  
+                                        @HtmlControls.TextBox("ENDERECO", new { @value = Model.ENDERECO, @placeholder = "Informe seu endereço",  @tabindex = "4" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu endereço!</b>  
+                                    </label>
+                                </section>
+                                <section class="col col-2" style="padding-right: 0px; padding-left: 5px;">
+                                    <label class="input">                  
+                                        @HtmlControls.TextBox("NUMERO", new { @value = Model.NUMERO, @placeholder = "Nº", @class="integer", @tabindex = "5" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Número!</b></label>
+                                </section>
+                                <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
+                                    <label class="input">
+                                        @HtmlControls.TextBox("BAIRRO", new { @value = Model.BAIRRO, @placeholder = "Informe o Bairro", @tabindex = "6" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu Bairro!</b>
+                                    </label>
+                                </section>
+                                <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
+                                    <label class="input">
+                                        @HtmlControls.TextBox("CIDADE", new { @value = Model.CIDADE, @placeholder = "Informe a Cidade", @tabindex = "7" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe sua Cidade!</b>
+                                    </label>
+                                </section>
+                                <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
+                                    <label class="select">
+                                        @{
+                                            var EnumResult = EInputUF.None;
+
+                                            if (Model.UF == null)
+                                            {
+                                                EnumResult = EInputUF.None;
+                                            }
+                                            else
+                                            {
+                                                foreach (EInputUF Item in Enum.GetValues(typeof(EInputUF)))
+                                                { if (Model.UF == Item.ToString()) { EnumResult = Item; } }
+                                            }
+                                         }
+
+                                         @HtmlControls.DropDownListCustomUF("UF", EnumResult, new { @tabindex = "8" })
+                                        <i></i>
+                                    </label>
+                                </section>
+                                <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
+                                    <label class="input">
+                                        @HtmlControls.TextBox("CEP", new { @value = Model.CEP, @placeholder = "Informe seu Cep", @class="cep", @tabindex = "9" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu Cep!</b>
+                                    </label>
+                                </section>
+
+                                <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
+                                    <label class="select"> 
+                                         @HtmlControls.DropDownListCustomPais("PAIS", (Model.PAIS == null) ? string.Empty : Model.PAIS, new { @tabindex = "10" })
+                                        <i></i>
+                                    </label>
+                                </section>
+                                <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
+                                    <label class="input">
+                                        @HtmlControls.TextBox("CPF_CNPJ", new { @value = Model.CPF_CNPJ, @placeholder = "Informe seu Cpf ou Cnpj", @class="document text-left", @tabindex = "11" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe seu Cpf ou Cnpj!</b>
+                                    </label>
+                                </section> 
+                            </fieldset>
+                            <fieldset>
+                                <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Informe o Login", @tabindex = "12", @class="text-lowercase", @maxlength="14" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe o Login!</b></label>
+                                </section>
+                                <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-lock"></i>
+                                        @HtmlControls.Password("SENHA", new { @value = Model.SENHA, @placeholder = "Informe a Senha", @tabindex = "13" })
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Informe a Senha!</b>
+                                    </label>
+                                </section>
+                             </fieldset>
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "A"})
+                            @Html.HiddenFor(model => model.DTH_CRIACAO, new { id= "DTH_CRIACAO", Value = DateTime.Now.ToString() })
+                            @Html.Hidden("FLAG_ADM", "N")
+                        
                     </div>
                 </div>
             </div>
@@ -57,8 +122,7 @@
                 <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
                 <button type="submit" class="btn btn-md btn-warning" id="btnSaveUsuario"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
             </div>
-            <input type="hidden" name="STATUS" id="STATUS" value="A" />                    
-        }
+                        }
     </div>
 </div>     
-<script src="~/Script/Login/Create.js"></script>
+<script src="~/Script/Usuario/Create.js"></script>

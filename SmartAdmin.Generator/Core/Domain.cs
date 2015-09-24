@@ -151,8 +151,14 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        /// </summary>");
             TextClass.AppendLine("        public void Delete(Expression<Func<" + DataModel.ClassName + Sufixo + ", bool>> filter)");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("            var model = _unitOfWork." + DataModel.ClassName + "Repository.GetItem(filter);");
-            TextClass.AppendLine("            _unitOfWork." + DataModel.ClassName + "Repository.Delete(model);");
+            TextClass.AppendLine("            var Collection = _unitOfWork." + DataModel.ClassName + "Repository.GetList(filter);");
+            TextClass.AppendLine("            if (Collection.Count > 0)");
+            TextClass.AppendLine("            {");
+            TextClass.AppendLine("                foreach (var item in Collection)");
+            TextClass.AppendLine("                {");
+            TextClass.AppendLine("                    _unitOfWork." + DataModel.ClassName + "Repository.Delete(item);");
+            TextClass.AppendLine("                }");
+            TextClass.AppendLine("            }");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");        
             TextClass.AppendLine("        /// <summary>");

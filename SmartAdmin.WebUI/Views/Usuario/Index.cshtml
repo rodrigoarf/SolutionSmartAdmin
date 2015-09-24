@@ -45,27 +45,6 @@
 <!-- #script this page -->
 <script src="~/Script/Usuario/Index.js" type="text/javascript"></script>
 <script type="text/javascript">
-
     runAllForms()
-
-   @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)
-    
-    function OpenModalPermission(Id)
-    {
-        $.ajax({
-            url: '/Usuario/PermissionMenuPartial/' + Id,
-            cache: false,
-            success: function (html) {
-                //console.log(html);
-                $("#modal-usuario-menu").html(html);
-                $("#modal-usuario-menu").modal('show');
-
-                // delegate On
-                //$("#modal-usuario-menu").on("click", "#btnSavePermission", function () {
-              
-                //});
-            }
-        });
-    }
-
+   @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)   
 </script>

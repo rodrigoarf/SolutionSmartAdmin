@@ -30,7 +30,7 @@
                                             <tr>
                                                 <th>
                                                     <label class="checkbox">
-                                                        <input name="checkbox-inline" type="checkbox">
+                                                        <input id="select_all" name="checkbox-inline" type="checkbox">
                                                         <i></i>
                                                     </label>
                                                 </th>
@@ -46,6 +46,8 @@
                                                     <tr>
                                                         <td>
                                                             <label class="checkbox">
+                                                                  @Html.HiddenFor(_=> Model.CollectionMenus[i].ID)
+                                                                  @Html.HiddenFor(_=> Model.CollectionMenus[i].Text)
                                                                   @Html.CheckBoxFor(_=> Model.CollectionMenus[i].Checked)
                                                                 <i></i>
                                                             </label>
@@ -68,4 +70,19 @@
             </div>
         }
     </div>
-</div>     
+</div>  
+
+<script>
+    $('#select_all').click(function (event) {
+        if (this.checked) {
+            $(':checkbox').each(function () {
+                this.checked = true;
+            });
+        }
+        else {
+            $(':checkbox').each(function () {
+                this.checked = false;
+            });
+        }
+    });
+</script>   

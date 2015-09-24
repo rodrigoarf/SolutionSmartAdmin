@@ -1,8 +1,7 @@
-﻿runAllForms();
-
+﻿
 $('#btnSaveUsuario').click(function () {
     FormValidation('#smart-form-create');
-});  
+});
 
 $('#LOGIN').keypress(function (e) {
     var Regex = new RegExp("^[a-zA-Z0-9]+$");
@@ -125,7 +124,7 @@ function PrintAlert(alert) {
 
 $.validator.addMethod("cpf", function (value, element) {
 
-    value = jQuery.trim(value);  
+    value = jQuery.trim(value);
     value = value.replace('.', '');
     value = value.replace('.', '');
     cpf = value.replace('-', '');
@@ -233,5 +232,3 @@ jQuery.extend(jQuery.validator.messages, {
     max: null,
     min: null
 });
-
-$('#extr-page-header-space').hide();

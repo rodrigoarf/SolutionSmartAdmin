@@ -3,9 +3,6 @@
 
 @using (Html.BeginForm("SaveForApproval", "Login", FormMethod.Post, new { @id = "smart-form-create", @class = "smart-form client-form" }))
 {  
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "A"})
-    @Html.HiddenFor(model => model.DTH_CRIACAO, new { id= "DTH_CRIACAO", Value = DateTime.Now.ToString() })
     <header>Cadastro de Usuários</header> 
     <fieldset>
         <section>
@@ -109,4 +106,8 @@
         <button id="btnSaveUsuario" type="submit" class="btn btn-warning">Salvar</button>
         <a href="~/Login/Index" class="btn btn-sm btn-primary">Voltar</a>
     </footer> 
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "A"})
+    @Html.HiddenFor(model => model.DTH_CRIACAO, new { id= "DTH_CRIACAO", Value = DateTime.Now.ToString() })
+    @Html.Hidden("FLAG_ADM", "N")
 }

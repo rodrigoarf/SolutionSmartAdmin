@@ -6,14 +6,14 @@
         var input = $(this);
         if (input.attr('name') == 'LOGIN') {
             if ($(this).val() == '') {
-                PrintAlert('Você deve preencher o campo Usuário!');
+                PrintAlert('Você deve preencher o campo <span style=\"color:#10e4ea;\">Usuário</span>!');
                 validation = false;
                 return (false);
             }
         } 
         if (input.attr('name') == 'SENHA') {
             if ($(this).val().length < 1) {
-                PrintAlert('Você deve preencher o campo Senha!');
+                PrintAlert('Você deve preencher o campo <span style=\"color:#10e4ea;\">Senha</span>!');
                 validation = false;
                 return (false);
             }
