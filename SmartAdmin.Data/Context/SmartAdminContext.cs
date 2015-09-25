@@ -40,6 +40,8 @@ namespace SmartAdmin.Data.Context
         public DbSet<InboxDto> Inbox { get; set; }
         public DbSet<BancoDto> Banco { get; set; }
         public DbSet<CedenteDto> Cedente { get; set; }
+        public DbSet<MensagemDto> Mensagem { get; set; }
+        public DbSet<MensagemEnviadaDto> MensagemEnviada { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -55,6 +57,8 @@ namespace SmartAdmin.Data.Context
              modelBuilder.Configurations.Add(new InboxMapper());
              modelBuilder.Configurations.Add(new BancoMapper());
              modelBuilder.Configurations.Add(new CedenteMapper());
+             modelBuilder.Configurations.Add(new MensagemMapper());
+             modelBuilder.Configurations.Add(new MensagemEnviadaMapper());
         }
     }
 }

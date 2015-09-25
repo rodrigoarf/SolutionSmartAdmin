@@ -1,6 +1,6 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<SmartAdmin.WebUI.ModelView.MensagemModelView>
+@{Layout = "~/Views/Shared/_Layout.cshtml";}
 
 <div class="inbox-nav-bar no-content-padding">  
   @Html.Partial("HeaderPartial")   
@@ -10,7 +10,7 @@
     <div class="inbox-side-bar">    
         @Html.Partial("MenuPartial") 
     </div>   
-    <div class="table-wrap custom-scroll animated fast fadeInRight">
-        @Html.Partial("GridPartial")   
+    <div class="table-wrap custom-scroll animated fast fadeInRight" style="height:500px;">
+        @Html.Partial("GridPartial", Model)   
     </div> 
 </div>

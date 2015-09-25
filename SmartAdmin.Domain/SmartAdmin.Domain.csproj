@@ -59,6 +59,8 @@
     <Compile Include="Models\EmailNewletter\EmailNewletter.cs" />
     <Compile Include="Models\EnvioNewletter\EnvioNewletter.cs" />
     <Compile Include="Models\Inbox\Inbox.cs" />
+    <Compile Include="Models\MensagemEnviada\MensagemEnviada.cs" />
+    <Compile Include="Models\Mensagem\Mensagem.cs" />
     <Compile Include="Models\MenuUsuario\MenuUsuario.cs" />
     <Compile Include="Models\Menu\Menu.cs" />
     <Compile Include="Models\TipoContato\TipoContato.cs" />

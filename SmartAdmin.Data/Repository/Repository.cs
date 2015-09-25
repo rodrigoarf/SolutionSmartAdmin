@@ -30,8 +30,11 @@ namespace SmartAdmin.Data.Generic
         {
             try
             {
-                _dbSet.Add(entity);
-                _context.SaveChanges();
+                if (entity != null)
+                {
+                    _dbSet.Add(entity);
+                    _context.SaveChanges();
+                } 
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
@@ -105,11 +108,8 @@ namespace SmartAdmin.Data.Generic
         {
             try
             {
-                if (entity != null)
-                {
-                    _dbSet.Remove(entity);
-                    _context.SaveChanges();
-                } 
+                _dbSet.Remove(entity);
+                _context.SaveChanges();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
@@ -121,7 +121,7 @@ namespace SmartAdmin.Data.Generic
                     foreach (var error in failure.ValidationErrors)
                     {
                         sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-                        sb.AppendFormat("<br/>");
+                        sb.AppendLine();
                     }
                 }
 

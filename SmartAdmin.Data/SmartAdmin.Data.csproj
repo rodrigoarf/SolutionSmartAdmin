@@ -69,6 +69,12 @@
     <Compile Include="Models\Inbox\InboxDto.cs" />
     <Compile Include="Models\Inbox\InboxDtoValidator.cs" />
     <Compile Include="Models\Inbox\InboxMapper.cs" />
+    <Compile Include="Models\MensagemEnviada\MensagemEnviadaDto.cs" />
+    <Compile Include="Models\MensagemEnviada\MensagemEnviadaDtoValidator.cs" />
+    <Compile Include="Models\MensagemEnviada\MensagemEnviadaMapper.cs" />
+    <Compile Include="Models\Mensagem\MensagemDto.cs" />
+    <Compile Include="Models\Mensagem\MensagemDtoValidator.cs" />
+    <Compile Include="Models\Mensagem\MensagemMapper.cs" />
     <Compile Include="Models\MenuUsuario\MenuUsuarioDto.cs" />
     <Compile Include="Models\MenuUsuario\MenuUsuarioDtoValidator.cs" />
     <Compile Include="Models\MenuUsuario\MenuUsuarioMapper.cs" />

@@ -20,6 +20,8 @@ namespace SmartAdmin.Domain
         private Inbox _inboxDomain;
         private Banco _bancoDomain;
         private Cedente _cedenteDomain;
+        private Mensagem _mensagemDomain;
+        private MensagemEnviada _mensagemenviadaDomain;
 
         public Usuario UsuarioDomain
         {
@@ -177,6 +179,32 @@ namespace SmartAdmin.Domain
             }
         }
 
+        public Mensagem MensagemDomain
+        {
+            get
+            {
+                if (this._mensagemDomain == null)
+                {
+                    this._mensagemDomain = new Mensagem();
+                }
+
+                return _mensagemDomain;
+            }
+        }
+
+        public MensagemEnviada MensagemEnviadaDomain
+        {
+            get
+            {
+                if (this._mensagemenviadaDomain == null)
+                {
+                    this._mensagemenviadaDomain = new MensagemEnviada();
+                }
+
+                return _mensagemenviadaDomain;
+            }
+        }
+
         private bool _disposed = false;
 
         public void Dispose()
@@ -203,6 +231,8 @@ namespace SmartAdmin.Domain
                     _inboxDomain.Dispose();
                     _bancoDomain.Dispose();
                     _cedenteDomain.Dispose();
+                    _mensagemDomain.Dispose();
+                    _mensagemenviadaDomain.Dispose();
                 }
             }
             _disposed = true;

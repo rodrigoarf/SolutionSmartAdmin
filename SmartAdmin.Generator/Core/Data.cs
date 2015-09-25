@@ -378,7 +378,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("            {");
             TextClass.AppendLine("                if (entity != null)");
             TextClass.AppendLine("                {");
-            TextClass.AppendLine("                    _dbSet.Remove(entity);");
+            TextClass.AppendLine("                    _dbSet.Add(entity);");
             TextClass.AppendLine("                    _context.SaveChanges();");
             TextClass.AppendLine("                } ");
             TextClass.AppendLine("            }");

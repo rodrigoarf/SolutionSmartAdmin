@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="HtmlHelpers\HtmlHelpers.cs" />
     <Compile Include="ModelView\AppConfigModelView.cs" />
+    <Compile Include="ModelView\MensagemModelView.cs" />
     <Compile Include="ModelView\PermitionModelView.cs" />
     <Compile Include="ModelView\MenuModelView.cs" />
     <Compile Include="ModelView\UsuarioModelView.cs" />
