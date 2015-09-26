@@ -126,7 +126,6 @@ namespace SmartAdmin.Domain
             var CollectionMenu = _unitOfWork.MenuRepository.GetList(_ => _.COD_MENU_PAI == 0 && _.STATUS == "A"); //--> Pega somente os menus pais, ativos e abilitados para o usuario corrente.
             var CollectionMenuUsuario = _unitOfWork.MenuUsuarioRepository.GetList(_ => _.COD_USUARIO == Id);
             var Collection = CollectionMenu.Join(CollectionMenuUsuario, x => x.ID, y => y.COD_MENU,
-                                                //(MenuDto, MenuUsuarioDto) => new { MenuDto, MenuUsuarioDto }).Where(m => m.MenuUsuarioDto.COD_USUARIO == Id)
                                                 (MenuDto, MenuUsuarioDto) => new { MenuDto, MenuUsuarioDto })
                                                 .Select (_ => new MenuDto
                                                 {

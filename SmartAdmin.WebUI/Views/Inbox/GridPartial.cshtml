@@ -14,37 +14,39 @@
         <tbody>
             @for (int i = 0; i < Model.Count; i++)
             {
-                <tr id="@(Model[i].Id)" @((Model[i].IsRead == false) ? "class=unread" : string.Empty)>
-                    <td class="inbox-table-icon">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(_ => Model[i].Checked, new { @class = "checkbox style-2" })
-                                <span></span>
-                            </label>
-                        </div>
-                    </td>
-                    <td class="inbox-data-from hidden-xs hidden-sm">
-                        <div>
-                            @(Model[i].Usuario.NOME)
-                        </div>
-                    </td>
-                    <td class="inbox-data-message">
-                        <div>
-                            @(Model[i].Titulo)
-                        </div>
-                    </td>
-                    <td class="inbox-data-attachment hidden-xs">
-                        @*<div>
-                            <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="FILES: rocketlaunch.jpg, timelogs.xsl" class="txt-color-darken"><i class="fa fa-paperclip fa-lg"></i></a>
-                        </div>*@
-                    </td>
-                    <td>
-                        <div>
-                                @(Model[i].DataEnvio)
-                        </div>
-                    </td>
-                </tr> 
+                <tr id="@(Model[i].MensagemId)" @((Model[i].MensagemLida == false) ? "class=unread" : string.Empty)>
+                <td class="inbox-table-icon">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="checkbox style-2" id="@(Model[i].MensagemChecked)" name="@(Model[i].MensagemChecked)" @((Model[i].MensagemChecked==true) ? "checked" : string.Empty)>
+                            <span></span>
+                        </label>
+                    </div>
+                </td>
+                <td class="inbox-data-from hidden-xs hidden-sm">
+                    <div>
+                        @(Model[i].MensagemAutor.NOME)
+                    </div>
+                </td>
+                <td class="inbox-data-message">
+                    <div>
+                        @(Model[i].MensagemTitulo)
+                    </div>
+                </td>
+                <td class="inbox-data-attachment hidden-xs">
+                    <div>
+                    </div>
+                </td>
+                <td class="inbox-data-date hidden-xs text-center" style="width:150px;">
+                    <div>
+                        @(Model[i].MensagemDataEnvio)
+                    </div>
+                </td>
+            </tr>                 
             }
+            
+
+
         </tbody>
     </table>
  }

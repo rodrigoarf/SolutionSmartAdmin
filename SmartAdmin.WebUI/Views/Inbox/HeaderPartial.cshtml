@@ -2,7 +2,9 @@
         <i class="fa fa-fw fa-inbox"></i> Mensagens 
 	</h1>
 
+
 	<div class="btn-group hidden-desktop visible-tablet">
+
 		<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			Inbox <i class="fa fa-caret-down"></i>
 		</button>
@@ -25,15 +27,44 @@
 	</div>
 
 	<div class="inbox-checkbox-triggered">
-		<div class="btn-group">
-			<a href="javascript:void(0);" rel="tooltip" title="" data-placement="bottom" data-original-title="Move to folder" class="btn btn-default"><strong><i class="fa fa-folder-open fa-lg"></i></strong></a>
-			<a href="javascript:void(0);" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete" class="deletebutton btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
-		</div> 
+		@*<div class="btn-group">
+			<a href="javascript:void(0);" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
+            <a href="javascript:void(0);" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
+		</div>*@   
+        <div class="btn-group" data-toggle="buttons">
+	        <label class="btn btn-default active">
+		        <input type="radio" name="iconselect" id="icon-1" value="fa-info" checked="">
+		        <i class="fa fa-info text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-2" value="fa-warning">
+		        <i class="fa fa-warning text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-3" value="fa-check">
+		        <i class="fa fa-check text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-4" value="fa-user">
+		        <i class="fa fa-user text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-5" value="fa-lock">
+		        <i class="fa fa-lock text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-6" value="fa-clock-o">
+		        <i class="fa fa-clock-o text-muted"></i> </label>
+        </div>
 	</div>
+
+
 
 	<a href="javascript:void(0);" id="compose-mail-mini" class="btn btn-primary pull-right hidden-desktop visible-tablet"> <strong><i class="fa fa-file fa-lg"></i></strong> </a>
 
 	<div class="btn-group pull-right inbox-paging">
-		<a href="javascript:void(0);" class="btn btn-default btn-sm"><strong><i class="fa fa-chevron-left"></i></strong></a>
-		<a href="javascript:void(0);" class="btn btn-default btn-sm"><strong><i class="fa fa-chevron-right"></i></strong></a>
+@*		<a href="javascript:void(0);" class="btn btn-default btn-sm"><strong><i class="fa fa-chevron-left"></i></strong></a>
+		<a href="javascript:void(0);" class="btn btn-default btn-sm"><strong><i class="fa fa-chevron-right"></i></strong></a>*@
+
+        <label class="btn btn-default">
+            <i class="fa fa-chevron-left"></i>
+        </label>
+        <label class="btn btn-default">
+            <i class="fa fa-chevron-right"></i>
+        </label>
 	</div>
