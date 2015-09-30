@@ -1,0 +1,42 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.WebUI.ModelView.MensagemModelView
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="inbox-nav-bar no-content-padding">
+    @Html.Partial("HeaderPartial")
+</div>
+
+<div id="inbox-content" class="inbox-body no-content-padding">
+    <div class="inbox-side-bar">
+        @Html.Partial("MenuPartial")
+    </div>
+    <div class="table-wrap custom-scroll animated fast fadeInRight">
+        <div class="inbox-info-bar no-padding">
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-1"><strong>De</strong></label>
+                    <div class="col-md-11">
+                        @HtmlControls.TextBox("MensagemAutor", new { @value = Model.MensagemAutor, @class = "form-control", @placeholder = "Destinatário da Mensagem", @readonly="true" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inbox-info-bar no-padding">
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-1"><strong>Título</strong></label>
+                    <div class="col-md-11">
+                        @HtmlControls.TextBox("MensagemTitulo", new { @value = Model.MensagemTitulo, @class = "form-control", @placeholder = "Assunto da mensagem", @readonly="true"  })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inbox-message no-padding">
+            <div>@Html.Raw(Model.MensagemTexto)</div>
+        </div>        
+    </div>
+</div>
+
+
+
+

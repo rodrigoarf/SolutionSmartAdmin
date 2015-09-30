@@ -810,7 +810,7 @@
     <Content Include="Content\js\plugin\selectToUISlider\selectToUISlider.jQuery.min.js" />
     <Content Include="Content\js\plugin\slimscroll\jquery.slimscroll.min.js" />
     <Content Include="Content\js\plugin\sparkline\jquery.sparkline.min.js" />
-    <Content Include="Content\js\plugin\summernote\summernote.min.js" />
+    <Content Include="Content\js\plugin\summernote\summernote.js" />
     <Content Include="Content\js\plugin\superbox\superbox.min.js" />
     <Content Include="Content\js\plugin\throttle-denounce\jquery.ba-throttle-debounce.min.js" />
     <Content Include="Content\js\plugin\typeahead\typeahead.min.js" />
@@ -1064,6 +1064,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Inbox\Sent.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\Trash.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\Compose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\CreatePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\Reader.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,8 +9,9 @@ namespace SmartAdmin.WebUI.ModelView
     public class MensagemModelView
     {
         public int MensagemId { get; set; }
-        public UsuarioDto MensagemAutor { get; set; } // Autor da mensagem
-        public virtual List<UsuarioDto> MensagemRemetentes { get; set; } // Coleção de Remetentes
+        public string MensagemAutor { get; set; } // Autor da mensagem
+        public string MensagemDestinatario { get; set; } // Somente um remente
+        public virtual List<UsuarioDto> CollectionDestinatarios { get; set; } // Coleção de Remetentes
         public DateTime? MensagemDataEnvio { get; set; }
         public DateTime? MensagemDataCriacao { get; set; }
         public string MensagemTitulo { get; set; }
@@ -24,8 +25,6 @@ namespace SmartAdmin.WebUI.ModelView
     { 
          CaixaDeEntrada = 1,
          CaixaDeSaida = 2,
-         CaixaDeImportantes = 3,
-         CaixaDeLixoEletronico = 4,
-         CaixaDeRascunhos = 5
+         CaixaDeLixoEletronico = 3
     }
 }

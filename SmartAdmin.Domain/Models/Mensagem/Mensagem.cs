@@ -92,6 +92,122 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Retorna lista de mensagens da caixa de entrada do usuario.
+        /// </summary>
+        public List<MensagemDto> GetInboxMessages(int IdUsuarioLogado)
+        {   
+            var _unitOfWorkMensagemDestinatarios = _unitOfWork.MensagemEnviadaRepository;
+            var CollectionRemetentesDaMensagem = _unitOfWorkMensagemDestinatarios.GetList(_ => _.COD_REMETENTE == IdUsuarioLogado);
+
+            var _unitOfWorkMensagem = _unitOfWork.MensagemRepository;
+            var CollectionMensagem = _unitOfWorkMensagem.GetList(null);
+
+            var Collection = CollectionRemetentesDaMensagem.Join(CollectionMensagem,
+                                               MensagemEnviada => MensagemEnviada.COD_MENSAGEM,
+                                               Mensagem => Mensagem.ID,
+                                               (MensagemEnviadaDto, MensagemDto) => new { MensagemEnviadaDto, MensagemDto })
+                                               .Select(_ => new MensagemDto
+                                               {
+                                                   ID = _.MensagemDto.ID,
+                                                   COD_AUTOR = _.MensagemDto.COD_AUTOR,
+                                                   TITULO  = _.MensagemDto.TEXTO,
+                                                   TEXTO  = _.MensagemDto.TEXTO,  
+                                                   DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
+                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
+                                                   STATUS  = _.MensagemDto.STATUS                                                  
+                                               }).OrderByDescending(_=>_.DTH_ENVIO).ToList();
+
+            return (Collection); 
+        }
+
+        /// <summary>
+        /// Retorna lista de mensagens da caixa de enviados do usuario.
+        /// </summary>
+        public List<MensagemDto> GetSentMessages(int IdUsuarioLogado)
+        {
+            var _unitOfWorkMensagemDestinatarios = _unitOfWork.MensagemEnviadaRepository;
+            var CollectionRemetentesDaMensagem = _unitOfWorkMensagemDestinatarios.GetList(_ => _.COD_AUTOR == IdUsuarioLogado);
+
+            var _unitOfWorkMensagem = _unitOfWork.MensagemRepository;
+            var CollectionMensagem = _unitOfWorkMensagem.GetList(null);
+
+            var Collection = CollectionRemetentesDaMensagem.Join(CollectionMensagem,
+                                               MensagemEnviada => MensagemEnviada.COD_MENSAGEM,
+                                               Mensagem => Mensagem.ID,
+                                               (MensagemEnviadaDto, MensagemDto) => new { MensagemEnviadaDto, MensagemDto })
+                                               .Select(_ => new MensagemDto
+                                               {
+                                                   ID = _.MensagemDto.ID,
+                                                   COD_AUTOR = _.MensagemDto.COD_AUTOR,
+                                                   TITULO = _.MensagemDto.TEXTO,
+                                                   TEXTO = _.MensagemDto.TEXTO,
+                                                   DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
+                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
+                                                   STATUS = _.MensagemDto.STATUS
+                                               }).OrderByDescending(_ => _.DTH_ENVIO).ToList();
+
+            return (Collection);
+        }
+
+        /// <summary>
+        /// Retorna lista de mensagens da caixa de lixo eletrônico do usuario.
+        /// </summary>
+        public List<MensagemDto> GetTrashMessages(int IdUsuarioLogado)
+        {
+            var _unitOfWorkMensagemDestinatarios = _unitOfWork.MensagemEnviadaRepository;
+            var CollectionRemetentesDaMensagem = _unitOfWorkMensagemDestinatarios.GetList(_ => _.COD_AUTOR == IdUsuarioLogado || _.COD_REMETENTE == IdUsuarioLogado);
+
+            var _unitOfWorkMensagem = _unitOfWork.MensagemRepository;
+            var CollectionMensagem = _unitOfWorkMensagem.GetList(_ => _.STATUS == "4" && _.COD_AUTOR == IdUsuarioLogado);
+
+            var Collection = CollectionRemetentesDaMensagem.Join(CollectionMensagem,
+                                               MensagemEnviada => MensagemEnviada.COD_MENSAGEM,
+                                               Mensagem => Mensagem.ID,
+                                               (MensagemEnviadaDto, MensagemDto) => new { MensagemEnviadaDto, MensagemDto })
+                                               .Select(_ => new MensagemDto
+                                               {
+                                                   ID = _.MensagemDto.ID,
+                                                   COD_AUTOR = _.MensagemDto.COD_AUTOR,
+                                                   TITULO = _.MensagemDto.TEXTO,
+                                                   TEXTO = _.MensagemDto.TEXTO,
+                                                   DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
+                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
+                                                   STATUS = _.MensagemDto.STATUS
+                                               }).OrderByDescending(_ => _.DTH_ENVIO).ToList();
+
+            return (Collection);
+        }
+
+        /// <summary>
+        /// Retorna o usuario autor da mensagem
+        /// </summary>
+        public UsuarioDto GetAutorFromMessage(int IdUsuarioAutor)
+        {
+            var _unitOfWorkUsuario = _unitOfWork.UsuarioRepository;
+            var Model = _unitOfWorkUsuario.GetItem(_ => _.ID == IdUsuarioAutor);
+            return (Model);
+        }
+
+        /// <summary>
+        ///  Retorna a lista de usuario a qual a mensagem foi enviada ou seja uma lista de remetentes
+        /// </summary>
+        public List<UsuarioDto> GetUsersSentFromMessage(int IdMensagem)
+        {
+            var _unitOfWorkMensagemDestinatarios = _unitOfWork.MensagemEnviadaRepository;
+            var _unitOfWorkUsuarioRemetente = _unitOfWork.UsuarioRepository; 
+
+            var CollectionRemetentesDaMensagem = _unitOfWorkMensagemDestinatarios.GetList(_ => _.COD_MENSAGEM == IdMensagem);
+            var CollectionUsuariosRemetentes = new List<UsuarioDto>();
+
+            foreach (var item in CollectionRemetentesDaMensagem)
+            {
+                CollectionUsuariosRemetentes.Add(_unitOfWorkUsuarioRemetente.GetItem(_ => _.ID == item.COD_REMETENTE));
+            }
+
+            return (CollectionUsuariosRemetentes);
+        }
+
+        /// <summary>
         ///  Distroe o objeto e recursos não gerenciados liberando memória
         /// </summary>
         public void Dispose()

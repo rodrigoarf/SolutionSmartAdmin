@@ -1,0 +1,129 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.WebUI.ModelView.MensagemModelView
+
+@using (Html.BeginForm("Save", "Inbox", FormMethod.Post, new { @id = "smart-form-create", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{  
+	<div class="inbox-info-bar no-padding">
+		<div class="row">
+			<div class="form-group">
+				<label class="control-label col-md-1"><strong>Para</strong></label>
+				<div class="col-md-11">                           
+                    @HtmlControls.TextBox("MensagemDestinatario", new {@value=Model.MensagemDestinatario, @class="form-control", @placeholder="Destinatário da Mensagem" })
+                </div>
+			</div>
+		</div>	
+	</div> 
+	<div class="inbox-info-bar no-padding">
+		<div class="row">
+			<div class="form-group">
+				<label class="control-label col-md-1"><strong>Título</strong></label>
+				<div class="col-md-11">
+                    @HtmlControls.TextBox("MensagemTitulo", new {@value=Model.MensagemTitulo, @class="form-control", @placeholder="Assunto da mensagem" })
+				</div>
+			</div>
+		</div>	
+	</div> 	
+    <div class="inbox-message no-padding">
+        @Html.TextArea("MensagemTexto", string.Empty, string.Empty)
+    </div> 	
+	<div class="inbox-compose-footer"> 
+		<button class="btn btn-danger" type="button">
+			Descartar
+		</button> 			
+		<button class="btn btn-info" type="button">
+			Salvar Rascunho
+		</button> 
+		<button class="btn btn-primary pull-right" type="button" id="btnSendMessage">
+			Enviar <i class="fa fa-arrow-circle-right fa-lg"></i>
+		</button> 
+	</div>    
+}    
+
+<script>
+    $(document).ready(function () {
+
+        /***************************
+        * JQUERY VALIDATOR
+        ***************************/
+        $('#btnSendMessage').click(function () {
+
+            var titleValue = $('#MensagemTitulo').val();
+            var senderValue = $('#MensagemDestinatario').val();
+            var messageValue = $('.note-editable').text();
+
+            if (senderValue == '') {
+                PrintAlert('Informe o Destinatário para a mensagem');  
+                return (false);
+            }
+            else {
+                if (senderValue != '')
+                {
+                    if (IsValidEmail(senderValue))
+                    {
+                        if (titleValue == '')
+                        {
+                            PrintAlert('Informe o Título para a mensagem');
+                            return (false);
+                        }
+                        else
+                        {
+                            if (messageValue == '')
+                            {
+                                PrintAlert('Informe o Texto para a mensagem');
+                                return (false);
+                            }
+                            else
+                            {
+                                if (messageValue.length <= 50)
+                                {
+                                    PrintAlert('Sua mensagem deve ter acima de 50 caracteres!');
+                                    return (false);
+                                }
+                                else
+                                {
+                                    $('#MensagemTexto').val(messageValue);
+                                    $("#smart-form-create").submit();
+                                    //PrintAlert('Mensagem sera enviada!');
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        PrintAlert('Informe um e-mail de Destinatário correto');
+                    }
+                }  
+            }
+        });
+
+
+        /***************************
+        * SUMMERNOTE EDITOR
+        ***************************/
+        loadScript("/Content/js/plugin/summernote/summernote.js", IniEmailBody);
+        function IniEmailBody() {
+            $('#MensagemTexto').summernote({
+                height: 300,
+                focus: true,
+                tabsize: 2
+            });
+        }
+    });
+
+    function PrintAlert(alert) {
+        $.SmartMessageBox({
+            title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',
+            content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
+            buttons: '[Voltar]'
+        });
+    }   
+
+    function IsValidEmail(EmailAddress) {
+        var Pattern = new RegExp(/^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/);
+        return (Pattern.test(EmailAddress));
+    };
+
+
+
+</script>
+

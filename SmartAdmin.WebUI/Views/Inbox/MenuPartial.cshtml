@@ -1,17 +1,14 @@
 ﻿
-        <a href="javascript:void(0);" id="compose-mail" class="btn btn-primary btn-block"><strong>Escrever</strong> </a>
+        <a href="/Inbox/Compose" id="compose-mail" class="btn btn-primary btn-block"><strong>Escrever</strong> </a>
 
         <ul class="inbox-menu-lg">
-            <li class="active">
-                <a class="inbox-load" href="/Inbox">Caixa de Entrada (@(ViewBag.TotalDeMensagem))</a>
+            <li @((ViewBag.SetMenu == "1") ? "class=active" : string.Empty)>
+                <a href="/Inbox">Caixa de Entrada</a>
             </li>
-            <li>
+            <li @((ViewBag.SetMenu == "2") ? "class=active" : string.Empty)>
                 <a href="/Inbox/Sent">Enviados</a>
             </li>
-            <li>
+            <li @((ViewBag.SetMenu == "3") ? "class=active" : string.Empty)>
                 <a href="/Inbox/Trash">Lixeira</a>
-            </li>
-            <li>
-                <a href="/Inbox/Draft">Rascunhos</a>
             </li>
         </ul>
