@@ -49,7 +49,7 @@
 
             var titleValue = $('#MensagemTitulo').val();
             var senderValue = $('#MensagemDestinatario').val();
-            var messageValue = $('.note-editable').text();
+            var messageValue = $('.note-editable').html();
 
             if (senderValue == '') {
                 PrintAlert('Informe o Destinatário para a mensagem');  

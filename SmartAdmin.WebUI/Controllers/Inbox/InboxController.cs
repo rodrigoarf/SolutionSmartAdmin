@@ -45,6 +45,17 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
         }
 
         [AuthorizedUser]
+        public ActionResult Favorites(int? Page)
+        {
+            var CollectionMensagensViewModel = FavoritesMessages();
+            var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
+            ViewBag.SetMenu = "4";
+
+            ViewBag.Mensagem = TempData["Mensagem"] as String;
+            return View(CollectionMensagensViewModel.ToPagedList(CurrentPage, PageSize));
+        }
+
+        [AuthorizedUser]
         public ActionResult Compose()
         {
             ViewBag.Mensagem = TempData["Mensagem"] as String;
@@ -55,68 +66,67 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
         [AuthorizedUser]
         public ActionResult Reader(int Id)
         {
-            var MensagemEnviadaDomain = new MensagemEnviada();                  
-            var ModelMensagemEnviada = MensagemEnviadaDomain.GetItem(_ => _.COD_MENSAGEM == Id);
-            ModelMensagemEnviada.STATUS = "S";
-            MensagemEnviadaDomain.Edit(ModelMensagemEnviada);
-
             var MensagemDomain = new Mensagem();
-            var ModelMensagem = MensagemDomain.GetItem(_ => _.ID == ModelMensagemEnviada.COD_MENSAGEM);
-
+            var ModelMensagem = MensagemDomain.GetItem(_ => _.ID == Id);  
+                                                                                   
+            var MensagemModelView = new SmartAdmin.WebUI.ModelView.MensagemModelView();
             var UsuarioDomain = new Usuario();
 
-            var MensagemModelView = new SmartAdmin.WebUI.ModelView.MensagemModelView();
-            MensagemModelView.MensagemAutor = UsuarioDomain.GetItem(_ => _.ID == ModelMensagemEnviada.COD_AUTOR).EMAIL;
+            MensagemModelView.MensagemDestinatarioObject = MensagemDomain.GetAutorFromMessage(ModelMensagem.COD_AUTOR);
             MensagemModelView.MensagemTitulo = ModelMensagem.TITULO;
             MensagemModelView.MensagemTexto = ModelMensagem.TEXTO;
+            MensagemModelView.MensagemDataEnvio = ModelMensagem.DTH_ENVIO; 
 
             return View(MensagemModelView);
         }
 
         [HttpPost]
         [AuthorizedUser]
+        [ValidateInput(false)]
         public ActionResult Save(SmartAdmin.WebUI.ModelView.MensagemModelView ModelView)
         {
             try
             {
                 var UsuarioDomain = new Usuario();
-                var ModelMensagem = new MensagemDto();               
-                  
-                var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
-                var UsuarioLogado = SessaoDomain.GetUsuario();
-
-                ModelMensagem.COD_AUTOR = UsuarioLogado.Usuario.ID;
-                ModelMensagem.TITULO = ModelView.MensagemTitulo;
-                ModelMensagem.TEXTO = ModelView.MensagemTexto;
-                ModelMensagem.STATUS = "2";
-                ModelMensagem.DTH_CRIACAO = DateTime.Now;
-                ModelMensagem.DTH_ENVIO = DateTime.Now;
-
-                var MensagemDomain = new Mensagem();
-                var MensagemSalva = MensagemDomain.SaveGetItem(ModelMensagem);
-
                 var Destinatario = UsuarioDomain.GetItem(_ => _.EMAIL == ModelView.MensagemDestinatario.ToLower());
 
                 if (Destinatario != null)
-                {  
+                {
+                    var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
+                    var UsuarioLogado = SessaoDomain.GetUsuario();
+                    var ModelMensagem = new MensagemDto();
+
+                    //--> Salva Mensagem
+                    ModelMensagem.COD_AUTOR = UsuarioLogado.Usuario.ID;
+                    ModelMensagem.TITULO = ModelView.MensagemTitulo;
+                    ModelMensagem.TEXTO = ModelView.MensagemTexto;
+                    ModelMensagem.DTH_CRIACAO = DateTime.Now;
+                    ModelMensagem.DTH_ENVIO = DateTime.Now;
+
+                    var MensagemDomain = new Mensagem();
+                    var MensagemSalva = MensagemDomain.SaveGetItem(ModelMensagem);
+                    //-->
+                           
                     var MensagemEnviadaDomain = new MensagemEnviada();
                     var MensagemEnviadaModel = new MensagemEnviadaDto();
 
+                    //--> Salva na tabela de enviados para cada autor
                     MensagemEnviadaModel.COD_MENSAGEM = MensagemSalva.ID;
                     MensagemEnviadaModel.COD_AUTOR  = UsuarioLogado.Usuario.ID;
                     MensagemEnviadaModel.COD_REMETENTE  = Destinatario.ID;
-                    MensagemEnviadaModel.STATUS = "N";
-
-                    MensagemEnviadaDomain.Save(MensagemEnviadaModel);     
+                    MensagemEnviadaModel.STATUS_AUTOR = "2";
+                    MensagemEnviadaModel.STATUS_REMETENTE = "1";
+                    MensagemEnviadaDomain.Save(MensagemEnviadaModel);
+                    //-->
 
                     TempData["Mensagem"] = "Mensagem enviada com sucesso!";
-                    TempData["Model"] = ModelView;
                     return (RedirectToAction("Index", "Inbox"));
                 } 
                 else
                 {
                     TempData["Mensagem"] = "E-mail de destinatário nao encontrado!";
-                    return (RedirectToAction("Compose", "Inbox", ModelView));
+                    TempData["Model"] = ModelView;
+                    return (RedirectToAction("Compose", "Inbox"));
                 }
             }
             catch (Exception Ex)
@@ -134,7 +144,7 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
             var MensagemEnviadaDomain = new MensagemEnviada();
             var CollectionRemetentesDaMensagem = new List<MensagemEnviadaDto>();
 
-            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_REMETENTE == UsuarioLogado.Usuario.ID);
+            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_REMETENTE == UsuarioLogado.Usuario.ID && _.STATUS_REMETENTE == "1");
 
             var MensagemDomain = new Mensagem();
             var CollectionMensagem = MensagemDomain.GetList(null);
@@ -153,8 +163,6 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
                                                                         MensagemTexto = _.MensagemDto.TEXTO,
                                                                         MensagemDataCriacao = _.MensagemDto.DTH_CRIACAO,
                                                                         MensagemDataEnvio = _.MensagemDto.DTH_ENVIO,
-                                                                        MensagemLida = ((_.MensagemEnviadaDto.STATUS == "S") ? true : false),
-                                                                        MensagemPasta = RetornaStatus(_.MensagemDto.STATUS),
                                                                         MensagemAutor = CollectionUsuario.Where(thisItemCollection => thisItemCollection.ID == _.MensagemDto.COD_AUTOR).FirstOrDefault().EMAIL
                                                                     }).OrderByDescending(_ => _.MensagemDataEnvio).ToList();
             return CollectionMensagensViewModel;
@@ -168,7 +176,7 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
             var MensagemEnviadaDomain = new MensagemEnviada();
             var CollectionRemetentesDaMensagem = new List<MensagemEnviadaDto>();
 
-            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_AUTOR == UsuarioLogado.Usuario.ID);
+            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_AUTOR == UsuarioLogado.Usuario.ID && _.STATUS_AUTOR == "2");
 
             var MensagemDomain = new Mensagem();
             var CollectionMensagem = MensagemDomain.GetList(null);
@@ -187,8 +195,6 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
                                                                         MensagemTexto = _.MensagemDto.TEXTO,
                                                                         MensagemDataCriacao = _.MensagemDto.DTH_CRIACAO,
                                                                         MensagemDataEnvio = _.MensagemDto.DTH_ENVIO,
-                                                                        MensagemLida = ((_.MensagemEnviadaDto.STATUS == "S") ? true : false),
-                                                                        MensagemPasta = RetornaStatus(_.MensagemDto.STATUS),
                                                                         MensagemAutor = CollectionUsuario.Where(thisItemCollection => thisItemCollection.ID == _.MensagemDto.COD_AUTOR).FirstOrDefault().EMAIL
                                                                     }).OrderByDescending(_ => _.MensagemDataEnvio).ToList();
             return CollectionMensagensViewModel;
@@ -202,10 +208,10 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
             var MensagemEnviadaDomain = new MensagemEnviada();
             var CollectionRemetentesDaMensagem = new List<MensagemEnviadaDto>();
 
-            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_AUTOR == UsuarioLogado.Usuario.ID || _.COD_REMETENTE == UsuarioLogado.Usuario.ID);
+            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_REMETENTE == UsuarioLogado.Usuario.ID && _.STATUS_REMETENTE == "3");
 
             var MensagemDomain = new Mensagem();
-            var CollectionMensagem = MensagemDomain.GetList(_ => _.STATUS == "3" && _.COD_AUTOR == UsuarioLogado.Usuario.ID);
+            var CollectionMensagem = MensagemDomain.GetList(null); // S = ESTA NA LIXEIRA, E = EXPLUIDO ATE DA LIXEIRA
 
             var UsuarioDomain = new Usuario();
             var CollectionUsuario = UsuarioDomain.GetList(null);
@@ -221,11 +227,84 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
                                                                         MensagemTexto = _.MensagemDto.TEXTO,
                                                                         MensagemDataCriacao = _.MensagemDto.DTH_CRIACAO,
                                                                         MensagemDataEnvio = _.MensagemDto.DTH_ENVIO,
-                                                                        MensagemLida = ((_.MensagemEnviadaDto.STATUS == "S") ? true : false),
-                                                                        MensagemPasta = RetornaStatus(_.MensagemDto.STATUS),
                                                                         MensagemAutor = CollectionUsuario.Where(thisItemCollection => thisItemCollection.ID == _.MensagemDto.COD_AUTOR).FirstOrDefault().EMAIL
                                                                     }).OrderByDescending(_ => _.MensagemDataEnvio).ToList();
             return CollectionMensagensViewModel;
+        }
+
+        private List<MensagemModelView> FavoritesMessages()
+        {
+            var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
+            var UsuarioLogado = SessaoDomain.GetUsuario();
+
+            var MensagemEnviadaDomain = new MensagemEnviada();
+            var CollectionRemetentesDaMensagem = new List<MensagemEnviadaDto>();
+
+            CollectionRemetentesDaMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_REMETENTE == UsuarioLogado.Usuario.ID && _.STATUS_REMETENTE == "4");
+
+            var MensagemDomain = new Mensagem();
+            var CollectionMensagem = MensagemDomain.GetList(null);
+
+            var UsuarioDomain = new Usuario();
+            var CollectionUsuario = UsuarioDomain.GetList(null);
+
+            var CollectionMensagensViewModel = CollectionRemetentesDaMensagem.Join(CollectionMensagem,
+                                                                    MensagemEnviada => MensagemEnviada.COD_MENSAGEM,
+                                                                    Mensagem => Mensagem.ID,
+                                                                    (MensagemEnviadaDto, MensagemDto) => new { MensagemEnviadaDto, MensagemDto })
+                                                                    .Select(_ => new SmartAdmin.WebUI.ModelView.MensagemModelView
+                                                                    {
+                                                                        MensagemId = _.MensagemDto.ID,
+                                                                        MensagemTitulo = _.MensagemDto.TITULO,
+                                                                        MensagemTexto = _.MensagemDto.TEXTO,
+                                                                        MensagemDataCriacao = _.MensagemDto.DTH_CRIACAO,
+                                                                        MensagemDataEnvio = _.MensagemDto.DTH_ENVIO,
+                                                                        MensagemAutor = CollectionUsuario.Where(thisItemCollection => thisItemCollection.ID == _.MensagemDto.COD_AUTOR).FirstOrDefault().EMAIL
+                                                                    }).OrderByDescending(_ => _.MensagemDataEnvio).ToList();
+            return CollectionMensagensViewModel;
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int[] values)
+        {
+            var MensagemEnviadaDomain = new MensagemEnviada();
+            foreach (var item in values)
+            {
+                var Model = MensagemEnviadaDomain.GetItem(_ => _.COD_MENSAGEM == item);
+                MensagemEnviadaDomain.Edit(new MensagemEnviadaDto()
+                {
+                    COD_MENSAGEM = Model.COD_MENSAGEM, 
+                    COD_AUTOR = Model.COD_AUTOR,
+                    COD_REMETENTE = Model.COD_REMETENTE,
+                    ID = Model.ID,
+                    STATUS_AUTOR = Model.STATUS_AUTOR,
+                    STATUS_REMETENTE = "3",
+               }); 
+            }
+
+            TempData["Mensagem"] = "As mensagens selecionada(s) foram envidas para lixeira.";
+            return (RedirectToAction("Index", "Inbox"));
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDefinitive(int[] values)
+        {
+            var MensagemEnviadaDomain = new MensagemEnviada();
+            foreach (var item in values)
+            {
+                var Model = MensagemEnviadaDomain.GetItem(_ => _.COD_MENSAGEM == item);
+                MensagemEnviadaDomain.Edit(new MensagemEnviadaDto()
+                {
+                    COD_MENSAGEM = Model.COD_MENSAGEM,
+                    COD_AUTOR = Model.COD_AUTOR,
+                    COD_REMETENTE = Model.COD_REMETENTE,
+                    ID = Model.ID,
+                    STATUS_AUTOR = Model.STATUS_AUTOR,
+                    STATUS_REMETENTE = "E",
+                });
+            }
+
+            return (RedirectToAction("Sent", "Inbox"));
         }
 
         private void TotalDeMensagens()
@@ -233,7 +312,7 @@ namespace SmartAdmin.WebUI.Controllers.Inbox
             var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
             var UsuarioLogado = SessaoDomain.GetUsuario();
             var MensagemEnviadaDomain = new MensagemEnviada();
-            ViewBag.TotalDeMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_REMETENTE == UsuarioLogado.Usuario.ID && _.STATUS == "N").Count;
+            ViewBag.TotalDeMensagem = MensagemEnviadaDomain.GetList(_ => _.COD_REMETENTE == UsuarioLogado.Usuario.ID).Count;
         }
 
         public SmartAdmin.WebUI.ModelView.EMensagemFolder RetornaStatus(string Status)

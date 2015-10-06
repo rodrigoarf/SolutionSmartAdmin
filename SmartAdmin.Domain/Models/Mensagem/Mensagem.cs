@@ -113,8 +113,7 @@ namespace SmartAdmin.Domain
                                                    TITULO  = _.MensagemDto.TEXTO,
                                                    TEXTO  = _.MensagemDto.TEXTO,  
                                                    DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
-                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
-                                                   STATUS  = _.MensagemDto.STATUS                                                  
+                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO                                            
                                                }).OrderByDescending(_=>_.DTH_ENVIO).ToList();
 
             return (Collection); 
@@ -142,8 +141,7 @@ namespace SmartAdmin.Domain
                                                    TITULO = _.MensagemDto.TEXTO,
                                                    TEXTO = _.MensagemDto.TEXTO,
                                                    DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
-                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
-                                                   STATUS = _.MensagemDto.STATUS
+                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO
                                                }).OrderByDescending(_ => _.DTH_ENVIO).ToList();
 
             return (Collection);
@@ -152,31 +150,31 @@ namespace SmartAdmin.Domain
         /// <summary>
         /// Retorna lista de mensagens da caixa de lixo eletrônico do usuario.
         /// </summary>
-        public List<MensagemDto> GetTrashMessages(int IdUsuarioLogado)
-        {
-            var _unitOfWorkMensagemDestinatarios = _unitOfWork.MensagemEnviadaRepository;
-            var CollectionRemetentesDaMensagem = _unitOfWorkMensagemDestinatarios.GetList(_ => _.COD_AUTOR == IdUsuarioLogado || _.COD_REMETENTE == IdUsuarioLogado);
+        //public List<MensagemDto> GetTrashMessages(int IdUsuarioLogado)
+        //{
+        //    var _unitOfWorkMensagemDestinatarios = _unitOfWork.MensagemEnviadaRepository;
+        //    var CollectionRemetentesDaMensagem = _unitOfWorkMensagemDestinatarios.GetList(_ => _.COD_AUTOR == IdUsuarioLogado || _.COD_REMETENTE == IdUsuarioLogado);
 
-            var _unitOfWorkMensagem = _unitOfWork.MensagemRepository;
-            var CollectionMensagem = _unitOfWorkMensagem.GetList(_ => _.STATUS == "4" && _.COD_AUTOR == IdUsuarioLogado);
+        //    var _unitOfWorkMensagem = _unitOfWork.MensagemRepository;
+        //    var CollectionMensagem = _unitOfWorkMensagem.GetList(_ => _.STATUS == "3" && _.COD_AUTOR == IdUsuarioLogado);
 
-            var Collection = CollectionRemetentesDaMensagem.Join(CollectionMensagem,
-                                               MensagemEnviada => MensagemEnviada.COD_MENSAGEM,
-                                               Mensagem => Mensagem.ID,
-                                               (MensagemEnviadaDto, MensagemDto) => new { MensagemEnviadaDto, MensagemDto })
-                                               .Select(_ => new MensagemDto
-                                               {
-                                                   ID = _.MensagemDto.ID,
-                                                   COD_AUTOR = _.MensagemDto.COD_AUTOR,
-                                                   TITULO = _.MensagemDto.TEXTO,
-                                                   TEXTO = _.MensagemDto.TEXTO,
-                                                   DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
-                                                   DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
-                                                   STATUS = _.MensagemDto.STATUS
-                                               }).OrderByDescending(_ => _.DTH_ENVIO).ToList();
+        //    var Collection = CollectionRemetentesDaMensagem.Join(CollectionMensagem,
+        //                                       MensagemEnviada => MensagemEnviada.COD_MENSAGEM,
+        //                                       Mensagem => Mensagem.ID,
+        //                                       (MensagemEnviadaDto, MensagemDto) => new { MensagemEnviadaDto, MensagemDto })
+        //                                       .Select(_ => new MensagemDto
+        //                                       {
+        //                                           ID = _.MensagemDto.ID,
+        //                                           COD_AUTOR = _.MensagemDto.COD_AUTOR,
+        //                                           TITULO = _.MensagemDto.TEXTO,
+        //                                           TEXTO = _.MensagemDto.TEXTO,
+        //                                           DTH_CRIACAO = _.MensagemDto.DTH_CRIACAO,
+        //                                           DTH_ENVIO = _.MensagemDto.DTH_ENVIO,
+        //                                           STATUS = _.MensagemDto.STATUS
+        //                                       }).OrderByDescending(_ => _.DTH_ENVIO).ToList();
 
-            return (Collection);
-        }
+        //    return (Collection);
+        //}
 
         /// <summary>
         /// Retorna o usuario autor da mensagem

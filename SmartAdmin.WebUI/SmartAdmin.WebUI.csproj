@@ -143,6 +143,7 @@
     <Compile Include="Controllers\Acesso\AcessoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Bugs\BugsController.cs" />
+    <Compile Include="Controllers\Dashboard\DashboardController.cs" />
     <Compile Include="Controllers\Financeiro\FinanceiroController.cs" />
     <Compile Include="Controllers\Inbox\InboxController.cs" />
     <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
@@ -1076,6 +1077,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Inbox\Reader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dashboard\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Inbox\Favorites.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,26 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
+
+                </div>
+            </article>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)
+
+    function PrintAlert(alert) {
+        $.SmartMessageBox({
+            title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',
+            content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
+            buttons: '[Voltar]'
+        });
+    }
+</script>

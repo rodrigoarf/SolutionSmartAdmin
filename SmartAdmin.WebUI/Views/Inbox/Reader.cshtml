@@ -10,33 +10,43 @@
     <div class="inbox-side-bar">
         @Html.Partial("MenuPartial")
     </div>
-    <div class="table-wrap custom-scroll animated fast fadeInRight">
-        <div class="inbox-info-bar no-padding">
+    <div class="table-wrap custom-scroll animated fast fadeInRight" style="height: 520px; opacity: 1;">
+        <h2 class="email-open-header">Re: @Model.MensagemTitulo
+	        <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="Imprimir" class="txt-color-darken pull-right"><i class="fa fa-print"></i></a>
+        </h2>
+        <div class="inbox-info-bar" style="margin-right: 0px;">
             <div class="row">
-                <div class="form-group">
-                    <label class="control-label col-md-1"><strong>De</strong></label>
-                    <div class="col-md-11">
-                        @HtmlControls.TextBox("MensagemAutor", new { @value = Model.MensagemAutor, @class = "form-control", @placeholder = "Destinatário da Mensagem", @readonly="true" })
+                <div class="col-sm-9">
+                    Enviada de: <strong>@Model.MensagemDestinatarioObject.LOGIN</strong>
+                    <span class="hidden-mobile">@Model.MensagemDestinatarioObject.EMAIL<br />
+                    Para mim em @Model.MensagemDataEnvio.Value.Day.ToString() de @Model.MensagemDataEnvio.Value.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) de @Model.MensagemDataEnvio.Value.Year.ToString() às @Model.MensagemDataEnvio.Value.ToString("HH:MM")</span>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div class="btn-group text-left">
+                        <button class="btn btn-primary btn-sm replythis">
+                            <i class="fa fa-reply"></i> Opções
+                        </button>
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="javascript:void(0);" class="replythis"><i class="fa fa-reply"></i> Responder</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Apagar</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>   
+        <div style="width:700px; padding:20px 0px 20px 0px;">
+            @Html.Raw(Model.MensagemTexto)
         </div>
-        <div class="inbox-info-bar no-padding">
-            <div class="row">
-                <div class="form-group">
-                    <label class="control-label col-md-1"><strong>Título</strong></label>
-                    <div class="col-md-11">
-                        @HtmlControls.TextBox("MensagemTitulo", new { @value = Model.MensagemTitulo, @class = "form-control", @placeholder = "Assunto da mensagem", @readonly="true"  })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="inbox-message no-padding">
-            <div>@Html.Raw(Model.MensagemTexto)</div>
-        </div>        
-    </div>
+    </div> 
 </div>
-
 
 
 

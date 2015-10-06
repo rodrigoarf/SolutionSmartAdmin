@@ -20,7 +20,6 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.TEXTO).IsRequired().HasMaxLength(65535);
             this.Property(_ => _.DTH_CRIACAO);
             this.Property(_ => _.DTH_ENVIO);
-            this.Property(_ => _.STATUS).IsRequired().HasMaxLength(1);
 
             // Table & Column Mappings
             this.ToTable("MENSAGEM", "agilecore1");
@@ -31,7 +30,6 @@ namespace SmartAdmin.Data.Mapper
             this.Property(_ => _.TEXTO).HasColumnName("TEXTO");
             this.Property(_ => _.DTH_CRIACAO).HasColumnName("DTH_CRIACAO");
             this.Property(_ => _.DTH_ENVIO).HasColumnName("DTH_ENVIO");
-            this.Property(_ => _.STATUS).HasColumnName("STATUS");
         }
     }
 }

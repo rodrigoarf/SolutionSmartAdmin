@@ -21,7 +21,11 @@ namespace SmartAdmin.Dto
 
         [Required(ErrorMessage = "Este campo é obrigatório.")]
         [StringLength(1, ErrorMessage = "A descrição deve ter no máximo 1 caracteres.")]
-        public System.String STATUS { get; set; }
+        public System.String STATUS_AUTOR { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [StringLength(1, ErrorMessage = "A descrição deve ter no máximo 1 caracteres.")]
+        public System.String STATUS_REMETENTE { get; set; }
 
     }
 }

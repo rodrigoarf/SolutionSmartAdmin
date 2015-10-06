@@ -17,7 +17,6 @@ namespace SmartAdmin.Dto
         public System.String TEXTO { get; set; }
         public Nullable<System.DateTime> DTH_CRIACAO { get; set; }
         public Nullable<System.DateTime> DTH_ENVIO { get; set; }
-        public System.String STATUS { get; set; }
     }
 }
 

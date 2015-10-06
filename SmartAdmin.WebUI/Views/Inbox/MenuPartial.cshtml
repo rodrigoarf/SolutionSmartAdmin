@@ -1,14 +1,17 @@
 ﻿
-        <a href="/Inbox/Compose" id="compose-mail" class="btn btn-primary btn-block"><strong>Escrever</strong> </a>
+        <a href="/Inbox/Compose" id="compose-mail" class="btn btn-primary btn-block"><i class="fa fa-coffee fa-lg"></i> <strong>Escrever</strong> </a>
 
         <ul class="inbox-menu-lg">
             <li @((ViewBag.SetMenu == "1") ? "class=active" : string.Empty)>
-                <a href="/Inbox">Caixa de Entrada</a>
+                <a href="/Inbox"><i class="fa fa-bell fa-lg"></i> Caixa de Entrada</a>
             </li>
             <li @((ViewBag.SetMenu == "2") ? "class=active" : string.Empty)>
-                <a href="/Inbox/Sent">Enviados</a>
+                <a href="/Inbox/Sent"><i class="fa fa-send fa-lg"></i> Enviados</a>
             </li>
             <li @((ViewBag.SetMenu == "3") ? "class=active" : string.Empty)>
-                <a href="/Inbox/Trash">Lixeira</a>
+                <a href="/Inbox/Trash"><i class="fa fa-recycle fa-lg"></i> Lixeira</a>
+            </li>
+            <li @((ViewBag.SetMenu == "4") ? "class=active" : string.Empty)>
+                <a href="/Inbox/Favorites"><i class="fa fa-thumbs-up fa-lg"></i> Favoritos</a>
             </li>
         </ul>

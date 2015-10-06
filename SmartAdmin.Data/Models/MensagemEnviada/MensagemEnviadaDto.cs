@@ -15,7 +15,8 @@ namespace SmartAdmin.Dto
         public System.Int32 COD_MENSAGEM { get; set; }
         public System.Int32 COD_AUTOR { get; set; }
         public System.Int32 COD_REMETENTE { get; set; }
-        public System.String STATUS { get; set; }
+        public System.String STATUS_AUTOR { get; set; }
+        public System.String STATUS_REMETENTE { get; set; }
     }
 }
 

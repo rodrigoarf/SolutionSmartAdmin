@@ -408,6 +408,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            var entry = _context.Entry<TEntity>(entity);");
             TextClass.AppendLine("            var pkey = _dbSet.Create().GetType().GetProperty(\"ID\").GetValue(entity);");
+            TextClass.AppendLine("            _context.Entry(entity).State = EntityState.Modified; //<-- força atualizar");
             TextClass.AppendLine("");
             TextClass.AppendLine("            if (entry.State ==EntityState.Detached)");
             TextClass.AppendLine("            {");

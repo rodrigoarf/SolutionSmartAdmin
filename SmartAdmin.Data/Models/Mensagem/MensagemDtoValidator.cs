@@ -21,10 +21,6 @@ namespace SmartAdmin.Dto
         [StringLength(65535, ErrorMessage = "A descrição deve ter no máximo 65535 caracteres.")]
         public System.String TEXTO { get; set; }
 
-        [Required(ErrorMessage = "Este campo é obrigatório.")]
-        [StringLength(1, ErrorMessage = "A descrição deve ter no máximo 1 caracteres.")]
-        public System.String STATUS { get; set; }
-
     }
 }
 
