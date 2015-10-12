@@ -63,7 +63,7 @@ namespace SmartAdmin.Data.Generic
             var entry = _context.Entry<TEntity>(entity);
             var pkey = _dbSet.Create().GetType().GetProperty("ID").GetValue(entity);
 
-            if ((entry.State == EntityState.Detached))
+            if (entry.State ==EntityState.Detached)
             {
                 var set = _context.Set<TEntity>();
                 TEntity attachedEntity = set.Find(pkey);

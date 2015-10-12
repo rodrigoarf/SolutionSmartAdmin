@@ -17,9 +17,13 @@
         <div class="inbox-info-bar" style="margin-right: 0px;">
             <div class="row">
                 <div class="col-sm-9">
-                    Enviada de: <strong>@Model.MensagemDestinatarioObject.LOGIN</strong>
-                    <span class="hidden-mobile">@Model.MensagemDestinatarioObject.EMAIL<br />
-                    Para mim em @Model.MensagemDataEnvio.Value.Day.ToString() de @Model.MensagemDataEnvio.Value.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) de @Model.MensagemDataEnvio.Value.Year.ToString() às @Model.MensagemDataEnvio.Value.ToString("HH:MM")</span>
+                    <strong><i>De:</i></strong><i> @Model.MensagemDestinatarioObject.LOGIN</i>
+                    <span class="hidden-mobile"><<i>@Model.MensagemDestinatarioObject.EMAIL</i>><br />
+               
+                    <strong><i>Para:</i></strong><i> @Model.CollectionDestinatarios[0].LOGIN</i>
+                    <span class="hidden-mobile"><<i>@Model.CollectionDestinatarios[0].EMAIL</i>><br />
+
+                    <i><strong>Em</strong> @Model.MensagemDataEnvio.Value.Day.ToString() de @Model.MensagemDataEnvio.Value.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) de @Model.MensagemDataEnvio.Value.Year.ToString() às @Model.MensagemDataEnvio.Value.ToString("HH:MM")</i></span>
                 </div>
                 <div class="col-sm-3 text-right">
                     <div class="btn-group text-left">

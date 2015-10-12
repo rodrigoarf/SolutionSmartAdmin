@@ -22,10 +22,10 @@ namespace SmartAdmin.Data.Context
 
         public SmartAdminContext() : base("Name=SmartAdminContext")
         {
-             this.Configuration.AutoDetectChangesEnabled = false;
+             this.Configuration.AutoDetectChangesEnabled = true;
+             this.Configuration.ValidateOnSaveEnabled = true;
              this.Configuration.LazyLoadingEnabled = false;
              this.Configuration.ProxyCreationEnabled = false;
-             this.Configuration.ValidateOnSaveEnabled = false;
         }
 
         public DbSet<UsuarioDto> Usuario { get; set; }

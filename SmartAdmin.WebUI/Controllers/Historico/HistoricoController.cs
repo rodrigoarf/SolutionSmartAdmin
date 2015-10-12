@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using SmartAdmin.Dto;
+using SmartAdmin.Domain;
 using SmartAdmin.WebUI.Infrastructure.ActionFilters;
 
 namespace SmartAdmin.WebUI.Controllers
@@ -43,14 +44,19 @@ namespace SmartAdmin.WebUI.Controllers
 
         [HttpPost]
         [AuthorizedUser]
-        public ActionResult Index(bool clear)
+        public ActionResult Load(DateTime DataInicial, DateTime DataFinal)
         {
-            if (clear == true)
-            { 
-                //-> clear database
-            }
+            var AcessoDominio = new SmartAdmin.Domain.Acesso();
+            var Collection = new List<AcessoDto>();
 
-            return View();
+            Collection = AcessoDominio.GetList(_ => _.DTH_ACESSO >= DataInicial &&
+                                                    _.DTH_ACESSO <= DataFinal)
+                                                     .OrderByDescending(_ => _.DTH_ACESSO).ToList();
+
+            ViewBag.DataInicial = DataInicial;
+            ViewBag.DataFinal = DataFinal;
+
+            return View("Index", Collection.ToPagedList(1, PageSize));
         }
 
         [AuthorizedUser]

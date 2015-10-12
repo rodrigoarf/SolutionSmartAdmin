@@ -12,15 +12,38 @@
  else
  {
     <form action="/Inbox/Delete" method="post" id="smart-form-messages">
+        @{        
+            var link = HttpContext.Current.Request.Url.AbsolutePath;
+
+            if (link == "/Inbox" || link == "/Inbox/Index")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="1" />
+            }
+     
+            if (link == "/Inbox/Sent")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="2" />
+            }
+     
+            if (link == "/Inbox/Trash")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="3" />
+            }
+
+            if (link == "/Inbox/Favorites")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="4" />
+            }
+        } 
         <table id="inbox-table" class="table table-striped table-hover">
-            <tbody>
+            <tbody> 
                 @for (int i = 0; i < Model.Count; i++)
                 {
                     <tr id="@(Model[i].MensagemId)">
                         <td class="inbox-table-icon">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" class="checkbox style-2" name="values" value="@(Model[i].MensagemId)">
+                                    <input type="checkbox" class="checkbox style-2" name="[@(i)]" value="@(Model[i].MensagemId)">
                                     <span></span>
                                 </label>
                             </div>
@@ -41,10 +64,8 @@
         </table>
     </form>
  }
-<script>
-
+<script> 
     $("#inbox-table input[type='checkbox']").change(function () {
         $(this).closest('tr').toggleClass("highlight", this.checked);
-    });
-
+    }); 
 </script>

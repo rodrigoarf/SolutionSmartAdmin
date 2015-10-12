@@ -288,10 +288,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("");
             TextClass.AppendLine("        public " + OutputClassDataContextName + "() : base(\"Name=" + OutputClassDataContextName + "\")");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("             this.Configuration.AutoDetectChangesEnabled = false;");
+            TextClass.AppendLine("             this.Configuration.AutoDetectChangesEnabled = true;");
+            TextClass.AppendLine("             this.Configuration.ValidateOnSaveEnabled = true;");
             TextClass.AppendLine("             this.Configuration.LazyLoadingEnabled = false;");
-            TextClass.AppendLine("             this.Configuration.ProxyCreationEnabled = false;");
-            TextClass.AppendLine("             this.Configuration.ValidateOnSaveEnabled = false;");
+            TextClass.AppendLine("             this.Configuration.ProxyCreationEnabled = false;");  
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
 
@@ -408,7 +408,6 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            var entry = _context.Entry<TEntity>(entity);");
             TextClass.AppendLine("            var pkey = _dbSet.Create().GetType().GetProperty(\"ID\").GetValue(entity);");
-            TextClass.AppendLine("            _context.Entry(entity).State = EntityState.Modified; //<-- força atualizar");
             TextClass.AppendLine("");
             TextClass.AppendLine("            if (entry.State ==EntityState.Detached)");
             TextClass.AppendLine("            {");

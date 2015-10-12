@@ -15,86 +15,16 @@
     </div> 
 </div>
 
+<script src="~/Script/Inbox/Sent.js"></script>
+<script type="text/javascript">
+    runAllForms()
+    @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)   
 
- <!-- #modal-menu-create -->
-@*<div class="modal fade" id="modal-menu-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Cadastrar menu</h4>
-        </div>
-    </div>
-</div>
-</div>*@
-
-<script>
-    //$('#btnDropMessageSents').click(function () {
-    //    var CheckboxSelected = $("#inbox-table input[type=checkbox]:checked");
-
-    //    if (CheckboxSelected >= 0)
-    //    {
-    //        $('#modal-drop-messages').modal('show')
-    //    }
-
-    //});
-
-
-
-    $("#btnDropMessageSents").click(function (e) {
-
-        var Items = $("#inbox-table input[type=checkbox]:checked");
-        var values = [];
-
-        $("#inbox-table input[type=checkbox]:checked").each(function () {
-            if (this.checked === true) {
-                values.push($(this).val());
-            }
+    function PrintAlert(alert) {
+        $.SmartMessageBox({
+            title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',
+            content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
+            buttons: '[Voltar]'
         });
-
-
-        if (Items.length > 0)
-        {
-            console.log(values);
-
-            $.SmartMessageBox({
-                title: "Aviso!",
-                content: "Deseja realmente apagar o(s) " + Items.length + " item(s) selecionado(s).",
-                buttons: '[Sim][Não]'
-            }, function (ButtonPressed) {
-                if (ButtonPressed === "Sim") {
-                    $.ajax({
-                        url: '/Inbox/DeleteDefinitive',
-                        type: "POST",  
-                        //data: JSON.stringify([1,2,3]),   
-                        //data: JSON.stringify({ steps: ['1', '2', '3'] }),
-                        data: values,
-                        dataType: "json",
-                        contentType: 'application/json; charset=utf-8',
-                        async: false,
-                        success: function () {
-                            $.smallBox({
-                                title: "Itens apagados",
-                                content: "<i class='fa fa-clock-o'></i> <i>Item(s) apagados com sucesso!</i>",
-                                color: "#659265",
-                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                timeout: 5000
-                            });
-                        },
-                        error: function (data) {
-                            alert("não rolo");
-                        }
-                    });
-
-                    
-                }
-                if (ButtonPressed === "Não") {
-                    return (false);
-                }  
-            });
-            e.preventDefault();
-        }
-    })
-
-
+    }
 </script>

@@ -144,6 +144,25 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Retorna uma lista de objetos mediante as propriedades da model preenchidas.
+        /// </summary>
+        public List<UsuarioDto> GetByFilters(UsuarioDto Model)
+        {
+            var Collection = new List<UsuarioDto>();
+
+            if (!String.IsNullOrEmpty(Model.NOME))
+                Collection = this.GetList(null).Where(_ => _.NOME.Contains(Model.NOME)).OrderBy(_ => _.NOME).ToList();
+
+            if (!String.IsNullOrEmpty(Model.STATUS))
+                Collection = this.GetList(null).Where(_ => _.STATUS == Model.STATUS).OrderBy(_ => _.NOME).ToList();
+
+            if (String.IsNullOrEmpty(Model.NOME) && (String.IsNullOrEmpty(Model.STATUS)))
+                Collection = this.GetList(_ => _.ID > 0).OrderBy(_ => _.NOME).ToList();
+
+            return (Collection);
+        }
+
+        /// <summary>
         /// Retorna uma lista de objetos de submenu de Id de menu pai.
         /// </summary>
         public List<MenuDto> GetSubMenuFromMenu(int Id)

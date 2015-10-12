@@ -9,6 +9,17 @@ namespace SmartAdmin.WebUI.ModelView
 {
     public class MensagemModelView
     {
+
+
+
+
+
+
+
+
+
+
+
         public int MensagemId { get; set; }
         public string MensagemAutor { get; set; } // Autor da mensagem
         public UsuarioDto MensagemDestinatarioObject { get; set; } // Somente um remente

@@ -36,16 +36,7 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult Load(UsuarioDto Model)
         {                                          
             var UsuarioDominio = new Usuario();
-            var Collection = new List<UsuarioDto>();
-
-            if (!String.IsNullOrEmpty(Model.NOME))
-                Collection = UsuarioDominio.GetList(null).Where(_ => _.NOME.Contains(Model.NOME)).OrderBy(_ => _.NOME).ToList();
-
-            if (!String.IsNullOrEmpty(Model.STATUS))
-                Collection = UsuarioDominio.GetList(null).Where(_ => _.STATUS == Model.STATUS).OrderBy(_ => _.NOME).ToList();
-
-            if (String.IsNullOrEmpty(Model.NOME) && (String.IsNullOrEmpty(Model.STATUS)))
-                Collection = UsuarioDominio.GetList(_ => _.ID > 0).OrderBy(_ => _.NOME).ToList(); 
+            var Collection = UsuarioDominio.GetByFilters(Model);
 
             return View("Index", Collection.ToPagedList(1, PageSize));     
         }

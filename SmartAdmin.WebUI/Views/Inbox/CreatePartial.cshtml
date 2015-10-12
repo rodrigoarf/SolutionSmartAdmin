@@ -62,21 +62,21 @@
                     {
                         if (titleValue == '')
                         {
-                            PrintAlert('Informe o Título para a mensagem');
+                            PrintAlert('Informe o <span style="color:#10e4ea;">Título</span> para a mensagem');
                             return (false);
                         }
                         else
                         {
                             if (messageValue == '')
                             {
-                                PrintAlert('Informe o Texto para a mensagem');
+                                PrintAlert('Informe o <span style="color:#10e4ea;">Texto</span> para a mensagem');
                                 return (false);
                             }
                             else
                             {
                                 if (messageValue.length <= 50)
                                 {
-                                    PrintAlert('Sua mensagem deve ter acima de 50 caracteres!');
+                                    PrintAlert('Sua mensagem deve ter acima de <span style="color:#10e4ea;">50 caracteres</span>!');
                                     return (false);
                                 }
                                 else
@@ -90,7 +90,7 @@
                     }
                     else
                     {
-                        PrintAlert('Informe um e-mail de Destinatário correto');
+                        PrintAlert('Informe um <span style="color:#10e4ea;">e-mail de Destinatário</span> correto');
                     }
                 }  
             }

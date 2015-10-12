@@ -7,19 +7,20 @@
 
             @if (ViewBag.SetMenu == "1")
             {
-                <a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Enviar para Lixeira" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
-                <a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>
+                <a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Enviar para Lixeira" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>@*
+                <a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>*@
             }
 
             @if (ViewBag.SetMenu == "2")
             {
-                <a id="btnDropMessageSents" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar Definitivamente" class="btn btn-default"><strong><i class="fa fa-exclamation fa-lg text-danger"></i></strong></a>
+                <a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Enviar para Lixeira" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>@*
+                <a id="btnDropMessageSents" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar Definitivamente" class="btn btn-default"><strong><i class="fa fa-exclamation fa-lg text-danger"></i></strong></a>*@
             }
 
             @if (ViewBag.SetMenu == "3")
             {
                 <a id="btnDropTrashMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar Definitivamente" class="btn btn-default"><strong><i class="fa fa-exclamation fa-lg text-danger"></i></strong></a>
-                <a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>
+                @*<a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>*@
             }
             
             @if (ViewBag.SetMenu == "4")
@@ -71,9 +72,9 @@
 
 <script>   
 
-    $('#btnDropMessage').click(function () {
-        $('#smart-form-messages').submit();
-    });
+    //$('#btnDropMessage').click(function () {
+    //    $('#smart-form-messages').submit();
+    //});
 
 
     //$('#btnDropMessage').click(function () {

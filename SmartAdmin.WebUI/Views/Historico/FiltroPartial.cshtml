@@ -4,7 +4,7 @@
 </header>
 <div>
     <div class="widget-body no-padding">
-        @using (Html.BeginForm("Index", "Historico", FormMethod.Post, new { @id = "smart-form-filter" }))
+        @using (Html.BeginForm("Load", "Historico", FormMethod.Post, new { @id = "smart-form-filter" }))
         {
             <div class="smart-form">
                 <fieldset>
@@ -13,14 +13,14 @@
 						    <label class="label">Data Inicial</label>
 						    <label class="input">
 							    <i class="icon-append fa fa-calendar"></i>
-							    <input type="text" name="DATAINICIAL" id="DATAINICIAL" placeholder="__/__/____" class="datemask datepicker">
+							    <input type="text" name="DataInicial" id="DataInicial" placeholder="__/__/____" class="datemask datepicker" @((ViewBag.DataInicial != null) ? "value="+ViewBag.DataInicial : string.Empty ) />
 						    </label>
                         </section>
                         <section class="col col-2">
 						    <label class="label">Data Final</label>
 						    <label class="input">
 							    <i class="icon-append fa fa-calendar"></i>
-							    <input type="text" name="DATAFINAL" id="DATAFINAL" placeholder="__/__/____" class="datemask datepicker">
+							    <input type="text" name="DataFinal" id="DataFinal" placeholder="__/__/____" class="datemask datepicker" @((ViewBag.DataFinal != null) ? "value="+ViewBag.DataFinal : string.Empty )>
 						    </label>
                         </section>
                     </div>
