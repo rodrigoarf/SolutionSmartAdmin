@@ -24,10 +24,13 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [AuthorizedUser]
-        public ActionResult Edit(int Id)
+        public ActionResult Edit()
         {
+            var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
+            var UsuarioLogado = SessaoDomain.GetUsuario();
+
             var UsuarioDominio = new Usuario();
-            var Model = UsuarioDominio.GetItem(_ => _.ID == Id);
+            var Model = UsuarioDominio.GetItem(_ => _.ID == UsuarioLogado.Usuario.ID);
             return View(Model);
         }
               
