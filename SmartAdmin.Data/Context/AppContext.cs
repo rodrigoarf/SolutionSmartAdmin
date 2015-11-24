@@ -13,14 +13,14 @@ using SmartAdmin.Dto;
 
 namespace SmartAdmin.Data.Context
 {
-    public partial class SmartAdminContext : DbContext
+    public partial class AppContext : DbContext
     {
-        static SmartAdminContext()
+        static AppContext()
         {
-            Database.SetInitializer<SmartAdminContext>(null);
+            Database.SetInitializer<AppContext>(null);
         }
 
-        public SmartAdminContext() : base("Name=SmartAdminContext")
+        public AppContext() : base("Name=AppContext")
         {
              this.Configuration.AutoDetectChangesEnabled = true;
              this.Configuration.ValidateOnSaveEnabled = true;

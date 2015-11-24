@@ -12,7 +12,7 @@ namespace SmartAdmin.Generator.Core
     public sealed class Domain
     {
         private StringBuilder TextClass;
-        private EDataBase DatabaseType = EDataBase.MySql;
+        private EDataBase DatabaseType = ConfigTables.DatabaseType;
 
         public string BuildBase()
         {
@@ -256,7 +256,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildUnitOfWork(Dictionary<string, ClassConfig> GroupTables)
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDomainUnitOfWork"].ToString();
+            var FilePath = ConfigurationManager.AppSettings["OutputClassDomain"].ToString();
             var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString();
 
             //--

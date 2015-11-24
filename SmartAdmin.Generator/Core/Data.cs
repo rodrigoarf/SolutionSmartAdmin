@@ -12,12 +12,14 @@ namespace SmartAdmin.Generator.Core
     public class Data
     {
         private StringBuilder TextClass;
-        private EDataBase DatabaseType = EDataBase.MySql;
-        private static string MySqlDataBase = ConfigurationManager.AppSettings["MySqlDataBase"].ToString();
+        private String ContextName = "AppContext";
+        private String ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString();                 
+        private string DataBaseService = ConfigurationManager.AppSettings["SchemaDatabase"].ToString();
+        private EDataBase DatabaseType = ConfigTables.DatabaseType;
 
         public string BuildModel(KeyValuePair<string, ClassConfig> TableSetting)
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataModels"].ToString();
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
             var SufixoModels = "Dto";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
@@ -140,7 +142,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildMapper(KeyValuePair<string, ClassConfig> TableSetting)
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataMapper"].ToString();
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
             var SufixoMapper = "Mapper";
             var SufixoModels = "Dto";
             var TableName = TableSetting.Key;
@@ -216,7 +218,7 @@ namespace SmartAdmin.Generator.Core
 
             TextClass.AppendLine("");
             TextClass.AppendLine("            // Table & Column Mappings");
-            TextClass.AppendLine(String.Format("            this.ToTable(\"" + TableName + "\", \"{0}\");", MySqlDataBase));
+            TextClass.AppendLine(String.Format("            this.ToTable(\"" + TableName + "\", \"{0}\");", DataBaseService));
             TextClass.AppendLine("");
 
             foreach (var ColumnMapper in TableSchema.CollectionColumn)
@@ -252,10 +254,8 @@ namespace SmartAdmin.Generator.Core
         }
 
         public string BuildContext(Dictionary<string, ClassConfig> GroupTables)
-        {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataContext"].ToString();
-            var OutputClassDataContextName = ConfigurationManager.AppSettings["OutputClassDataContextName"].ToString();
-            var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString(); 
+        {               
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();              
             var SufixoModels = "Dto";
             
             //--
@@ -279,14 +279,14 @@ namespace SmartAdmin.Generator.Core
 
             TextClass.AppendLine("namespace " + ProjectName + ".Data.Context");
             TextClass.AppendLine("{");
-            TextClass.AppendLine("    public partial class " + OutputClassDataContextName + " : DbContext");
+            TextClass.AppendLine("    public partial class " + ContextName + " : DbContext");
             TextClass.AppendLine("    {");
-            TextClass.AppendLine("        static " + OutputClassDataContextName + "()");
+            TextClass.AppendLine("        static " + ContextName + "()");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("            Database.SetInitializer<" + OutputClassDataContextName + ">(null);");
+            TextClass.AppendLine("            Database.SetInitializer<" + ContextName + ">(null);");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");
-            TextClass.AppendLine("        public " + OutputClassDataContextName + "() : base(\"Name=" + OutputClassDataContextName + "\")");
+            TextClass.AppendLine("        public " + ContextName + "() : base(\"Name=" + ContextName + "\")");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("             this.Configuration.AutoDetectChangesEnabled = true;");
             TextClass.AppendLine("             this.Configuration.ValidateOnSaveEnabled = true;");
@@ -316,7 +316,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("}");
             //--
 
-            var FileName = OutputClassDataContextName + ".cs";
+            var FileName = ContextName + ".cs";
             var Diretory = FilePath + @"\Context";
             var FullFile = Diretory + @"\" + FileName;
 
@@ -337,9 +337,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildRepository()
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataRepository"].ToString();
-            var OutputClassDataContextName = ConfigurationManager.AppSettings["OutputClassDataContextName"].ToString();
-            var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString(); 
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
 
             //--
             TextClass = new StringBuilder();
@@ -360,10 +358,10 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("{");
             TextClass.AppendLine("    public class Repository<TEntity> : IDisposable where TEntity : class");
             TextClass.AppendLine("    {");
-            TextClass.AppendLine("        protected " + OutputClassDataContextName + " _context;");
+            TextClass.AppendLine("        protected " + ContextName + " _context;");
             TextClass.AppendLine("        protected DbSet<TEntity> _dbSet;");
             TextClass.AppendLine("");
-            TextClass.AppendLine("        public Repository(" + OutputClassDataContextName + " context)");
+            TextClass.AppendLine("        public Repository(" + ContextName + " context)");
             TextClass.AppendLine("        {");
             TextClass.AppendLine("            this._context = context;");
             TextClass.AppendLine("            this._dbSet = context.Set<TEntity>();");
@@ -633,14 +631,14 @@ namespace SmartAdmin.Generator.Core
             //--
 
             var FileName = "Repository.cs";
-            var FullFile = FilePath + @"\Repository\" + FileName;
+            var FullFile = FilePath + @"\Repository";
              
-            DirectoryInfo Directory = new DirectoryInfo(FilePath + @"\Repository");
+            DirectoryInfo Directory = new DirectoryInfo(FullFile);
 
             if (!Directory.Exists)
                 Directory.Create();
 
-            using (TextWriter Writer = File.CreateText(FullFile))
+            using (TextWriter Writer = File.CreateText(FullFile + @"\" + FileName))
             {
                 Writer.WriteLine(TextClass.ToString());
             }
@@ -652,9 +650,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildUnitOfWork(Dictionary<string, ClassConfig> GroupTables)
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataUnitOfWork"].ToString();
-            var OutputClassDataContextName = ConfigurationManager.AppSettings["OutputClassDataContextName"].ToString();
-            var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString(); 
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
             var SufixoModels = "Dto";
 
             //--
@@ -673,7 +669,7 @@ namespace SmartAdmin.Generator.Core
             TextClass.AppendLine("{");
             TextClass.AppendLine("    public class UnitOfWork : IDisposable");
             TextClass.AppendLine("    {");
-            TextClass.AppendLine("        private " + OutputClassDataContextName + " _context = new " + OutputClassDataContextName + "();");
+            TextClass.AppendLine("        private " + ContextName + " _context = new " + ContextName + "();");
             TextClass.AppendLine("        private bool _disposed = false;");
             TextClass.AppendLine("");
 
@@ -758,8 +754,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildBase()
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataModels"].ToString();
-            var ProjectName = ConfigurationManager.AppSettings["ProjetName"].ToString(); 
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
 
             //--
             TextClass = new StringBuilder();
@@ -802,13 +797,13 @@ namespace SmartAdmin.Generator.Core
             //--
 
             var FileName = "Base.cs";
-            var FullName = FilePath + @"\Models\" + FileName; 
-            var Directorio = new DirectoryInfo(FilePath);
+            var FileFull = FilePath + @"\Models";
+            var Directorio = new DirectoryInfo(FileFull);   
 
             if (!Directorio.Exists)
                 Directorio.Create();
 
-            using (TextWriter Writer = File.CreateText(FullName))
+            using (TextWriter Writer = File.CreateText(Directorio + @"\" + FileName))
             {
                 Writer.WriteLine(TextClass.ToString());
             }
@@ -828,7 +823,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildModelDataAnnotations(KeyValuePair<string, ClassConfig> TableSetting)
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataModels"].ToString();
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
             var SufixoModels = "Dto";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
@@ -858,7 +853,7 @@ namespace SmartAdmin.Generator.Core
             {
                 if (ColumnMapper.ColumnKey != "pk")
                 {
-                    if (ColumnMapper.DataType == "datetime")
+                    if ((ColumnMapper.DataType == "datetime") || (ColumnMapper.DataType == "timestamp") || (ColumnMapper.DataType == "timestamp with time zone") || (ColumnMapper.DataType == "timestamp with local time zone"))
                     {
                         if (ColumnMapper.IsNullable == "yes")
                         {
@@ -871,7 +866,7 @@ namespace SmartAdmin.Generator.Core
                             TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
                         }
                     }
-                    else if (ColumnMapper.DataType == "int")
+                    else if ((ColumnMapper.DataType == "int") || (ColumnMapper.DataType == "integer") || (ColumnMapper.DataType == "number"))
                     {
                         if (ColumnMapper.IsNullable == "yes")
                         {
@@ -884,7 +879,7 @@ namespace SmartAdmin.Generator.Core
                             TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
                         }
                     }
-                    else if (ColumnMapper.DataType == "decimal")
+                    else if ((ColumnMapper.DataType == "decimal") || (ColumnMapper.DataType == "float"))
                     {
                         if (ColumnMapper.IsNullable == "yes")
                         {
@@ -943,7 +938,7 @@ namespace SmartAdmin.Generator.Core
 
         public string BuildDataAnnotations(KeyValuePair<string, ClassConfig> TableSetting)
         {
-            var FilePath = ConfigurationManager.AppSettings["OutputClassDataModels"].ToString();
+            var FilePath = ConfigurationManager.AppSettings["OutputClassData"].ToString();
             var SufixoModels = "DtoValidator";
             var TableName = TableSetting.Key;
             var DataModel = TableSetting.Value;
@@ -980,11 +975,11 @@ namespace SmartAdmin.Generator.Core
                         if (ColumnMapper.MaxLenght != String.Empty)
                         {
                             TextClass.AppendLine("        [StringLength(" + ColumnMapper.MaxLenght + ", ErrorMessage = \"A descrição deve ter no máximo " + ColumnMapper.MaxLenght + " caracteres.\")]");
-                        }                        
-                        
+                        }
+
                         TextClass.AppendLine("        public " + ColumnDataType + " " + ColumnMapper.ColumnName + " { get; set; }");
                         TextClass.AppendLine("");
-                    }  
+                    }
                     // Campos não requerido nao precisao ir no Metadata class
                     //else if (ColumnMapper.IsNullable == "yes")  
                     //{

@@ -12,7 +12,7 @@ namespace SmartAdmin.Generator.Core
 {
     public class Functions
     {
-        private static string MySqlDataBase = ConfigurationManager.AppSettings["MySqlDataBase"].ToString();
+        private static string DataBaseService = ConfigurationManager.AppSettings["SchemaDatabase"].ToString();
 
         public static TableMapper GetTableSchema(string TableName, EDataBase DataBaseType)
         {
@@ -30,7 +30,7 @@ namespace SmartAdmin.Generator.Core
                         Retorno = LoadSQLServer(TableName);
                         break;
                     case EDataBase.Oracle:
-                        Retorno = null;
+                        Retorno = LoadOracle(TableName);
                         break;
                 }
 
@@ -52,13 +52,13 @@ namespace SmartAdmin.Generator.Core
             if ((ColumnDataType == "tinyint") || (ColumnDataType == "unsigned"))
                 DataType = "System.Byte";
 
-            if ((ColumnDataType == "binary") || (ColumnDataType == "varbinary") || (ColumnDataType == "blob") || (ColumnDataType == "longblob"))
+            if ((ColumnDataType == "binary") || (ColumnDataType == "varbinary") || (ColumnDataType == "blob") || (ColumnDataType == "longblob") || (ColumnDataType == "bfile") || (ColumnDataType == "long raw") || (ColumnDataType == "raw"))
                 DataType = "System.Byte[]";
 
-            if ((ColumnDataType == "datetime"))
+            if ((ColumnDataType == "datetime") || (ColumnDataType == "timestamp") || (ColumnDataType == "timestamp with time zone") || (ColumnDataType == "timestamp with local time zone"))
                 DataType = "System.DateTime";
 
-            if ((ColumnDataType == "decimal"))
+            if ((ColumnDataType == "decimal") || (ColumnDataType == "float"))
                 DataType = "System.Decimal";
 
             if ((ColumnDataType == "double"))
@@ -70,7 +70,7 @@ namespace SmartAdmin.Generator.Core
             if ((ColumnDataType == "smallint"))
                 DataType = "System.Int16";
 
-            if ((ColumnDataType == "int"))
+            if ((ColumnDataType == "int") || (ColumnDataType == "integer") || (ColumnDataType == "number"))
                 DataType = "System.Int32";
 
             if ((ColumnDataType == "bigint"))
@@ -79,10 +79,7 @@ namespace SmartAdmin.Generator.Core
             if ((ColumnDataType == "tinyint"))
                 DataType = "System.SByte";
 
-            if ((ColumnDataType == "float"))
-                DataType = "System.Single";
-
-            if ((ColumnDataType == "char") || (ColumnDataType == "varchar") || (ColumnDataType == "text") || (ColumnDataType == "longtext"))
+            if ((ColumnDataType == "char") || (ColumnDataType == "nchar") || (ColumnDataType == "varchar") || (ColumnDataType == "varchar2") || (ColumnDataType == "nvarchar") || (ColumnDataType == "nvarchar2") || (ColumnDataType == "text") || (ColumnDataType == "longtext") || (ColumnDataType == "clob") || (ColumnDataType == "long"))
                 DataType = "System.String";
 
             if ((ColumnDataType == "time"))
@@ -159,22 +156,18 @@ namespace SmartAdmin.Generator.Core
         {
             var TableMapper = new TableMapper();
 
-            var Query = "SELECT " +
-                                "UPPER(COLUMN_NAME) COLUMN_NAME," +
-                                "LOWER(IS_NULLABLE) IS_NULLABLE," +
-                                "LOWER(DATA_TYPE) DATA_TYPE," +
-                                "LOWER(CHARACTER_MAXIMUM_LENGTH) MAXIMUM_LENGTH, " +
-                                "CASE" +
-                                "   WHEN LOWER(COLUMN_KEY) = 'pri' THEN 'pk' " +
-                                "   WHEN LOWER(COLUMN_KEY) = 'mul' THEN 'fk' " +
-                                "   WHEN LOWER(COLUMN_KEY) = NULL THEN NULL " +
-                                "END AS COLUMN_KEY " +
-                        "FROM " +
-                                "INFORMATION_SCHEMA.COLUMNS A " +
-                        "WHERE " +
-                                "A.TABLE_SCHEMA = '" + MySqlDataBase + "' AND A.TABLE_NAME = '" + TableName + "' " +
-                        "ORDER BY " +
-                                "A.ORDINAL_POSITION ASC";
+            var Query = string.Format(@"SELECT UPPER(COLUMN_NAME) COLUMN_NAME,
+		                                       LOWER(IS_NULLABLE) IS_NULLABLE,
+		                                       LOWER(DATA_TYPE)   DATA_TYPE,
+		                                       LOWER(CHARACTER_MAXIMUM_LENGTH) MAXIMUM_LENGTH, 
+		                                       CASE WHEN LOWER(COLUMN_KEY) = 'pri' THEN 'pk' 
+                                                    WHEN LOWER(COLUMN_KEY) = 'mul' THEN 'fk'    
+				                                    WHEN LOWER(COLUMN_KEY) = NULL THEN NULL 
+                                               END AS COLUMN_KEY 
+	                                      FROM INFORMATION_SCHEMA.COLUMNS A
+	                                     WHERE A.TABLE_SCHEMA = '{0}' 
+	                                       AND A.TABLE_NAME   = '{1}' 
+	                                     ORDER BY A.ORDINAL_POSITION ASC", DataBaseService, TableName);
 
             using (var Conexao = new ConnectMySql(Query))
             {
@@ -194,11 +187,6 @@ namespace SmartAdmin.Generator.Core
                         Column.ColumnKey = Conexao.Ler("COLUMN_KEY").ToString();
 
                         CollectionColumnMapper.Add(Column);
-
-                        //--> Nova Implementação
-                        //var Relation = new List<TableRelationship>();
-                        //Relation.Add(GetRelationship(TableName, Column.ColumnName, ETypeFind.All));
-                        //TableMapper.CollectionRelationship = Relation;
                     }
 
                     TableMapper.CollectionColumn = CollectionColumnMapper;
@@ -207,6 +195,86 @@ namespace SmartAdmin.Generator.Core
             return (TableMapper);
         }
 
+        private static TableMapper LoadOracle(String TableName)
+        {
+            var TableMapper = new TableMapper();    
+
+            var Query = string.Format(@"SELECT a.column_name COLUMN_NAME,
+	                                           CASE WHEN LOWER(a.nullable) = 'n' THEN 'no'
+                                                    WHEN LOWER(a.nullable) = 'y' THEN 'yes'             
+                                                    WHEN LOWER(a.nullable) = NULL THEN NULL
+                                               END AS IS_NULLABLE,
+                                               LOWER(a.data_type) DATA_TYPE,
+                                               a.data_length MAXIMUM_LENGTH, 
+                                               CASE WHEN LOWER(b.constraint_type) = 'p'  THEN 'pk'
+  	                                                WHEN LOWER(b.constraint_type) = 'r'  THEN 'fk'
+  	                                                WHEN LOWER(b.constraint_type) = 'f'  THEN 'fk'
+  	                                                WHEN LOWER(b.constraint_type) = NULL THEN NULL 
+                                               END COLUMN_KEY
+                                            FROM all_tab_columns A,
+                                                (SELECT w.column_name,
+                                                        g.constraint_type,
+                                                        w.table_name
+                                                   FROM all_cons_columns w, all_constraints g
+                                                  WHERE w.constraint_name = g.constraint_name(+)
+                                                    AND g.constraint_type = 'P' ORDER BY 1) B
+                                          WHERE a.table_name = b.table_name(+)
+                                                AND a.column_name = b.column_name(+)
+                                                AND A.table_name = '{0}'", TableName);
+
+//            var Query = string.Format(@"SELECT  
+//   	                                    UPPER(ALL_TAB_COLUMNS.COLUMN_NAME)               COLUMN_NAME,
+//  	                                    CASE WHEN LOWER(ALL_TAB_COLUMNS.NULLABLE) = 'n' THEN 'no'
+//                                             WHEN LOWER(ALL_TAB_COLUMNS.NULLABLE) = 'y' THEN 'yes'             
+//                                             WHEN LOWER(ALL_TAB_COLUMNS.NULLABLE) = NULL THEN NULL
+//                                         END AS IS_NULLABLE,
+//  	                                    LOWER(ALL_TAB_COLUMNS.DATA_TYPE)                 DATA_TYPE,
+//                                        LOWER(ALL_TAB_COLUMNS.DATA_LENGTH)               MAXIMUM_LENGTH, 
+//  	                                    CASE WHEN LOWER(ALL_CONSTRAINTS.CONSTRAINT_TYPE) = 'p'  THEN 'pk'
+//  	                                         WHEN LOWER(ALL_CONSTRAINTS.CONSTRAINT_TYPE) = 'r'  THEN 'fk'
+//  	                                         WHEN LOWER(ALL_CONSTRAINTS.CONSTRAINT_TYPE) = 'f'  THEN 'fk'
+//  		                                     WHEN LOWER(ALL_CONSTRAINTS.CONSTRAINT_TYPE) = NULL THEN NULL 
+//  	                                     END AS                                          COLUMN_KEY 
+//                                        FROM SYS.ALL_TAB_COLUMNS LEFT OUTER JOIN SYS.ALL_CONS_COLUMNS ON ALL_TAB_COLUMNS.OWNER = ALL_CONS_COLUMNS.OWNER 
+//                                         AND ALL_TAB_COLUMNS.TABLE_NAME = ALL_CONS_COLUMNS.TABLE_NAME 
+//                                         AND ALL_TAB_COLUMNS.COLUMN_NAME = ALL_CONS_COLUMNS.COLUMN_NAME
+//                                         AND ALL_TAB_COLUMNS.COLUMN_NAME = ALL_CONS_COLUMNS.COLUMN_NAME LEFT OUTER JOIN SYS.ALL_CONSTRAINTS ON ALL_CONSTRAINTS.OWNER = ALL_CONS_COLUMNS.OWNER 
+//                                         AND ALL_CONSTRAINTS.TABLE_NAME = ALL_CONS_COLUMNS.TABLE_NAME 
+//                                         AND ALL_CONS_COLUMNS.CONSTRAINT_NAME = ALL_CONSTRAINTS.CONSTRAINT_NAME, SYS.ALL_TABLES 
+//                                       WHERE (ALL_TAB_COLUMNS.OWNER = ALL_TABLES.OWNER) 
+//                                         AND (ALL_TAB_COLUMNS.TABLE_NAME = ALL_TABLES.TABLE_NAME) 
+//                                         AND ALL_TAB_COLUMNS.TABLE_NAME = '{0}'
+//                                       ORDER BY ALL_TAB_COLUMNS.COLUMN_ID ASC", TableName);
+
+            using (var Conexao = new ConnectOracle(Query))
+            {
+                if (Conexao.Open())
+                {
+                    TableMapper.TableName = TableName;
+                    var CollectionColumnMapper = new List<ColumnMapper>();
+
+                    while (Conexao.LerRegistro())
+                    {
+                        var Column = new ColumnMapper();
+
+                        Column.ColumnName = Conexao.Ler("COLUMN_NAME").ToString();
+                        Column.IsNullable = Conexao.Ler("IS_NULLABLE").ToString();
+                        Column.DataType = Conexao.Ler("DATA_TYPE").ToString();
+                        Column.MaxLenght = Conexao.Ler("MAXIMUM_LENGTH").ToString();
+                        Column.ColumnKey = Conexao.Ler("COLUMN_KEY").ToString();
+
+                        CollectionColumnMapper.Add(Column);    
+                    }
+
+                    TableMapper.CollectionColumn = CollectionColumnMapper;
+                }
+            }
+            return (TableMapper);
+        }
+
+        /// <summary>
+        ///  não implementado ainda
+        /// </summary>
         public static TableRelationship GetRelationship(string TableName, string ColumnName, ETypeFind TypeFind)
         {
             var Query = string.Format(@"SELECT * FROM
@@ -219,11 +287,10 @@ namespace SmartAdmin.Generator.Core
 		                                           INFORMATION_SCHEMA.KEY_COLUMN_USAGE A, 
 		                                           INFORMATION_SCHEMA.TABLE_CONSTRAINTS B 
 	                                         WHERE 
-		                                           A.TABLE_SCHEMA = '{0}' AND
 		                                           UPPER(A.TABLE_NAME) = UPPER(B.TABLE_NAME) AND 
 		                                           UPPER(A.TABLE_SCHEMA) = UPPER(B.TABLE_SCHEMA) AND
 		                                           UPPER(A.CONSTRAINT_NAME) = UPPER(B.CONSTRAINT_NAME)) AA 
-                                                   WHERE 1=1 ", MySqlDataBase);
+                                                   WHERE 1=1 ");
 
             switch (TypeFind)
             {

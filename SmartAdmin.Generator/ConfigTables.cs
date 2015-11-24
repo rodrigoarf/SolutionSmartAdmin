@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartAdmin.Generator.Core;
 using SmartAdmin.Generator.Models;
 
 namespace SmartAdmin.Generator
 {
     public class ConfigTables
-    {
+    {                       
+        /// <summary>
+        /// Configurar qual o banco de dados onde as tabelas estao
+        /// </summary>
+        public static EDataBase DatabaseType = Core.EDataBase.MySql;
+       
+        /// <summary>
+        /// Configurar as tabelas que se quer gerar as classes aqui
+        /// </summary>
         public Dictionary<string, ClassConfig> GetTableMapper()
         {
             var Storage = new Dictionary<string, ClassConfig>();
@@ -30,5 +39,6 @@ namespace SmartAdmin.Generator
 
             return (Storage);
         }
+        
     }
 }

@@ -11,7 +11,7 @@ namespace SmartAdmin.Data
 {
     public class UnitOfWork : IDisposable
     {
-        private SmartAdminContext _context = new SmartAdminContext();
+        private AppContext _context = new AppContext();
         private bool _disposed = false;
 
         private Repository<UsuarioDto> _usuarioRepository;

@@ -24,13 +24,17 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [AuthorizedUser]
-        public ActionResult Edit()
+        public ActionResult Edit(Nullable<int> id)
         {
-            var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
-            var UsuarioLogado = SessaoDomain.GetUsuario();
+            if (id == null)
+            {
+                var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
+                var UsuarioLogado = SessaoDomain.GetUsuario();  
+                id = UsuarioLogado.Usuario.ID;
+            }      
 
             var UsuarioDominio = new Usuario();
-            var Model = UsuarioDominio.GetItem(_ => _.ID == UsuarioLogado.Usuario.ID);
+            var Model = UsuarioDominio.GetItem(_ => _.ID == id);   
             return View(Model);
         }
               

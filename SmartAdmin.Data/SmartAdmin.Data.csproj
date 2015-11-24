@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\SmartAdminContext.cs" />
+    <Compile Include="Context\AppContext.cs" />
     <Compile Include="Models\Acesso\AcessoDto.cs" />
     <Compile Include="Models\Acesso\AcessoDtoValidator.cs" />
     <Compile Include="Models\Acesso\AcessoMapper.cs" />

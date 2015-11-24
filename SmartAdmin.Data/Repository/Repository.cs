@@ -14,10 +14,10 @@ namespace SmartAdmin.Data.Generic
 {
     public class Repository<TEntity> : IDisposable where TEntity : class
     {
-        protected SmartAdminContext _context;
+        protected AppContext _context;
         protected DbSet<TEntity> _dbSet;
 
-        public Repository(SmartAdminContext context)
+        public Repository(AppContext context)
         {
             this._context = context;
             this._dbSet = context.Set<TEntity>();
