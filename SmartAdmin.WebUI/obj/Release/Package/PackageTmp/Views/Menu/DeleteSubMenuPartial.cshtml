@@ -1,0 +1,79 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.MenuDto
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Editar Submenu</h4>
+        </div>
+        @using (Html.BeginForm(String.Empty,String.Empty,FormMethod.Post, new { @id = "modal-submenu-delete" }))
+        {
+            @Html.AntiForgeryToken();  
+            @Html.HiddenFor(model => Model.ID, new { id = "ID" })
+            @Html.HiddenFor(model => Model.COD_MENU_PAI, new { id = "COD_MENU_PAI" })
+            <div class="modal-body" style="padding-bottom:0px;">
+                <div class="widget-body no-padding">
+                    <div class="smart-form">
+                        <fieldset>
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-tasks"></i>
+                                        @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Menu do sistema", @tabindex = "1", @readonly="true" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Nome do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-sitemap"></i>
+                                        @HtmlControls.TextBox("CONTROLLER", new { @value = Model.CONTROLLER, @placeholder = "Controller do menu", @tabindex = "2", @readonly="true" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Controller do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-random"></i>
+                                        @HtmlControls.TextBox("ACTION", new { @value = Model.ACTION, @placeholder = "Action do menu", @tabindex = "3", @readonly="true" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Action do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-leaf"></i>
+                                        @HtmlControls.TextBox("ICONE", new { @value = Model.ICONE, @placeholder = "Icone do menu", @tabindex = "4", @readonly="true" })
+                                        <b class="tooltip tooltip-bottom-right">
+                                            <i class="fa fa-warning txt-color-teal"></i> Icone do menu no sistema 
+                                        </b>
+                                    </label>
+                                </section>  
+
+                        </fieldset>
+                        <fieldset style="padding-bottom: 0px;">
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="select">
+                                        @HtmlControls.DropDownListCustomStatus("STATUS", ((Model.STATUS == null) ? EInputStatus.None : ((Model.STATUS == "A") ? EInputStatus.Ativo : EInputStatus.Inativo)), new { @disabled = false })
+                                        <i></i>
+                                    </label>
+                                </section>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Voltar</button>
+                <button type="submit" class="btn btn-md btn-warning" id="btnDeleteSubMenu"><i class="fa fa-cog"></i>&nbsp;Apagar</button>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.BancoDto
+<header>
+    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+    <h2>Busca por Agências Bancarias</h2>
+</header>
+<div>
+    <div class="widget-body no-padding">
+        @using (Html.BeginForm("Banco", "Financeiro", FormMethod.Post, new { @id = "smart-form-filter" }))
+        {
+            <div class="smart-form">
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-4">
+                            <label class="label">Nome da Agência Bancaria</label>
+                            <label for="address" class="input">
+                                @HtmlControls.TextBox("NOME", new {@value=Model.NOME, @placeholder="Informe o nome da Agência Bancaria",  })
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Nome da Agência Bancaria
+                                </b>
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        <i class="fa fa-search"></i> Buscar
+                    </button>
+                    <a class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modal-banco-create">
+                        <i class="fa fa-cog"></i> Inserir     
+                    </a>
+                </footer>
+            </div> 
+        }
+    </div>
+</div>

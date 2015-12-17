@@ -1,0 +1,71 @@
+﻿@using PagedList.Mvc;
+@using SmartAdmin.WebUI.ModelView;
+@model PagedList.IPagedList<SmartAdmin.WebUI.ModelView.MensagemModelView>
+
+ @if (Model.Count == 0)
+ {
+    <div class="alert alert-warning no-margin fade in">
+        <i class="fa-fw fa fa-info"></i>
+         Não existem mensagem
+    </div>
+ }
+ else
+ {
+    <form action="/Inbox/Delete" method="post" id="smart-form-messages">
+        @{        
+            var link = HttpContext.Current.Request.Url.AbsolutePath;
+
+            if (link == "/Inbox" || link == "/Inbox/Index")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="1" />
+            }
+     
+            if (link == "/Inbox/Sent")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="2" />
+            }
+     
+            if (link == "/Inbox/Trash")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="3" />
+            }
+
+            if (link == "/Inbox/Favorites")
+            {
+                <input type="hidden" name="auxiliar" id="auxiliar" value="4" />
+            }
+        } 
+        <table id="inbox-table" class="table table-striped table-hover">
+            <tbody> 
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr id="@(Model[i].MensagemId)">
+                        <td class="inbox-table-icon">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="checkbox style-2" name="[@(i)]" value="@(Model[i].MensagemId)">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="inbox-data-message">
+                            <div>
+                               <a href="/Inbox/Reader/@(Model[i].MensagemId)">@Html.Raw(Model[i].MensagemTitulo)</a>
+                            </div>
+                        </td>
+                        <td class="inbox-data-date hidden-xs text-center" style="width:150px;">
+                            <div>
+                                @(Model[i].MensagemDataEnvio)
+                            </div>
+                        </td>
+                    </tr>                 
+                }
+            </tbody>
+        </table>
+    </form>
+ }
+<script> 
+    $("#inbox-table input[type='checkbox']").change(function () {
+        $(this).closest('tr').toggleClass("highlight", this.checked);
+    }); 
+</script>

@@ -1,0 +1,7 @@
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Release\SmartAdmin.Data.dll.config
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Release\SmartAdmin.Data.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Release\SmartAdmin.Data.pdb
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Release\EntityFramework.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\bin\Release\EntityFramework.xml
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Release\SmartAdmin.Data.dll
+D:\Projetos\SolutionPlataform\SmartAdmin.Data\obj\Release\SmartAdmin.Data.pdb

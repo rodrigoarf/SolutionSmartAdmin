@@ -1,0 +1,75 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.BancoDto
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Cadastrar Agência Bancaria</h4>
+        </div>
+        @using (Html.BeginForm("EditBanco", "Financeiro", FormMethod.Post, new { @id = "smart-form-edit" }))
+        {
+            @HtmlControls.HiddenField("ID", new { @value = Model.ID }) 
+            <div class="modal-body" style="padding-bottom:0px;">
+                <div class="widget-body no-padding">
+                    <div class="smart-form">
+                        <fieldset>
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-tasks"></i>
+                                    @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome da Agência Bancaria"})                                     
+                                    <b class="tooltip tooltip-bottom-right">
+                                        <i class="fa fa-warning txt-color-teal"></i> Nome da Agência Bancaria
+                                    </b>
+                                </label>
+                            </section> 
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-sitemap"></i>
+                                    @HtmlControls.TextBox("WEBSITE", new { @value = Model.WEBSITE, @placeholder = "Website da Agência Bancaria"})
+                                    <b class="tooltip tooltip-bottom-right">
+                                        <i class="fa fa-warning txt-color-teal"></i> Website da Agência Bancaria
+                                    </b>
+                                </label>
+                            </section> 
+                            <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
+                                <label class="input">
+                                    <i class="icon-append fa fa-university"></i>
+                                    @HtmlControls.TextBox("SIGLA", new { @value = Model.SIGLA, @placeholder = "Sigla da Agência Bancaria"})
+                                    <b class="tooltip tooltip-bottom-right">
+                                        <i class="fa fa-warning txt-color-teal"></i> Sigla da Agência Bancaria
+                                    </b>
+                                </label>
+                            </section>
+                            <section class="col col-6" style="padding-right: 0px; padding-left: 5px;">
+                                <label class="select">
+                                    @{
+                                        var CollectionItems = new List<SelectListItem>();
+                                        CollectionItems.Add(new SelectListItem() { Text = "Pública", Value = "1", Selected = ((Model.FLAG_TIPO == "1") ? true : false) });
+                                        CollectionItems.Add(new SelectListItem() { Text = "Privada", Value = "2", Selected = ((Model.FLAG_TIPO == "2") ? true : false) });
+                                        CollectionItems.Add(new SelectListItem() { Text = "Cooperativa", Value = "3", Selected = ((Model.FLAG_TIPO == "3") ? true : false) });   
+                                     }
+                                     @HtmlControls.DropDownList("FLAG_TIPO", CollectionItems, new { @value = Model.SIGLA, @placeholder = "Sigla da Agência Bancaria"})
+                                     <i></i>
+                                </label>
+                            </section>  
+                        </fieldset> 
+
+                        <fieldset>
+                            <section class="col col-6" style="padding-left: 0px; padding-right: 5px;">
+                                <label class="select">
+                                    @HtmlControls.DropDownListCustomStatus("STATUS", ((Model.STATUS == "A") ? EInputStatus.Ativo : EInputStatus.Inativo))
+                                    <i></i>
+                                </label>
+                            </section> 
+                        </fieldset> 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
+                <button id="btnEditBanco" type="submit" class="btn btn-md btn-warning"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
+            </div>
+        }
+    </div>
+</div>

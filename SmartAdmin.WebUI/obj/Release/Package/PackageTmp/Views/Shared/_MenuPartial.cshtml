@@ -1,0 +1,69 @@
+﻿@model SmartAdmin.WebUI.ModelView.UsuarioModelView
+
+<div class="login-info">
+    <span>
+        <a href="/Usuario/Edit">
+            <img src="@(Model.Usuario.FOTO)" alt="me" class="online" />
+            <span>@Model.Usuario.LOGIN</span>
+            <i class="fa fa-angle-down"></i>
+        </a>
+    </span>
+</div>
+
+<nav>
+    <ul>
+        <li class="top-menu-hidden">
+            <a href="/Dashboard/Index"><i class="fa fa-lg fa-fw fa-inbox"></i><span class="menu-item-parent">Dashboard</span></a>
+        </li>
+        <li class="top-menu-hidden">
+            <a href="/Inbox/Index"><i class="fa fa-lg fa-fw fa-wechat"></i><span class="menu-item-parent">Mensagens</span></a>
+        </li>
+@*        <li class="top-menu-hidden">
+            <a href="#"><i class="fa fa-lg fa-fw fa-envelope-o"></i><span class="menu-item-parent">Newsletters</span></a>
+            <ul>
+                <li>
+                    <a href="/Newsletter/Grupos"><i class="fa fa-users"></i>Grupos</a>
+                </li>
+                <li>
+                    <a href="/Newsletter/Campanhas"><i class="fa fa-paper-plane"></i>Campanhas</a>
+                </li>
+                <li>
+                    <a href="/Newsletter/Templates"><i class="fa fa-picture-o"></i>Templates</a>
+                </li>
+            </ul>
+        </li>*@
+    </ul>
+</nav>
+
+
+ @if (Model.CollectionMenusAndSubMenus.Count > 0)
+ { 
+     <nav>
+         <ul>
+             @foreach (var MenusAndSubMenu in Model.CollectionMenusAndSubMenus)
+             {
+                 <li>
+                     <a href="@((!String.IsNullOrEmpty(MenusAndSubMenu.Menu.CONTROLLER) ? String.Format(@"{0}/{1}", MenusAndSubMenu.Menu.CONTROLLER, MenusAndSubMenu.Menu.ACTION) : String.Format("{0}","#")))"><i class="fa fa-lg fa-fw @MenusAndSubMenu.Menu.ICONE txt-color-blue"></i><span class="menu-item-parent">@MenusAndSubMenu.Menu.NOME</span></a>
+                     @if (MenusAndSubMenu.CollectionSubMenu.Count > 0)
+                     {
+                         <ul>
+                             @foreach (var SubMenu in MenusAndSubMenu.CollectionSubMenu)
+                             {
+                                 <li>
+                                     <a href="@String.Format(@"{0}{1}", SubMenu.CONTROLLER, SubMenu.ACTION)">@((!String.IsNullOrEmpty(SubMenu.ICONE)) ? Html.Raw(String.Format("<i class=\"fa {0}\"></i> {1}",SubMenu.ICONE, SubMenu.NOME)) : Html.Raw(String.Format("{1}", SubMenu.NOME)))</a>
+                                 </li>  
+                             }
+                         </ul>
+                      }
+                 </li>
+             }
+         </ul>
+     </nav>
+ }
+
+<span class="minifyme" data-action="minifyMenu"><i class="fa fa-arrow-circle-left hit"></i></span>
+
+
+
+
+

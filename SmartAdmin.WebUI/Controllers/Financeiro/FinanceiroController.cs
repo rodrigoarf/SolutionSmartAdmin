@@ -34,7 +34,7 @@ namespace SmartAdmin.WebUI.Controllers.Financeiro
                      
         [HttpPost]
         [AuthorizedUser]
-        public ActionResult SaveCedente(CedenteDto Model)
+        public ActionResult Save(CedenteDto Model)
         {           
             try
             {

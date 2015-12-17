@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa-fw fa fa-home"></i>Histórico de Acessos ao Sistema
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 text-right"></div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
+                    <header>
+                        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                        <h2>Busca por Acessos</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <form action="/Historico" id="smart-form-filter" method="post">
+                                <div class="smart-form">
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-2">
+                                                <label class="label">Data Inicial</label>
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-calendar"></i>
+                                                    <input type="text" name="DATAINICIAL" id="DATAINICIAL" placeholder="__/__/____" class="datemask datepicker hasDatepicker">
+                                                </label>
+                                            </section>
+                                            <section class="col col-2">
+                                                <label class="label">Data Final</label>
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-calendar"></i>
+                                                    <input type="text" name="DATAINICIAL" id="DATAFINAL" placeholder="__/__/____" class="datemask datepicker hasDatepicker">
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                    <footer>
+                                        <button id="btnBuscarHistorico" type="submit" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-search"></i> Buscar
+                                        </button>
+                                    </footer>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-blueDark">
+                    <header>
+                        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                        <h2>Histórico de Acesso</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <div class="smart-form">
+                                <!--content here-->
+                                <footer class="text-center" style="padding-top: 25px; padding-bottom: 25px;">
+                                <!--paginate here-->    
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>  
+
+<script src="/Script/Bugs/Index.js" type="text/javascript"></script>
+
+

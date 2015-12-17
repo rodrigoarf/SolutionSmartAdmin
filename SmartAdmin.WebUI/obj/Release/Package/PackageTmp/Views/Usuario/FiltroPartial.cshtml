@@ -1,0 +1,44 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.UsuarioDto
+<header>
+    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+    <h2>Busca por Usuários</h2>
+</header>
+<div>
+    <div class="widget-body no-padding">
+        <div class="smart-form">
+            @using (Html.BeginForm("Load", "Usuario", FormMethod.Post, new { @id = "smart-form-filter" }))
+            {
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-3">
+                            <label class="label">Nome do usuário</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome do usuário" })
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i>Informe o nome ou parte do nome do usuário 
+                                </b>
+                            </label>
+                        </section>
+                        <section class="col col-3">
+                            <label class="label">Status do usuário</label>
+                            <label class="select">
+                                @HtmlControls.DropDownListCustomStatus("STATUS", EInputStatus.None)
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <button id="btnBuscar" type="submit" class="btn btn-sm btn-primary">
+                        <i class="fa fa-search"></i> Buscar
+                    </button>
+                    <a class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modal-usuario-create">
+                        <i class="fa fa-cog"></i> Inserir     
+                    </a>
+                </footer>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿<header>
+	<span class="widget-icon"><i class="fa fa-edit"></i></span>
+	<h2>Busca por Boletos Emitidos</h2>
+</header>
+<div>
+	<div class="widget-body no-padding">
+		<div class="smart-form">
+            @using (Html.BeginForm("Index", "Boleto", FormMethod.Post, new { @id = "smart-form-filter" }))
+            {
+			    <fieldset>
+				    <div class="row">
+					    <section class="col col-4">
+						    <label class="label">Busca por Sacado</label>
+						    <label class="input">
+							    <i class="icon-append fa fa-user"></i>
+							    <input type="text" name="NOME" placeholder="Nome do Sacado (Quem pagará o Boleto)">
+                                <b class="tooltip tooltip-bottom-right">
+                                    <i class="fa fa-warning txt-color-teal"></i> Informe o nome ou parte do nome do Sacado 
+                                </b>
+						    </label>
+					    </section>
+					    <section class="col col-2">
+						    <label class="label">Busca por Status</label>
+						    <label class="select">
+							    <select name="ativo">
+								    <option value="0" selected="" disabled="">(Todos)</option>
+								    <option value="A">Boletos Vencidos</option>
+								    <option value="I">Boletos Não Vencidos</option>
+							    </select>
+							    <i></i>
+						    </label>
+					    </section>
+				    </div>
+				    <div class="row">
+					    <section class="col col-2">
+						    <label class="label">Data de Emissão</label>
+						    <label class="input">
+							    <i class="icon-append fa fa-calendar"></i>
+							    <input type="text" name="DATA" placeholder="__/__/____" class="datemask datepicker">
+						    </label>
+					    </section>                      
+				    </div>
+			    </fieldset>
+			    <footer>
+				    <button type="submit" class="btn btn-sm btn-primary">
+					    <i class="fa fa-search"></i> Buscar
+				    </button>
+			    </footer>
+            }
+		</div> 
+	</div>
+</div>

@@ -1,0 +1,163 @@
+﻿	<h1 class="page-title txt-color-blueDark hidden-tablet">
+        <i class="fa fa-fw fa-inbox"></i> Mensagens 
+	</h1>
+
+	<div class="inbox-checkbox-triggered">  
+		<div class="btn-group">
+
+            @if (ViewBag.SetMenu == "1")
+            {
+                <a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Enviar para Lixeira" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>@*
+                <a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>*@
+            }
+
+            @if (ViewBag.SetMenu == "2")
+            {
+                <a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Enviar para Lixeira" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>@*
+                <a id="btnDropMessageSents" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar Definitivamente" class="btn btn-default"><strong><i class="fa fa-exclamation fa-lg text-danger"></i></strong></a>*@
+            }
+
+            @if (ViewBag.SetMenu == "3")
+            {
+                <a id="btnDropTrashMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar Definitivamente" class="btn btn-default"><strong><i class="fa fa-exclamation fa-lg text-danger"></i></strong></a>
+                @*<a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>*@
+            }
+            
+            @if (ViewBag.SetMenu == "4")
+            {
+                <a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Enviar para Lixeira" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
+                <a id="btnMoveFolderMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Mover Mensagem" class="btn btn-default"><strong><i class="fa fa-rotate-left fa-lg"></i></strong></a>
+            }
+
+			@*<a id="btnDropMessage" rel="tooltip" title="" data-placement="bottom" data-original-title="Apagar" class="btn btn-default"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>*@
+		</div>   
+       @*<div class="btn-group" data-toggle="buttons">
+	        <label class="btn btn-default active">
+		        <input type="radio" name="iconselect" id="icon-1" value="fa-info" checked="">
+		        <i class="fa fa-info text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-2" value="fa-warning">
+		        <i class="fa fa-warning text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-3" value="fa-check">
+		        <i class="fa fa-check text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-4" value="fa-user">
+		        <i class="fa fa-user text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-5" value="fa-lock">
+		        <i class="fa fa-lock text-muted"></i> </label>
+	        <label class="btn btn-default">
+		        <input type="radio" name="iconselect" id="icon-6" value="fa-clock-o">
+		        <i class="fa fa-clock-o text-muted"></i> </label>
+        </div>>*@
+	</div>
+
+
+
+	<a href="javascript:void(0);" id="compose-mail-mini" class="btn btn-primary pull-right hidden-desktop visible-tablet"> <strong><i class="fa fa-file fa-lg"></i></strong> </a>
+
+	<div class="btn-group pull-right inbox-paging">
+@*		<a href="javascript:void(0);" class="btn btn-default btn-sm"><strong><i class="fa fa-chevron-left"></i></strong></a>
+		<a href="javascript:void(0);" class="btn btn-default btn-sm"><strong><i class="fa fa-chevron-right"></i></strong></a>*@
+
+        <label class="btn btn-default">
+            <i class="fa fa-chevron-left"></i>
+        </label>
+        <label class="btn btn-default">
+            <i class="fa fa-chevron-right"></i>
+        </label>
+	</div>
+
+
+<script>   
+
+    //$('#btnDropMessage').click(function () {
+    //    $('#smart-form-messages').submit();
+    //});
+
+
+    //$('#btnDropMessage').click(function () {
+
+
+    //    var UnformatedValues = $("#inbox-table input[type=checkbox]:checked");
+    //    if (UnformatedValues.length > 0)
+    //    {
+    //        $.SmartMessageBox({
+    //            title: "Aviso!",
+    //            content: "Deseja realmente enviar para lixeria as mensagens selecionadas?",
+    //            buttons: '[Sim][Não]'
+    //        }, function (ButtonPressed) {
+    //            if (ButtonPressed === "Sim") {
+                                         
+    //                var values = [];
+    //                $("#inbox-table input[type=checkbox]:checked").each(function () {
+    //                    //alert($(this).attr('id'));  
+    //                    values.push($(this).attr('id'));
+    //                });
+
+    //                console.log(values);
+
+    //                $.ajax({
+    //                    type: "POST",
+    //                    url: "/Inbox/Delete",
+    //                    //data: values,
+    //                    data: JSON.stringify(value),
+    //                    dataType: "json",
+    //                    contentType: "application/json; charset=utf-8",
+    //                    traditional: true,
+    //                    success: function () {
+
+    //                        $.smallBox({
+    //                            title: "Callback function",
+    //                            content: "<i class='fa fa-clock-o'></i> <i>Mensagens enviadas para Lixeira!</i>",
+    //                            color: "#659265",
+    //                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+    //                            timeout: 4000
+    //                        });
+
+    //                    },
+    //                    failure: function () { alert("not working..."); }
+    //                });
+
+
+
+
+
+                    
+    //            }
+    //            if (ButtonPressed === "Não") {
+    //                $.smallBox({
+    //                    title: "Callback function",
+    //                    content: "<i class='fa fa-clock-o'></i> <i>You pressed No...</i>",
+    //                    color: "#C46A69",
+    //                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+    //                    timeout: 4000
+    //                });
+    //            }
+
+    //        });
+    //    }
+    //});
+
+    //function PrintAlert(alert) {
+    //    $.SmartMessageBox({
+    //        title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',
+    //        content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
+    //        buttons: '[Deletar][Voltar]'
+    //    }, function OnClick() {
+    //        if (ButtonPressed === "Deletar") {  
+    //            $.smallBox({
+    //                title: "Callback function",
+    //                content: "<i class='fa fa-clock-o'></i> <i>You pressed Yes...</i>",
+    //                color: "#659265",
+    //                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+    //                timeout: 4000
+    //            });
+    //        }
+    //        if (ButtonPressed === "Voltar") {
+    //            return false;
+    //        }
+    //    });
+    //} 
+</script>

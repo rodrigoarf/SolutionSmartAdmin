@@ -1,0 +1,54 @@
+﻿@model SmartAdmin.WebUI.ModelView.MenuModelView
+<header>
+    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+    <h2>SubMenus do menu @(Model.Menu.NOME)</h2>
+</header>
+<div>
+    <div class="widget-body smart-form no-padding">
+        <div class="smart-form">
+            @if (Model.CollectionSubMenu.Count == 0)
+            { 
+                <div class="alert alert-info no-margin text-center">
+                   Não existem submenus cadastrados para esta categoria de menu. Para inserir submenus clique no botão inserir ao lado.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover smart-form" style="border: 0;">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="vertical-align: top;">Nome do SubMenu</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Controller</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Action</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Status</th>
+                                <th class="text-center" style="vertical-align: top; width: 120px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CollectionSubMenu)
+                            {
+                                <tr>
+                                    <td class="text-left">@item.NOME</td>
+                                    <td class="text-left">@item.CONTROLLER</td>
+                                    <td class="text-left">@item.ACTION</td>
+                                    <td class="text-center">@((item.STATUS == "A") ? "Ativo" : "Inativo")</td>
+                                    <td class="text-center">
+                                        <a onclick="OpenModalEdit('@(item.ID)','@(item.COD_MENU_PAI)');" class="btn btn-xs btn-default btnOpenModalEdit"><i class="fa fa-pencil"></i></a>
+                                        <a onclick="OpenModalDelete('@(item.ID)','@(item.COD_MENU_PAI)')" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+        <footer class="text-right" style="background: rgba(248,248,248,.9);">
+            <button onclick="OpenModalCreate('0','@(Model.Menu.ID)');" type="submit" class="btn btn-warning">Inserir</button>
+            <a href="/Menu/Index" class="btn btn-primary">Voltar</a>            
+        </footer>
+    </div>
+</div>
+
+

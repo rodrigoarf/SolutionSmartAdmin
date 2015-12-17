@@ -1,0 +1,64 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Dto.UsuarioDto
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        @using (Html.BeginForm("Save", "Login", FormMethod.Post, new { @id = "smart-form-create" }))
+        {    
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cadastrar novo usuário</h4>
+            </div>  
+            <div class="modal-body" style="padding-bottom:0; margin-bottom:0;">
+                <div class="widget-body no-padding">
+                    <div class="smart-form">                         
+                        <fieldset>
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome do usuário completo", @tabindex = "5" })
+                                    <b class="tooltip tooltip-bottom-right">Nome do usuário completo</b>
+                                </label>
+                            </section>
+                            <section>
+                                <label class="select">
+                                    @HtmlControls.DropDownListCustomSexo("SEXO",EInputSexo.None, false)
+                                    <i></i>
+                                </label>
+                            </section>
+                        </fieldset>                             
+                        <fieldset>
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                     @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder="Login de acesso ao sistema", @style="text-transform: lowercase;", @maxlength="14", @tabindex="1" })
+                                    <b class="tooltip tooltip-bottom-right">Usuário de acesso</b>
+                                </label>
+                            </section> 
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    @HtmlControls.Password("SENHA", new { @value = Model.SENHA, @placeholder="Senha de acesso ao sistema", @tabindex="2" })
+                                    <b class="tooltip tooltip-bottom-right">Senha de acesso ao sistema</b>
+                                </label>
+                            </section> 
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-envelope"></i>
+                                    @HtmlControls.TextBoxEmail("EMAIL", new { @value = Model.EMAIL, @placeholder="E-mail", @style="text-transform: lowercase;", @tabindex="4" })
+                                    <b class="tooltip tooltip-bottom-right">Email de contato</b>
+                                </label>
+                            </section>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><i class="fa fa-sign-in"></i>&nbsp;Fechar</button>
+                <button type="submit" class="btn btn-md btn-warning" id="btnSaveUsuario"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
+            </div>
+            <input type="hidden" name="STATUS" id="STATUS" value="A" />                    
+        }
+    </div>
+</div>     
+<script src="~/Script/Login/Create.js"></script>

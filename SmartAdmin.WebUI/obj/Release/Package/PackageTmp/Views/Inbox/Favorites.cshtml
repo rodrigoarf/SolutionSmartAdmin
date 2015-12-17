@@ -1,0 +1,34 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<SmartAdmin.WebUI.ModelView.MensagemModelView>
+@{Layout = "~/Views/Shared/_Layout.cshtml";}
+
+<div class="inbox-nav-bar no-content-padding">  
+  @Html.Partial("HeaderPartial")   
+</div>
+
+<div id="inbox-content" class="inbox-body no-content-padding">  
+    <div class="inbox-side-bar">    
+        @Html.Partial("MenuPartial") 
+    </div>   
+    <div class="table-wrap custom-scroll animated fast fadeInRight" style="height:500px;">
+        @Html.Partial("GridPartial", Model)   
+    </div> 
+</div>
+
+
+<div class="modal fade" id="modal-menu-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+</div>
+
+<script type="text/javascript">
+    runAllForms()
+    @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)   
+
+    function PrintAlert(alert) {
+        $.SmartMessageBox({
+            title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',
+            content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
+            buttons: '[Voltar]'
+        });
+    }
+</script>

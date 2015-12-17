@@ -1,0 +1,74 @@
+﻿@model SmartAdmin.WebUI.ModelView.MenuModelView
+@{Layout = "~/Views/Shared/_Layout.cshtml";}
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+              <i class="fa fa-edit fa-fw "></i>Menu principal 
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 text-right"></div>
+          
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
+                    <header>
+                        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                        <h2>Informações do menu</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            @Html.Partial("EditPartial", Model.Menu)
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa fa-edit fa-fw "></i>Submenus
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 text-right"></div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-blueDark">
+                    @Html.Partial("GridSubMenuPartial", Model)
+                </div>
+            </article>
+        </div>
+    </div>
+
+</div>
+
+<!-- #modal de criação -->
+<div class="modal fade" id="modal-submenu-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @{Html.Action("CreateSubMenuPartial", "Menu", new { IdItem = 0, IdSubItem = Model.Menu.ID }); }
+</div> 
+
+<!-- #modal de edição -->
+<div class="modal fade" id="modal-submenu-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     @{Html.Action("EditSubMenuPartial","Menu", new { IdItem = 0, IdSubItem = 0 }); }
+</div>   
+
+<!-- #modal de deleção -->
+<div class="modal fade" id="modal-submenu-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     @{Html.Action("DeleteSubMenuPartial", "Menu", new { IdItem = 0, IdSubItem = 0 }); }
+</div>     
+      
+<!-- scripts -->
+<script src="~/Script/Menu/Edit.js"></script>
+
+
+
+
+
+
+
+

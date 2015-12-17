@@ -1,0 +1,63 @@
+﻿<header>
+    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+    <h2>Boletos Emitidos</h2>
+</header>
+<div>
+    <div class="widget-body no-padding">
+        <div class="smart-form">
+            <div class="table-responsive">
+                <table id="datatable_tabletools" class="table table-bordered smart-form" style="border: 0;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="vertical-align: top; width: 90px;">Código</th>
+                            <th class="text-center" style="vertical-align: top;">Sacado</th>
+                            <th class="text-center" style="vertical-align: top; width: 110px;">Emissão</th>
+                            <th class="text-center" style="vertical-align: top; width: 110px;">Vencimento</th>
+                            <th class="text-center" style="vertical-align: top; width: 110px;">Valor</th>
+                            <th class="text-center" style="vertical-align: top; width: 110px;">Status</th>
+                            <th class="text-center" style="vertical-align: top; width: 110px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="success">
+                            <td class="text-center">231231</td>
+                            <td class="text-left">Julio Perroni Albuquerque</td>
+                            <td class="text-center">12/12/2012 13:00</td>
+                            <td class="text-center">12/12/2012 13:00</td>
+                            <td class="text-center">R$69,00</td>
+                            <td class="text-center">@*@((item.STATUS == "A") ? "Ativo" : "Inativo")*@ Pago</td>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">231231</td>
+                            <td class="text-left">Antonio Mauro da Silva</td>
+                            <td class="text-center">12/12/2012 13:00</td>
+                            <td class="text-center">12/12/2012 13:00</td>
+                            <td class="text-center">R$69,00</td>
+                            <td class="text-center">@*@((item.STATUS == "A") ? "Ativo" : "Inativo")*@ Emitido</td>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">231231</td>
+                            <td class="text-left">Antonio Rodrigo Fernandes</td>
+                            <td class="text-center">12/12/2012 13:00</td>
+                            <td class="text-center">12/12/2012 13:00</td>
+                            <td class="text-center">R$69,00</td>
+                            <td class="text-center">@*@((item.STATUS == "A") ? "Ativo" : "Inativo")*@ Emitido</td>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                            </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <footer class="text-center" style="padding-top: 25px; padding-bottom: 25px;">
+               @* @Html.Partial("_PaginationPartial", Model)*@
+            </footer>
+        </div>
+    </div>
+</div>

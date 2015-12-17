@@ -1,0 +1,50 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<SmartAdmin.Dto.UsuarioDto>  
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa-fw fa fa-home"></i>Usuários do Sistema
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 text-right"></div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
+                    @Html.Partial("FiltroPartial", new SmartAdmin.Dto.UsuarioDto())
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div id="Grid" class="jarviswidget jarviswidget-color-blueDark">
+                   @Html.Partial("GridPartial", Model)
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
+<!-- #modal-usuario-create -->
+<div class="modal fade" id="modal-usuario-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @Html.Partial("CreatePartial", new SmartAdmin.Dto.UsuarioDto())
+</div>
+
+<!-- #modal-usuario-menu -->
+<div class="modal fade" id="modal-usuario-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   @* @Html.Action("EditMenuPartial")*@
+</div>    
+
+<!-- #script this page -->
+<script src="~/Script/Usuario/Index.js" type="text/javascript"></script>
+<script type="text/javascript">
+    runAllForms()
+   @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)   
+</script>

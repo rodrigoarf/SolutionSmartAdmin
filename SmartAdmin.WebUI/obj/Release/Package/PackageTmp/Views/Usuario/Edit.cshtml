@@ -1,0 +1,36 @@
+﻿@model SmartAdmin.Dto.UsuarioDto
+@{Layout = "~/Views/Shared/_Layout.cshtml";}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa fa-edit fa-fw "></i>Perfil de Usuário 
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8"></div>
+</div>
+
+<div class="jarviswidget jarviswidget-color-blueDark">
+    <header>
+        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+        <h2>Informações</h2>
+    </header>
+    <div>
+        <div class="widget-body no-padding">
+             @Html.Partial("EditPartial", Model)
+        </div>
+    </div>
+</div>
+
+<script src="~/Script/Usuario/Edit.js" type="text/javascript"></script>
+
+
+
+
+
+
+
+
+
+
+
