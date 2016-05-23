@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartAdmin.Domain.Model;
 
 namespace SmartAdmin.Domain
 {
     public class UnitOfWork : IDisposable
     {
+        private bool _Disposed = false;
+
         private Usuario _usuarioDomain;
-        private TipoNewletter _tiponewletterDomain;
-        private EmailNewletter _emailnewletterDomain;
-        private EnvioNewletter _envionewletterDomain;
         private Acesso _acessoDomain;
-        private TipoContato _tipocontatoDomain;
-        private Contato _contatoDomain;
         private Menu _menuDomain;
         private MenuUsuario _menuusuarioDomain;
-        private Inbox _inboxDomain;
-        private Banco _bancoDomain;
-        private Cedente _cedenteDomain;
-        private Mensagem _mensagemDomain;
-        private MensagemEnviada _mensagemenviadaDomain;
 
         public Usuario UsuarioDomain
         {
@@ -29,183 +22,44 @@ namespace SmartAdmin.Domain
             {
                 if (this._usuarioDomain == null)
                 {
-                    this._usuarioDomain = new Usuario();
+                    this._usuarioDomain = new UsuarioSpecialized();
                 }
-
                 return _usuarioDomain;
             }
         }
-
-        public TipoNewletter TipoNewletterDomain
-        {
-            get
-            {
-                if (this._tiponewletterDomain == null)
-                {
-                    this._tiponewletterDomain = new TipoNewletter();
-                }
-
-                return _tiponewletterDomain;
-            }
-        }
-
-        public EmailNewletter EmailNewletterDomain
-        {
-            get
-            {
-                if (this._emailnewletterDomain == null)
-                {
-                    this._emailnewletterDomain = new EmailNewletter();
-                }
-
-                return _emailnewletterDomain;
-            }
-        }
-
-        public EnvioNewletter EnvioNewletterDomain
-        {
-            get
-            {
-                if (this._envionewletterDomain == null)
-                {
-                    this._envionewletterDomain = new EnvioNewletter();
-                }
-
-                return _envionewletterDomain;
-            }
-        }
-
         public Acesso AcessoDomain
         {
             get
             {
                 if (this._acessoDomain == null)
                 {
-                    this._acessoDomain = new Acesso();
+                    this._acessoDomain = new AcessoSpecialized();
                 }
-
                 return _acessoDomain;
             }
         }
-
-        public TipoContato TipoContatoDomain
-        {
-            get
-            {
-                if (this._tipocontatoDomain == null)
-                {
-                    this._tipocontatoDomain = new TipoContato();
-                }
-
-                return _tipocontatoDomain;
-            }
-        }
-
-        public Contato ContatoDomain
-        {
-            get
-            {
-                if (this._contatoDomain == null)
-                {
-                    this._contatoDomain = new Contato();
-                }
-
-                return _contatoDomain;
-            }
-        }
-
         public Menu MenuDomain
         {
             get
             {
                 if (this._menuDomain == null)
                 {
-                    this._menuDomain = new Menu();
+                    this._menuDomain = new MenuSpecialized();
                 }
-
                 return _menuDomain;
             }
         }
-
         public MenuUsuario MenuUsuarioDomain
         {
             get
             {
                 if (this._menuusuarioDomain == null)
                 {
-                    this._menuusuarioDomain = new MenuUsuario();
+                    this._menuusuarioDomain = new MenuUsuarioSpecialized();
                 }
-
                 return _menuusuarioDomain;
             }
         }
-
-        public Inbox InboxDomain
-        {
-            get
-            {
-                if (this._inboxDomain == null)
-                {
-                    this._inboxDomain = new Inbox();
-                }
-
-                return _inboxDomain;
-            }
-        }
-
-        public Banco BancoDomain
-        {
-            get
-            {
-                if (this._bancoDomain == null)
-                {
-                    this._bancoDomain = new Banco();
-                }
-
-                return _bancoDomain;
-            }
-        }
-
-        public Cedente CedenteDomain
-        {
-            get
-            {
-                if (this._cedenteDomain == null)
-                {
-                    this._cedenteDomain = new Cedente();
-                }
-
-                return _cedenteDomain;
-            }
-        }
-
-        public Mensagem MensagemDomain
-        {
-            get
-            {
-                if (this._mensagemDomain == null)
-                {
-                    this._mensagemDomain = new Mensagem();
-                }
-
-                return _mensagemDomain;
-            }
-        }
-
-        public MensagemEnviada MensagemEnviadaDomain
-        {
-            get
-            {
-                if (this._mensagemenviadaDomain == null)
-                {
-                    this._mensagemenviadaDomain = new MensagemEnviada();
-                }
-
-                return _mensagemenviadaDomain;
-            }
-        }
-
-        private bool _disposed = false;
 
         public void Dispose()
         {
@@ -215,27 +69,17 @@ namespace SmartAdmin.Domain
 
         private void Clear(bool disposing)
         {
-            if (!this._disposed)
+            if (!this._Disposed)
             {
                 if (disposing)
                 {
-                    _usuarioDomain.Dispose();
-                    _tiponewletterDomain.Dispose();
-                    _emailnewletterDomain.Dispose();
-                    _envionewletterDomain.Dispose();
-                    _acessoDomain.Dispose();
-                    _tipocontatoDomain.Dispose();
-                    _contatoDomain.Dispose();
-                    _menuDomain.Dispose();
-                    _menuusuarioDomain.Dispose();
-                    _inboxDomain.Dispose();
-                    _bancoDomain.Dispose();
-                    _cedenteDomain.Dispose();
-                    _mensagemDomain.Dispose();
-                    _mensagemenviadaDomain.Dispose();
+                    _usuarioDomain = null;
+                    _acessoDomain = null;
+                    _menuDomain = null;
+                    _menuusuarioDomain = null;
                 }
             }
-            _disposed = true;
+            _Disposed = true;
         }
 
         ~UnitOfWork()

@@ -6,69 +6,55 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using SmartAdmin.Data;
-using SmartAdmin.Dto;
+using SmartAdmin.Data.Model;
 
-namespace SmartAdmin.Domain
+/// <summary>
+/// Esta classe abstrata não pode ser instanciada. O objetivo desta classe é fornecer uma definição de metodos
+/// base comuns para que várias outras classes derivadas desta possam compartilhar metodos por 'override'.
+/// </summary>
+namespace SmartAdmin.Domain.Model
 {
-    public partial class Menu
+    public abstract class Menu
     {
-        private bool _disposed = false;
-        private SmartAdmin.Data.UnitOfWork _unitOfWork = new SmartAdmin.Data.UnitOfWork();
+        public SmartAdmin.Data.UnitOfWork _unitOfWork = new SmartAdmin.Data.UnitOfWork();
 
         /// <summary>
         /// Salva um objeto<T>
         /// </summary>
-        public void Save(MenuDto model)
+        public virtual void Save(MenuDto model)
         {
-            _unitOfWork.MenuRepository.Save(model);
+            _unitOfWork.MenuRepository.Add(model);
         }
 
         /// <summary>
         /// Salva e retorna o objeto<T> salvo
         /// </summary>
-        public MenuDto SaveGetItem(MenuDto model)
+        public virtual MenuDto SaveGetItem(MenuDto model)
         {
-           var retorno = _unitOfWork.MenuRepository.SaveGetItem(model);
+           var retorno = _unitOfWork.MenuRepository.AddGetItem(model);
            return (retorno);
         }
 
         /// <summary>
         /// Salva uma lista de objetos List<T>
         /// </summary>
-        public void SaveAll(List<MenuDto> model)
+        public virtual void SaveAll(List<MenuDto> model)
         {
-            _unitOfWork.MenuRepository.SaveAll(model);
+            _unitOfWork.MenuRepository.AddAll(model);
         }
 
         /// <summary>
         /// Salva a edição de um objeto<T>
         /// </summary>
-        public void Edit(MenuDto model)
+        public virtual void Edit(MenuDto model)
         {
             _unitOfWork.MenuRepository.Edit(model);
         }
 
         /// <summary>
-        /// Deleta um objeto
-        /// </summary>
-        public void Delete(Expression<Func<MenuDto, bool>> filter)
-        {
-            var model = _unitOfWork.MenuRepository.GetItem(filter);
-            _unitOfWork.MenuRepository.Delete(model);
-        }
-
-        /// <summary>
-        /// Deleta uma lista de objetos
-        /// </summary>
-        public void DeleteAll(List<MenuDto> collection)
-        {
-            foreach (var item in collection) { _unitOfWork.MenuRepository.Delete(item); }
-        }
-
-        /// <summary>
         /// Retorna um único objeto<T> buscado por expressão Lambda
         /// </summary>
-        public MenuDto GetItem(Expression<Func<MenuDto, bool>> filter)
+        public virtual MenuDto GetItem(Expression<Func<MenuDto, bool>> filter)
         {
             MenuDto model;
             model = _unitOfWork.MenuRepository.GetItem(filter);
@@ -76,19 +62,51 @@ namespace SmartAdmin.Domain
         }
 
         /// <summary>
+        /// Deleta um objeto
+        /// </summary>
+        public virtual void Delete(Expression<Func<MenuDto, bool>> filter)
+        {
+            var Collection = _unitOfWork.MenuRepository.GetByFilter(filter);
+            if (Collection.ToList().Count > 0)
+            {
+                foreach (var item in Collection)
+                {
+                    _unitOfWork.MenuRepository.Delete(item);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deleta uma lista de objetos
+        /// </summary>
+        public virtual void DeleteAll(List<MenuDto> collection)
+        {
+            foreach (var item in collection) { _unitOfWork.MenuRepository.Delete(item); }
+        }
+
+        /// <summary>
         /// Retorna uma lista List(T) de objetos buscados pela expressão Lambda
         /// </summary>
-        public List<MenuDto> GetList(Expression<Func<MenuDto, bool>> filter)
+        public virtual List<MenuDto> GetList(Expression<Func<MenuDto, bool>> filter)
         {
             List<MenuDto> collection;
-            collection = _unitOfWork.MenuRepository.GetList(filter);
+            collection = _unitOfWork.MenuRepository.GetByFilter(filter).ToList();
+            return (collection);
+        }
+
+        /// <summary>
+        /// Retorna uma lista IQueryable(T) de objetos buscados pela expressão Lambda
+        /// </summary>
+        public virtual IQueryable<MenuDto> GetByFilter(Expression<Func<MenuDto, bool>> filter)
+        {
+            var collection = _unitOfWork.MenuRepository.GetByFilter(filter);
             return (collection);
         }
 
         /// <summary>
         /// Inativa um objeto para visualização
         /// </summary>
-        public void ToInactive(int Id)
+        public virtual void ToInactive(int Id)
         {
             MenuDto model = _unitOfWork.MenuRepository.GetItem(_ => _.ID == Id && _.STATUS == "A");
             model.STATUS = "I";
@@ -98,36 +116,13 @@ namespace SmartAdmin.Domain
         /// <summary>
         /// Ativa um objeto para visualização
         /// </summary>
-        public void ToActive(int Id)
+        public virtual void ToActive(int Id)
         {
             MenuDto model = _unitOfWork.MenuRepository.GetItem(_ => _.ID == Id && _.STATUS == "I");
             model.STATUS = "A";
             _unitOfWork.MenuRepository.Edit(model);
         }
 
-        /// <summary>
-        ///  Distroe o objeto e recursos não gerenciados liberando memória
-        /// </summary>
-        public void Dispose()
-        {
-            Clear(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Clear(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                    _unitOfWork.Dispose();
-            }
-            _disposed = true;
-        }
-
-        ~Menu()
-        {
-            Clear(false);
-        }
     }
 }
 
