@@ -3,211 +3,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartAdmin.Dto;
-using SmartAdmin.Data.Generic;
-using SmartAdmin.Data.Context;
+using SmartAdmin.Data.Model;
+using SmartAdmin.Data.Repository;
+using SmartAdmin.Data.ApplicationContext;
 
 namespace SmartAdmin.Data
 {
     public class UnitOfWork : IDisposable
     {
-        private AppContext _context = new AppContext();
-        private bool _disposed = false;
+        private SmartAdminContext _Context = new SmartAdminContext();
+        private bool _Disposed = false;
 
-        private Repository<UsuarioDto> _usuarioRepository;
-        private Repository<TipoNewletterDto> _tiponewletterRepository;
-        private Repository<EmailNewletterDto> _emailnewletterRepository;
-        private Repository<EnvioNewletterDto> _envionewletterRepository;
-        private Repository<AcessoDto> _acessoRepository;
-        private Repository<TipoContatoDto> _tipocontatoRepository;
-        private Repository<ContatoDto> _contatoRepository;
-        private Repository<MenuDto> _menuRepository;
-        private Repository<MenuUsuarioDto> _menuusuarioRepository;
-        private Repository<InboxDto> _inboxRepository;
-        private Repository<BancoDto> _bancoRepository;
-        private Repository<CedenteDto> _cedenteRepository;
-        private Repository<MensagemDto> _mensagemRepository;
-        private Repository<MensagemEnviadaDto> _mensagemenviadaRepository;
+        private RepositoryGeneric<UsuarioDto> _usuarioRepository;
+        private RepositoryGeneric<AcessoDto> _acessoRepository;
+        private RepositoryGeneric<MenuDto> _menuRepository;
+        private RepositoryGeneric<MenuUsuarioDto> _menuusuarioRepository;
 
-        public Repository<UsuarioDto> UsuarioRepository
+        public RepositoryGeneric<UsuarioDto> UsuarioRepository
         {
             get
             {
                 if (this._usuarioRepository == null)
                 {
-                    this._usuarioRepository = new Repository<UsuarioDto>(_context);
+                    this._usuarioRepository = new RepositoryGeneric<UsuarioDto>(_Context);
                 }
-
                 return _usuarioRepository;
             }
         }
 
-        public Repository<TipoNewletterDto> TipoNewletterRepository
-        {
-            get
-            {
-                if (this._tiponewletterRepository == null)
-                {
-                    this._tiponewletterRepository = new Repository<TipoNewletterDto>(_context);
-                }
-
-                return _tiponewletterRepository;
-            }
-        }
-
-        public Repository<EmailNewletterDto> EmailNewletterRepository
-        {
-            get
-            {
-                if (this._emailnewletterRepository == null)
-                {
-                    this._emailnewletterRepository = new Repository<EmailNewletterDto>(_context);
-                }
-
-                return _emailnewletterRepository;
-            }
-        }
-
-        public Repository<EnvioNewletterDto> EnvioNewletterRepository
-        {
-            get
-            {
-                if (this._envionewletterRepository == null)
-                {
-                    this._envionewletterRepository = new Repository<EnvioNewletterDto>(_context);
-                }
-
-                return _envionewletterRepository;
-            }
-        }
-
-        public Repository<AcessoDto> AcessoRepository
+        public RepositoryGeneric<AcessoDto> AcessoRepository
         {
             get
             {
                 if (this._acessoRepository == null)
                 {
-                    this._acessoRepository = new Repository<AcessoDto>(_context);
+                    this._acessoRepository = new RepositoryGeneric<AcessoDto>(_Context);
                 }
-
                 return _acessoRepository;
             }
         }
 
-        public Repository<TipoContatoDto> TipoContatoRepository
-        {
-            get
-            {
-                if (this._tipocontatoRepository == null)
-                {
-                    this._tipocontatoRepository = new Repository<TipoContatoDto>(_context);
-                }
-
-                return _tipocontatoRepository;
-            }
-        }
-
-        public Repository<ContatoDto> ContatoRepository
-        {
-            get
-            {
-                if (this._contatoRepository == null)
-                {
-                    this._contatoRepository = new Repository<ContatoDto>(_context);
-                }
-
-                return _contatoRepository;
-            }
-        }
-
-        public Repository<MenuDto> MenuRepository
+        public RepositoryGeneric<MenuDto> MenuRepository
         {
             get
             {
                 if (this._menuRepository == null)
                 {
-                    this._menuRepository = new Repository<MenuDto>(_context);
+                    this._menuRepository = new RepositoryGeneric<MenuDto>(_Context);
                 }
-
                 return _menuRepository;
             }
         }
 
-        public Repository<MenuUsuarioDto> MenuUsuarioRepository
+        public RepositoryGeneric<MenuUsuarioDto> MenuUsuarioRepository
         {
             get
             {
                 if (this._menuusuarioRepository == null)
                 {
-                    this._menuusuarioRepository = new Repository<MenuUsuarioDto>(_context);
+                    this._menuusuarioRepository = new RepositoryGeneric<MenuUsuarioDto>(_Context);
                 }
-
                 return _menuusuarioRepository;
-            }
-        }
-
-        public Repository<InboxDto> InboxRepository
-        {
-            get
-            {
-                if (this._inboxRepository == null)
-                {
-                    this._inboxRepository = new Repository<InboxDto>(_context);
-                }
-
-                return _inboxRepository;
-            }
-        }
-
-        public Repository<BancoDto> BancoRepository
-        {
-            get
-            {
-                if (this._bancoRepository == null)
-                {
-                    this._bancoRepository = new Repository<BancoDto>(_context);
-                }
-
-                return _bancoRepository;
-            }
-        }
-
-        public Repository<CedenteDto> CedenteRepository
-        {
-            get
-            {
-                if (this._cedenteRepository == null)
-                {
-                    this._cedenteRepository = new Repository<CedenteDto>(_context);
-                }
-
-                return _cedenteRepository;
-            }
-        }
-
-        public Repository<MensagemDto> MensagemRepository
-        {
-            get
-            {
-                if (this._mensagemRepository == null)
-                {
-                    this._mensagemRepository = new Repository<MensagemDto>(_context);
-                }
-
-                return _mensagemRepository;
-            }
-        }
-
-        public Repository<MensagemEnviadaDto> MensagemEnviadaRepository
-        {
-            get
-            {
-                if (this._mensagemenviadaRepository == null)
-                {
-                    this._mensagemenviadaRepository = new Repository<MensagemEnviadaDto>(_context);
-                }
-
-                return _mensagemenviadaRepository;
             }
         }
 
@@ -219,28 +75,18 @@ namespace SmartAdmin.Data
 
         private void Clear(bool disposing)
         {
-            if (!this._disposed)
+            if (!this._Disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    _Context.Dispose();
                     _usuarioRepository = null;
-                    _tiponewletterRepository = null;
-                    _emailnewletterRepository = null;
-                    _envionewletterRepository = null;
                     _acessoRepository = null;
-                    _tipocontatoRepository = null;
-                    _contatoRepository = null;
                     _menuRepository = null;
                     _menuusuarioRepository = null;
-                    _inboxRepository = null;
-                    _bancoRepository = null;
-                    _cedenteRepository = null;
-                    _mensagemRepository = null;
-                    _mensagemenviadaRepository = null;
                 }
             }
-            _disposed = true;
+            _Disposed = true;
         }
 
         ~UnitOfWork()

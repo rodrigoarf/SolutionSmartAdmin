@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SmartAdmin.Data.Model
+namespace SmartAdmin.Domain.Annotations
 {
     [Serializable]
     public class Base

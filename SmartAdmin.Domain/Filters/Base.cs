@@ -4,9 +4,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SmartAdmin.Data.Model
+namespace SmartAdmin.Domain.Filters
 {
-    [Serializable]
     public class Base
     {
         public Int32 ID { get; set; }

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace SmartAdmin.Data.Model
 {
     [Serializable]
-    public class Base
+    public class MenuUsuarioDto : Base
     {
-        public Int32 ID { get; set; }
+        public System.Int32 COD_MENU { get; set; }
+        public System.Int32 COD_USUARIO { get; set; }
     }
 }
 
