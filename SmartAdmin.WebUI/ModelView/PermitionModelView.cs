@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using SmartAdmin.Dto;
+using SmartAdmin.Data.Model;
 
 namespace SmartAdmin.WebUI.ModelView
 {

@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.Gerador.v1", "SmartAdmin.Gerador.v1.csproj", "{646CEE3E-30D7-4F65-A78F-73AC82E89805}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Gerador", "0 - Gerador", "{2062740D-1E2E-4031-8E19-4C2632F5C4CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Data", "1 - Data", "{413C9FEE-6171-486E-B1BA-F8A068E7EE10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{BBA9D2F0-7B88-44B0-A6F2-E72AFE083389}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Presentation", "3 - Presentation", "{B7280A2C-BF85-47F4-A9F7-49661F9AE1C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pentanyx.WebUI", "..\Pentanyx.WebUI\Pentanyx.WebUI.csproj", "{45B8EAEE-3E1C-4756-A3D7-86005244F613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pentanyx.SessionStateProvider", "..\Pentanyx.SessionProvider\Pentanyx.SessionStateProvider.csproj", "{C28B1166-1380-445D-AEC1-8A18B990DD18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pentanyx.Data", "..\Pentanyx.Data\Pentanyx.Data.csproj", "{B9EA8D06-BC51-4329-B63D-E1FDE03AA46F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pentanyx.Domain", "..\Pentanyx.Domain\Pentanyx.Domain.csproj", "{3A12DCBB-748B-433F-88FD-10D12B64238F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{646CEE3E-30D7-4F65-A78F-73AC82E89805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{646CEE3E-30D7-4F65-A78F-73AC82E89805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646CEE3E-30D7-4F65-A78F-73AC82E89805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{646CEE3E-30D7-4F65-A78F-73AC82E89805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45B8EAEE-3E1C-4756-A3D7-86005244F613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B8EAEE-3E1C-4756-A3D7-86005244F613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B8EAEE-3E1C-4756-A3D7-86005244F613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B8EAEE-3E1C-4756-A3D7-86005244F613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9EA8D06-BC51-4329-B63D-E1FDE03AA46F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9EA8D06-BC51-4329-B63D-E1FDE03AA46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9EA8D06-BC51-4329-B63D-E1FDE03AA46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9EA8D06-BC51-4329-B63D-E1FDE03AA46F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A12DCBB-748B-433F-88FD-10D12B64238F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A12DCBB-748B-433F-88FD-10D12B64238F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A12DCBB-748B-433F-88FD-10D12B64238F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A12DCBB-748B-433F-88FD-10D12B64238F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{646CEE3E-30D7-4F65-A78F-73AC82E89805} = {2062740D-1E2E-4031-8E19-4C2632F5C4CA}
+		{B9EA8D06-BC51-4329-B63D-E1FDE03AA46F} = {413C9FEE-6171-486E-B1BA-F8A068E7EE10}
+		{C28B1166-1380-445D-AEC1-8A18B990DD18} = {BBA9D2F0-7B88-44B0-A6F2-E72AFE083389}
+		{3A12DCBB-748B-433F-88FD-10D12B64238F} = {BBA9D2F0-7B88-44B0-A6F2-E72AFE083389}
+		{45B8EAEE-3E1C-4756-A3D7-86005244F613} = {B7280A2C-BF85-47F4-A9F7-49661F9AE1C9}
+	EndGlobalSection
+EndGlobal

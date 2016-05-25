@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.WebUI", "SmartAd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.Boleto", "SmartAdmin.Boleto\SmartAdmin.Boleto\SmartAdmin.Boleto.csproj", "{08E4BF80-7BB6-47C5-983B-6D146980292B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdmin.SessionStateProvider", "SmartAdmin.SessionProvider\SmartAdmin.SessionStateProvider.csproj", "{C28B1166-1380-445D-AEC1-8A18B990DD18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{08E4BF80-7BB6-47C5-983B-6D146980292B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08E4BF80-7BB6-47C5-983B-6D146980292B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08E4BF80-7BB6-47C5-983B-6D146980292B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28B1166-1380-445D-AEC1-8A18B990DD18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{12947BEF-ECA3-4F5A-8068-04AD6C38ED5B} = {B88B749B-C207-4C01-8299-2F70F83B15F5}
 		{99779F07-C527-46F4-8F95-97C002A709DB} = {894FBC8A-D66D-4DC4-B0F3-962A56860CC1}
 		{08E4BF80-7BB6-47C5-983B-6D146980292B} = {894FBC8A-D66D-4DC4-B0F3-962A56860CC1}
+		{C28B1166-1380-445D-AEC1-8A18B990DD18} = {894FBC8A-D66D-4DC4-B0F3-962A56860CC1}
 		{B97DBA2F-F137-4252-95AE-9AB4516337A4} = {B39CDC59-CAE4-4F04-B4D8-DAF78392D3A2}
 	EndGlobalSection
 EndGlobal

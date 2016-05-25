@@ -12,6 +12,6 @@ namespace SmartAdmin.WebUI.Infrastructure.Session
         void Finish();
         bool IsActive();
         string GetSessionId();
-        TEntity GetUsuario();
+        TEntity GetObjectFromSession();
     }
 }

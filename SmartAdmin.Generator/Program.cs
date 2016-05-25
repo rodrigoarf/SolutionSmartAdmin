@@ -1,159 +1,179 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
-using SmartAdmin.Generator.Core;
+using System.Configuration;
+using SmartAdmin.Gerador.Models;
+using SmartAdmin.Gerador.Enums;
+using SmartAdmin.Gerador.Infrastructure;
 
-namespace SmartAdmin.Generator
+namespace SmartAdmin.Gerador
 {
     public class Program
     {
-        const int MILLISECONDS = 1000;
+        private const int MILLISECONDS = 1000;
+        private static bool VERIFY_TIME = Convert.ToBoolean(ConfigurationManager.AppSettings["Temporizador"].ToString());
+        public static EDataBase DatabaseType = EDataBase.MySql;
+        public static EEntity EntityType = EEntity.Entity5;
 
         static void Main(string[] args)
         {
             // Header...
             WriteHeader();
-            TimeSleep(MILLISECONDS);
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); } 
 
-            // Ask...
-            WriteToConsole("Para gerar contexto completo digite: 1");
-            WriteToConsole("Para gerar somente camada de dados digite: 2");
+            // Ask...            
+            WriteToConsole("Para gerar contexto completo digite:.............1");
+            WriteToConsole("Para gerar somente camada de dados digite:.......2");
+            WriteToConsole("Para gerar somente camada de domínio digite:.....3");
+            WriteToConsole("Para gerar somente camada de frontend digite:....4");
 
             var AnswerQuestion = String.Empty;
 
             // Verify...
-            do { 
-
+            do
+            {
                 AnswerQuestion = ReadFromConsole();
-                if ((AnswerQuestion == "1") || (AnswerQuestion == "2") || (AnswerQuestion == "3")) { break; }
+                if ((AnswerQuestion == "1") || (AnswerQuestion == "2") || (AnswerQuestion == "3") || (AnswerQuestion == "4")) { break; }
 
-            } while ((AnswerQuestion != "1") || (AnswerQuestion != "2") || (AnswerQuestion != "3"));
+            } while ((AnswerQuestion != "1") || (AnswerQuestion != "2") || (AnswerQuestion != "3") || (AnswerQuestion == "4"));
 
             // Processing...
             MakeProcess(AnswerQuestion);
         }
 
-        //ok
+        #region Métodos privados de geração
+
         private static void MakeProcess(string AnswerQuestion)
-        {
+        {             
+            Console.ForegroundColor = ConsoleColor.Gray;
+
             if (AnswerQuestion == "1")
-            {
-                // Start here!
-                Console.ForegroundColor = ConsoleColor.Gray;
-
-                MakeModelsWithDataAnnotation();
-                MakeBase();
-                MakeMappers();
-                MakeContext();
-                MakeRepository();
-                MakeUnitOfWork();
+            {                                                
+                MakeData();
                 MakeDomain();
-
-                // Final here!
-                WriteToConsole(" ");
-                WriteToConsole("Processo executado com sucesso!");
-                ReadFromConsole();
+                MakeController();
             }
             else if (AnswerQuestion == "2")
             {
-                // Start here!
-                Console.ForegroundColor = ConsoleColor.Gray;
-
-                MakeModelsWithDataAnnotation();
-                MakeMappers();
-                MakeContext();
-                MakeUnitOfWork();
-
-                // Final here!
-                WriteToConsole(" ");
-                WriteToConsole("Processo executado com sucesso!");
-                ReadFromConsole();
+                MakeData();
             }
             else if (AnswerQuestion == "3")
             {
-                // Final here!
                 MakeDomain();
-
-                // Final here!
-                WriteToConsole(" ");
-                WriteToConsole("Processo executado com sucesso!");
-                ReadFromConsole();
             }
+            else if (AnswerQuestion == "4")
+            {
+                MakeController();
+            }
+
+            WriteToConsole(" ");
+            WriteToConsole("Processo executado com sucesso!");
+            ReadFromConsole();
         }
 
-        //ok
-        public static void MakeModelsWithOutDataAnnotation()
+        public static void MakeData()
         {
-            var ConfigTable = new ConfigTables();
-            var BuildClass = new Data();
+            MakeBase();
+            MakeModels();
+            MakeMappers();
+            MakeContext();
+            MakeRepository();
+            MakeIRepository();
+            MakeUnitOfWork();
+        }
+
+        private static void MakeDomain()
+        {
+            var ConfigTable = new TableToClass();
+            var BuildClass = new Domain();
             var GroupTables = ConfigTable.GetTableMapper();
 
             WriteToConsole(" ");
-            WriteToConsole("Gerando Dto(s)...");
+            WriteToConsole("Gerando Domain Models...");  
+
+            WriteToConsole("-> " + BuildClass.BuildUnitOfWork(GroupTables));
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+
+            WriteToConsole("-> " + BuildClass.BuildBaseFilter());
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+
+            WriteToConsole("-> " + BuildClass.BuildBaseAnnotations());
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
 
             foreach (var Table in GroupTables)
             {
-                WriteToConsole(BuildClass.BuildModel(Table));
-                TimeSleep(MILLISECONDS);
-            }
+                WriteToConsole("-> " + BuildClass.BuildModels(Table));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+
+                WriteToConsole("-> " + BuildClass.BuildFilters(Table));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+
+                WriteToConsole("-> " + BuildClass.BuildModelsBaseAnnotations(Table));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+
+                WriteToConsole("-> " + BuildClass.BuildModelsAnnotations(Table));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+
+                WriteToConsole("-> " + BuildClass.BuildModelsSpecialized(Table.Value.ClassName));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+            }  
         }
 
-        //ok
-        public static void MakeModelsWithDataAnnotation()
+        private static void MakeController()
         {
-            var ConfigTable = new ConfigTables();
-            var BuildClass = new Data();
+            var ConfigTable = new TableToClass();
+            var BuildClass = new Presentation();
             var GroupTables = ConfigTable.GetTableMapper();
 
             WriteToConsole(" ");
-            WriteToConsole("Gerando Dto(s)...");
+            WriteToConsole("Gerando Controllers...");
+
+            WriteToConsole("-> " + BuildClass.BuildBase());
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
 
             foreach (var Table in GroupTables)
             {
-                WriteToConsole(BuildClass.BuildModelDataAnnotations(Table));
-                TimeSleep(MILLISECONDS);
-            }
-
-            MakeDataAnnotations();
-        }
-
-        //ok
-        public static void MakeDataAnnotations()
-        {
-            var ConfigTable = new ConfigTables();
-            var BuildClass = new Data();
-            var GroupTables = ConfigTable.GetTableMapper();
-
-            WriteToConsole(" ");
-            WriteToConsole("Gerando Metadata(s)...");
-
-            foreach (var Table in GroupTables)
-            {
-                WriteToConsole(BuildClass.BuildDataAnnotations(Table));
-                TimeSleep(MILLISECONDS);
+                if (Table.Value.CreateController)
+                {
+                    WriteToConsole("-> " + BuildClass.BuildController(Table.Value.ClassName));
+                    if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }
+                }  
             }
         }
 
-        //ok
-        public static void MakeBase()
+        private static void MakeBase()
         {
             var BuildClass = new Data();
 
             WriteToConsole(" ");
             WriteToConsole("Gerando BaseModel...");
-            WriteToConsole(BuildClass.BuildBase());
+            WriteToConsole("-> " + BuildClass.BuildBase());
 
-            TimeSleep(MILLISECONDS);
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }            
         }
 
-        //ok
-        public static void MakeMappers()
+        private static void MakeModels()
         {
-            var ConfigTable = new ConfigTables();
+            var ConfigTable = new TableToClass();
+            var BuildClass = new Data();
+            var GroupTables = ConfigTable.GetTableMapper();
+
+            WriteToConsole(" ");
+            WriteToConsole("Gerando Models...");
+
+            foreach (var Table in GroupTables)
+            {
+                WriteToConsole("-> " + BuildClass.BuildModels(Table));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }  
+            }
+        }
+
+        private static void MakeMappers()
+        {
+            var ConfigTable = new TableToClass();
             var BuildClass = new Data();
             var GroupTables = ConfigTable.GetTableMapper();
 
@@ -162,72 +182,63 @@ namespace SmartAdmin.Generator
 
             foreach (var Table in GroupTables)
             {
-                WriteToConsole(BuildClass.BuildMapper(Table));
-                TimeSleep(MILLISECONDS);
+                WriteToConsole("-> " + BuildClass.BuildMapper(Table));
+                if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }  
             }
-        }     
-        
-        //ok
-        public static void MakeContext()
+        }
+
+        private static void MakeContext()
         {
-            var ConfigTable = new ConfigTables();
+            var ConfigTable = new TableToClass();
             var BuildClass = new Data();
             var GroupTables = ConfigTable.GetTableMapper();
 
             WriteToConsole(" ");
             WriteToConsole("Gerando Contexto...");
 
-            WriteToConsole(BuildClass.BuildContext(GroupTables));
-            TimeSleep(MILLISECONDS);
+            WriteToConsole("-> " + BuildClass.BuildContext(GroupTables));
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }  
         }
 
-        //ok
-        public static void MakeRepository()
+        private static void MakeRepository()
         {
             var BuildClass = new Data();
 
             WriteToConsole(" ");
             WriteToConsole("Gerando Repositorio...");
 
-            WriteToConsole(BuildClass.BuildRepository());
-            TimeSleep(MILLISECONDS);
-        }   
+            WriteToConsole("-> " + BuildClass.BuildRespository());
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }  
+        }
 
-        //ok
-        public static void MakeUnitOfWork()
+        private static void MakeIRepository()
         {
-            var ConfigTable = new ConfigTables();
+            var BuildClass = new Data();
+
+            WriteToConsole(" ");
+            WriteToConsole("Gerando IRepositorio...");
+
+            WriteToConsole("-> " + BuildClass.BuildIRespository());
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }  
+        }
+
+        private static void MakeUnitOfWork()
+        {
+            var ConfigTable = new TableToClass();
             var BuildClass = new Data();
             var GroupTables = ConfigTable.GetTableMapper();
 
             WriteToConsole(" ");
             WriteToConsole("Gerando UnitOfWork...");
 
-            WriteToConsole(BuildClass.BuildUnitOfWork(GroupTables));
-            TimeSleep(MILLISECONDS);
+            WriteToConsole("-> " + BuildClass.BuildUnitOfWork(GroupTables));
+            if (VERIFY_TIME) { TimeSleep(MILLISECONDS); }  
         }
 
-        //ok
-        public static void MakeDomain()
-        {
-            var ConfigTable = new ConfigTables();
-            var BuildClass = new Domain();
-            var GroupTables = ConfigTable.GetTableMapper();
+        #endregion
 
-            WriteToConsole(" ");
-            WriteToConsole("Gerando classes de domínio...");
+        #region Métodos do shellprompt
 
-            foreach (var Table in GroupTables)
-            {
-                WriteToConsole(BuildClass.BuildDomain(Table.Key, Table.Value));
-                TimeSleep(MILLISECONDS);
-            }
-
-            WriteToConsole(BuildClass.BuildUnitOfWork(GroupTables));
-            TimeSleep(MILLISECONDS);
-        }
-
-        #region FUNCTIONS OF SHELL PROMPT
         private static void TimeSleep(int Milliseconds)
         {
             var StopWatch = Stopwatch.StartNew();
@@ -243,42 +254,25 @@ namespace SmartAdmin.Generator
             var ConsoleCopyRight = new StringBuilder();
 
             Console.WriteLine("#***********************************************************");
-            Console.WriteLine("# Console gerador de DbContext");
-            Console.WriteLine("# Repositorio GitHub - https://github.com/rodrigoarf");
-            Console.WriteLine("# Software - https://windows.github.com/");
-            Console.WriteLine("#");
-
-            Console.WriteLine("# > Repository Pattern");
-            Console.WriteLine("#   - Context");
-            Console.WriteLine("#   - Table Models and Mappers");
-            Console.WriteLine("#   - Generic Repository");
-            Console.WriteLine("#");
-
-            Console.WriteLine("# > Domain Pattern");
-            Console.WriteLine("#   - Domain entity(s) with and methods of the manipulation");
-            Console.WriteLine("#   - Domain entity(s) partial extensions, for business logic");
-            Console.WriteLine("#");
-
-            Console.WriteLine("# > Service Pattern");
-            Console.WriteLine("#   - Entities models with encapsulated domain methods");
-            Console.WriteLine("#   - Entities (DTO - Data Transfer Object)");
-            Console.WriteLine("#");
+            Console.WriteLine("# Projeto: SmartAdmin.Gerador");
+            Console.WriteLine("# Console: Gerador de Camadas para Aplicações");
+            Console.WriteLine("# Empresa: Agilecore Software");
             Console.WriteLine("#***********************************************************");
 
             WriteToConsole(ConsoleCopyRight.ToString());
         }
 
-        public static ConsoleKeyInfo ReadKeyPress()
+        private static ConsoleKeyInfo ReadKeyPress()
         {
             return (Console.ReadKey());
         }
 
-        public static string ReadFromConsole()
+        private static string ReadFromConsole()
         {
             return (Console.ReadLine());
         }
 
-        public static void WriteToConsole(string message = "")
+        private static void WriteToConsole(string message)
         {
             if (message.Length > 0)
             {
@@ -286,16 +280,17 @@ namespace SmartAdmin.Generator
             }
         }
 
-        public static void WriteEnterLine()
+        private static void WriteEnterLine()
         {
             Console.WriteLine(String.Empty);
             Console.ReadLine();
         }
 
-        public static string Execute(string command)
+        private static string Execute(string command)
         {
             return string.Format("Comando {0} executado.", command);
         }
+
         #endregion
     }
 }

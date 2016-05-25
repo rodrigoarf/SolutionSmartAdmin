@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SmartAdmin.Generator.Program</StartupObject>
+    <StartupObject>SmartAdmin.Gerador.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -50,15 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigTables.cs" />
-    <Compile Include="Connections\ConnectMySql.cs" />
-    <Compile Include="Connections\ConnectOracle.cs" />
-    <Compile Include="Connections\ConnectSqlServer.cs" />
-    <Compile Include="Core\Functions.cs" />
-    <Compile Include="Core\Service.cs" />
-    <Compile Include="Core\Domain.cs" />
-    <Compile Include="Core\Data.cs" />
-    <Compile Include="Models\ClassConfig.cs" />
+    <Compile Include="Connection\ConnectionMySql.cs" />
+    <Compile Include="Connection\ConnectionOracle.cs" />
+    <Compile Include="Connection\ConnectionSqlServer.cs" />
+    <Compile Include="Enums\EEntity.cs" />
+    <Compile Include="Enums\EDataBase.cs" />
+    <Compile Include="Infrastructure\Data.cs" />
+    <Compile Include="Infrastructure\Domain.cs" />
+    <Compile Include="Infrastructure\Presentation.cs" />
+    <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Interface\IData.cs" />
+    <Compile Include="Models\ControllerConfig.cs" />
+    <Compile Include="Models\ModelConfig.cs" />
+    <Compile Include="Models\TableConfig.cs" />
     <Compile Include="Models\TableMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,5 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<SmartAdmin.Dto.BancoDto>  
+@model PagedList.IPagedList<SmartAdmin.Data.Model.BancoDto>  
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,7 +16,7 @@
         <div class="row">
             <article class="col-sm-12">
                 <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
-                   @Html.Partial("BancoFiltroPartial", new SmartAdmin.Dto.BancoDto())
+                   @Html.Partial("BancoFiltroPartial", new SmartAdmin.Data.Model.BancoDto())
                 </div>
             </article>
         </div>
@@ -34,7 +34,7 @@
 </div> 
 
 <div class="modal fade" id="modal-banco-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    @Html.Partial("BancoCreatePartial", new SmartAdmin.Dto.BancoDto());
+    @Html.Partial("BancoCreatePartial", new SmartAdmin.Data.Model.BancoDto());
 </div> 
 
 <div class="modal fade" id="modal-banco-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div> 

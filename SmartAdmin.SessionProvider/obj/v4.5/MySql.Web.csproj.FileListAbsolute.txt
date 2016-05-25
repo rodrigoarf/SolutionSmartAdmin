@@ -1,0 +1,7 @@
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\obj\v4.5\MySql.Web.csprojResolveAssemblyReference.cache
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\obj\v4.5\MySql.Web.Properties.Resources.resources
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\obj\v4.5\MySql.Web.csproj.GenerateResource.Cache
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\bin\v4.5\Debug\MySql.Web.dll
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\bin\v4.5\Debug\MySql.Web.pdb
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\obj\v4.5\MySql.Web.dll
+C:\Users\Rodrigo\Desktop\mysql-web-fixed-master\source\obj\v4.5\MySql.Web.pdb

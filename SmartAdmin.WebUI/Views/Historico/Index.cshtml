@@ -1,5 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<SmartAdmin.Dto.AcessoDto>  
+@model PagedList.IPagedList<SmartAdmin.Data.Model.AcessoDto>  
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,7 +15,7 @@
         <div class="row">
             <article class="col-sm-12">
                 <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
-                    @Html.Partial("FiltroPartial", new SmartAdmin.Dto.AcessoDto())
+                    @Html.Partial("FiltroPartial", new SmartAdmin.Data.Model.AcessoDto())
                 </div>
             </article>
         </div>

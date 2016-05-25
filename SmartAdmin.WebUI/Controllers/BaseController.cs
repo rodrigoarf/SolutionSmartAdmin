@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SmartAdmin.Dto;
+using SmartAdmin.Data.Model;
 using SmartAdmin.Data;   
 using SmartAdmin.WebUI.HtmlHelpers;
 

@@ -36,7 +36,7 @@
 </nav>
 
 
- @if (Model.CollectionMenusAndSubMenus.Count > 0)
+ @if ((Model.CollectionMenusAndSubMenus != null) && (Model.CollectionMenusAndSubMenus.Count > 0))
  { 
      <nav>
          <ul>

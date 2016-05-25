@@ -1,5 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<SmartAdmin.Dto.MenuDto>  
+@model PagedList.IPagedList<SmartAdmin.Data.Model.MenuDto>  
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,7 +15,7 @@
         <div class="row">
             <article class="col-sm-12">
                 <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
-                    @Html.Partial("FiltroPartial", new SmartAdmin.Dto.MenuDto())
+                    @Html.Partial("FiltroPartial", new SmartAdmin.Data.Model.MenuDto())
                 </div>
             </article>
         </div>
@@ -35,7 +35,7 @@
 
  <!-- #modal-menu-create -->
 <div class="modal fade" id="modal-menu-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    @Html.Partial("CreatePartial", new SmartAdmin.Dto.MenuDto())
+    @Html.Partial("CreatePartial", new SmartAdmin.Data.Model.MenuDto())
 </div>
 
 <!-- scripts -->

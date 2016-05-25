@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                     <div class="well no-padding">
-                        @Html.Partial("FormPartial", new SmartAdmin.Dto.UsuarioDto())                     
+                        @Html.Partial("FormPartial", new SmartAdmin.Data.Model.UsuarioDto())                     
                     </div>
                 </div>
             </div>
@@ -74,11 +74,11 @@
     </div>
     <!-- #modal-usuario-create -->
     <div class="modal fade" id="modal-usuario-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-         @Html.Partial("CreatePartial", new SmartAdmin.Dto.UsuarioDto());
+         @Html.Partial("CreatePartial", new SmartAdmin.Data.Model.UsuarioDto());
     </div>
     <!-- #modal-usuario-create -->
     <div class="modal fade" id="modal-usuario-remember" tabindex="-1" role="dialog" aria-labelledby="myModalLabelRemember" aria-hidden="true">
-         @Html.Partial("RememberPartial", new SmartAdmin.Dto.UsuarioDto());
+         @Html.Partial("RememberPartial", new SmartAdmin.Data.Model.UsuarioDto());
     </div>
     <script>
         @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert('" + ViewBag.Mensagem + "');") : null)

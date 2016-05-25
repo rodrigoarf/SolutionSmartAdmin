@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SmartAdmin.Dto;
+using SmartAdmin.Data.Model;
 using SmartAdmin.Domain;
+using SmartAdmin.Domain.Model; 
 using SmartAdmin.WebUI.Infrastructure.ActionFilters;
 using PagedList;
+
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -15,7 +17,7 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public ActionResult Index(int? Page)
         {
-            var UsuarioDominio = new Usuario();
+            var UsuarioDominio = new UsuarioSpecialized();
             var Model = UsuarioDominio.GetList(_ => _.ID > 0);              
             var CurrentPage = ((Page == null) ? 1 : Convert.ToInt32(Page));
 
@@ -29,11 +31,11 @@ namespace SmartAdmin.WebUI.Controllers
             if (id == null)
             {
                 var SessaoDomain = new SmartAdmin.WebUI.Infrastructure.Session.SessionManager();
-                var UsuarioLogado = SessaoDomain.GetUsuario();  
+                var UsuarioLogado = SessaoDomain.GetObjectFromSession();  
                 id = UsuarioLogado.Usuario.ID;
-            }      
+            }
 
-            var UsuarioDominio = new Usuario();
+            var UsuarioDominio = new UsuarioSpecialized();
             var Model = UsuarioDominio.GetItem(_ => _.ID == id);   
             return View(Model);
         }
@@ -41,18 +43,33 @@ namespace SmartAdmin.WebUI.Controllers
         [HttpPost]
         [AuthorizedUser]
         public ActionResult Load(UsuarioDto Model)
-        {                                          
-            var UsuarioDominio = new Usuario();
-            var Collection = UsuarioDominio.GetByFilters(Model);
+        {
+            var UsuarioDominio = new UsuarioSpecialized();
+            var Collection = UsuarioDominio.GetByFilter(_ => _.NOME == Model.NOME && _.STATUS == Model.STATUS);
 
             return View("Index", Collection.ToPagedList(1, PageSize));     
         }
+
+        //public List<UsuarioDto> GetByFilters(UsuarioDto Model)
+        //{
+        //    var UsuarioDominio = new UsuarioSpecialized();
+        //    IQueryable<UsuarioDto> Collection;
+
+        //    if (Model.NOME != null)
+        //    {
+        //        Collection = UsuarioDominio.GetByFilter(_ => _.NOME == Model.NOME);
+        //    }
+        //    else
+        //    {
+        //        Collection = UsuarioDominio.GetByFilter(_ => _.STATUS == Model.STATUS);
+        //    }
+        //}
 
         [HttpPost]
         [AuthorizedUser]
         public ActionResult Save(UsuarioDto Model)
         {
-            var UsuarioDomain = new Usuario();
+            var UsuarioDomain = new UsuarioSpecialized();
             var ModelCheck = UsuarioDomain.GetItem(_=>_.LOGIN == Model.LOGIN && _.EMAIL == Model.EMAIL && _.ID != Model.ID);
 
             if (ModelCheck != null)
@@ -73,7 +90,7 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public ActionResult SavePermission(UsuarioDto Model)
         {
-            var UsuarioDomain = new Usuario();
+            var UsuarioDomain = new UsuarioSpecialized();
             var ModelCheck = UsuarioDomain.GetItem(_ => _.LOGIN == Model.LOGIN && _.EMAIL == Model.EMAIL && _.ID != Model.ID);
 
             if (ModelCheck != null)
@@ -91,8 +108,8 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         public ActionResult SaveMenuPermission(SmartAdmin.WebUI.ModelView.PermissionModelView Model)
-        { 
-            var MenuUsuarioDomain = new MenuUsuario();
+        {
+            var MenuUsuarioDomain = new MenuUsuarioSpecialized();
             MenuUsuarioDomain.Delete(_ => _.COD_USUARIO == Model.ID);
 
             var Collection = new List<MenuUsuarioDto>();
@@ -110,13 +127,13 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public PartialViewResult PermissionMenuPartial(int Id)
         {
-            var UsuarioDomain = new Usuario();
+            var UsuarioDomain = new UsuarioSpecialized();
             var Model = UsuarioDomain.GetItem(_ => _.ID == Id);
 
-            var MenuDomain = new Menu();
+            var MenuDomain = new MenuSpecialized();
             var Collection = MenuDomain.GetList(_=>_.STATUS=="A" && _.COD_MENU_PAI == 0);
 
-            var MenuUsuarioDomain = new MenuUsuario();
+            var MenuUsuarioDomain = new MenuUsuarioSpecialized();
             var CollectionAllowed = MenuUsuarioDomain.GetList(_ => _.COD_USUARIO == Id);
 
             var CheckboxList = new List<SmartAdmin.WebUI.ModelView.CheckBoxes>();
@@ -154,8 +171,8 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var UsuarioDominio = new Usuario();
-                var ModelExists = UsuarioDominio.IsExistsByDocument(Model.CPF_CNPJ.Trim());
+                var UsuarioDominio = new UsuarioSpecialized();
+                var ModelExists = UsuarioDominio.GetByFilter(_ => _.CPF_CNPJ == Model.CPF_CNPJ.Trim());
 
                 if (ModelExists == null)
                 {

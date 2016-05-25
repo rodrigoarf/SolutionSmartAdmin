@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using SmartAdmin.Dto;
+using SmartAdmin.Data.Model;
 using SmartAdmin.Domain;
 using SmartAdmin.WebUI.ModelView;
 using SmartAdmin.WebUI.Infrastructure.ActionFilters;

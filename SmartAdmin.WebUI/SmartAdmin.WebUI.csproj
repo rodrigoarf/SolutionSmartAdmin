@@ -145,11 +145,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Acesso\AcessoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\Bugs\BugsController.cs" />
     <Compile Include="Controllers\Dashboard\DashboardController.cs" />
-    <Compile Include="Controllers\Financeiro\FinanceiroController.cs" />
-    <Compile Include="Controllers\Inbox\InboxController.cs" />
-    <Compile Include="Controllers\Newsletter\NewsletterController.cs" />
     <Compile Include="Infrastructure\ActionFilters\AuthorizedUser\AuthorizedUser.cs" />
     <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\HttpAntiModelInjectionException.cs">
@@ -852,9 +848,6 @@
     <Content Include="Script\Usuario\Create.js" />
     <Content Include="Script\Usuario\Edit.js" />
     <Content Include="Script\Usuario\Index.js" />
-    <Content Include="Templates\Email\index003.htm" />
-    <Content Include="Templates\Email\index002.htm" />
-    <Content Include="Templates\Email\index001.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -864,9 +857,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Templates\Email\Image\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -945,9 +936,6 @@
     <Content Include="Views\Menu\CreatePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Usuario\CreatePartial.cshtml" />
     <Content Include="Views\Usuario\FiltroPartial.cshtml" />
     <Content Include="Views\Usuario\GridPartial.cshtml" />
@@ -970,6 +958,10 @@
     <Content Include="Views\Historico\FiltroPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SmartAdmin.Boleto\SmartAdmin.Boleto\SmartAdmin.Boleto.csproj">
+      <Project>{08e4bf80-7bb6-47c5-983b-6d146980292b}</Project>
+      <Name>SmartAdmin.Boleto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SmartAdmin.Data\SmartAdmin.Data.csproj">
       <Project>{8451c4fb-9d96-4d82-8172-473022a93d03}</Project>
       <Name>SmartAdmin.Data</Name>
@@ -977,6 +969,10 @@
     <ProjectReference Include="..\SmartAdmin.Domain\SmartAdmin.Domain.csproj">
       <Project>{bb1a26fc-c3ff-401c-84a0-cb5d66a891fd}</Project>
       <Name>SmartAdmin.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartAdmin.SessionProvider\SmartAdmin.SessionStateProvider.csproj">
+      <Project>{c28b1166-1380-445d-aec1-8a18b990dd18}</Project>
+      <Name>SmartAdmin.SessionStateProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

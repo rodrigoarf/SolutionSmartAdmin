@@ -1,25 +1,25 @@
-﻿using SmartAdmin.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SmartAdmin.Domain;
+using System.Web.Security;
+using SmartAdmin.Domain.Model;
 using SmartAdmin.Domain.Security;
 using SmartAdmin.Domain.Helpers;
 using SmartAdmin.WebUI.Infrastructure.Session;
 using SmartAdmin.WebUI.ModelView;
-using System.Web.Security;
+using SmartAdmin.Data.Model;      
 
 namespace SmartAdmin.WebUI.Controllers
 {
     public class LoginController : BaseController
     {
-        private Usuario UsuarioDomain { get; set; }
+        private UsuarioSpecialized UsuarioDomain { get; set; }
 
         public LoginController()
         {
-            UsuarioDomain = new Usuario();
+            UsuarioDomain = new UsuarioSpecialized();
         }
 
         public ActionResult Index()
@@ -32,10 +32,10 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         public ActionResult Registro()
-        {
+        {                      
             ViewBag.Mensagem = TempData["Mensagem"] as String;
             var Model = TempData["Model"] as UsuarioDto;
-            return View((Model == null) ? new SmartAdmin.Dto.UsuarioDto() : Model);
+            return View((Model == null) ? new SmartAdmin.Data.Model.UsuarioDto() : Model);
         }
 
         [HttpPost]
@@ -43,32 +43,30 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var UsuarioLogado = UsuarioDomain.Authentication(Model);
+                var TextCrypt = new SmartAdmin.Domain.Security.Cryptography();
+                var SenhaCrypt = TextCrypt.Encrypt(Model.SENHA);  
+                var UsuarioLogado = UsuarioDomain.GetByFilter(_ => _.LOGIN == Model.LOGIN && _.SENHA == SenhaCrypt).FirstOrDefault();
 
                 if (UsuarioLogado != null)
                 {
                     //--> Acesso
-                    var AcessoDomain = new SmartAdmin.Domain.Acesso();
+                    var AcessoDomain = new AcessoSpecialized();
                     AcessoDomain.Save(GetUserInformation(String.Empty));
 
                     //--> Menus & Submenus
-                    var CollectionMenuMain = new List<MenuModelView>();                    
+                    var CollectionMenuMain = new List<MenuModelView>();
                     foreach (var MenuMain in UsuarioDomain.GetAllowedMenus(UsuarioLogado.ID)) //--> Para cada menu pai pega os filhos e adiciona no modelo de visão
                     {
-                       var CollectionSubMenus = UsuarioDomain.GetSubMenuFromMenu(MenuMain.ID);
-                       var CurrentMenuMain = new MenuModelView() { Menu = MenuMain, CollectionSubMenu = CollectionSubMenus }; 
-                       CollectionMenuMain.Add(CurrentMenuMain);
+                        var CollectionSubMenus = UsuarioDomain.GetAllowedMenusChild(MenuMain.ID);
+                        var CurrentMenuMain = new MenuModelView() { Menu = MenuMain, CollectionSubMenu = CollectionSubMenus };
+                        CollectionMenuMain.Add(CurrentMenuMain);
                     }
 
                     //--> Session
                     var Session = new SessionManager();
                     Session.Start(new UsuarioModelView() { Usuario = UsuarioLogado, CollectionMenusAndSubMenus = CollectionMenuMain });
 
-                    //--> Cookie
-                    CreateCookie(UsuarioLogado, Remind);
-                    //--> Cookie
-                  
-                    return (RedirectToAction("Index", "Menu"));
+                    return (RedirectToAction("Index", "DashBoard"));
                 }
                 else
                 {
@@ -101,21 +99,25 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult SessionUpdateObject()
         {
             var Session = new SessionManager();
-            var ModelView = Session.GetUsuario();
+            var ModelView = (UsuarioModelView)Session.GetObjectFromSession();
 
             //--> Atualiza Dados do Usuário
-            var UsuarioDomain = new Usuario();
+            var UsuarioDomain = new UsuarioSpecialized();
             var UsuarioLogado = UsuarioDomain.GetItem(_ => _.ID == ModelView.Usuario.ID);
                 
             //--> Atualiza Menus & Submenus
             var CollectionMenuMain = new List<MenuModelView>();
+           
             foreach (var MenuMain in UsuarioDomain.GetAllowedMenus(ModelView.Usuario.ID)) //--> Para cada menu pai pega os filhos e adiciona no modelo de visão
             {
-                var CollectionSubMenus = UsuarioDomain.GetSubMenuFromMenu(MenuMain.ID);
+                var CollectionSubMenus = UsuarioDomain.GetAllowedMenusChild(MenuMain.ID);
                 var CurrentMenuMain = new MenuModelView() { Menu = MenuMain, CollectionSubMenu = CollectionSubMenus };
+
                 CollectionMenuMain.Add(CurrentMenuMain);
             }
+
             var Id = ModelView.Usuario.ID;
+            
             ModelView = null;
             Session.Start(new UsuarioModelView() { Usuario = UsuarioLogado, CollectionMenusAndSubMenus = CollectionMenuMain });
 
@@ -127,8 +129,8 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var UsuarioDominio = new Usuario();
-                var ModelExists = UsuarioDominio.IsExistsByDocument(Model.CPF_CNPJ.Trim());
+                var UsuarioDominio = new UsuarioSpecialized();
+                var ModelExists = UsuarioDominio.GetByFilter(_ => _.CPF_CNPJ == Model.CPF_CNPJ.Trim());
 
                 if (ModelExists == null)
                 {    
@@ -184,8 +186,8 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {   
-                var UsuarioDominio = new Usuario();
-                var ModelExists = UsuarioDominio.IsExists(Model);
+                var UsuarioDominio = new UsuarioSpecialized();
+                var ModelExists = UsuarioDominio.GetByFilter(_=> _.CPF_CNPJ == Model.CPF_CNPJ).FirstOrDefault();
 
                 if (ModelExists != null)
                 {
@@ -196,9 +198,7 @@ namespace SmartAdmin.WebUI.Controllers
                     UsuarioDominio.Edit(ModelExists);
 
                     var Email = new Email("rodrigo_arf@hotmail.com", "rodrigo_arf@hotmail.com", "Recuperação de Senha", "bla...bla...bla...bla...bla...");
-                    if (Email.Enviar())
-                        TempData["Mensagem"] = "Uma nova senha foi enviada para o e-email cadastrado. Por favor verifique sua caixa de e-mails!";
-
+                    if (Email.Enviar()) { TempData["Mensagem"] = "Uma nova senha foi enviada para o e-email cadastrado. Por favor verifique sua caixa de e-mails!"; }
                 }
                 else
                 {

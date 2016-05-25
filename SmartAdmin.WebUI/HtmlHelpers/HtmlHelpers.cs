@@ -257,15 +257,15 @@ namespace SmartAdmin.WebUI.HtmlHelpers
 
             var HtmlControl = new StringBuilder();
             HtmlControl.Append(String.Format("<select id=\"{0}\" name=\"{1}\" {2}>", Id, Name, Atributes));
-            switch (ModelType)
-            {
-                case EInputModel.AgenciasBancarias:
-                    var BancoDomain = new SmartAdmin.Domain.Banco();
-                    var CollectionBanco = BancoDomain.GetList(_ => _.STATUS == "A");
-                    HtmlControl.AppendLine(String.Format("<option value=\"\" {0} >(Agências Bancarias)</option>", ((DefaultValue == String.Empty) || (DefaultValue == "0")) ? "selected=\"true\"" : string.Empty));
-                    foreach (var item in CollectionBanco) { HtmlControl.AppendLine(String.Format("<option value=\"{0}\" {2}>{1}</option>", item.ID, item.NOME, (item.ID == ((DefaultValue != String.Empty) ? Convert.ToInt32(DefaultValue) : 0)) ? "selected=\"true\"" : string.Empty)); }
-                    break;
-            }
+            //switch (ModelType)
+            //{
+            //    case EInputModel.AgenciasBancarias:
+            //        var BancoDomain = new SmartAdmin.Domain.Model.Banco();
+            //        var CollectionBanco = BancoDomain.GetList(_ => _.STATUS == "A");
+            //        HtmlControl.AppendLine(String.Format("<option value=\"\" {0} >(Agências Bancarias)</option>", ((DefaultValue == String.Empty) || (DefaultValue == "0")) ? "selected=\"true\"" : string.Empty));
+            //        foreach (var item in CollectionBanco) { HtmlControl.AppendLine(String.Format("<option value=\"{0}\" {2}>{1}</option>", item.ID, item.NOME, (item.ID == ((DefaultValue != String.Empty) ? Convert.ToInt32(DefaultValue) : 0)) ? "selected=\"true\"" : string.Empty)); }
+            //        break;
+            //}
 
             HtmlControl.Append("</select>");
             return (new MvcHtmlString(HtmlControl.ToString()));

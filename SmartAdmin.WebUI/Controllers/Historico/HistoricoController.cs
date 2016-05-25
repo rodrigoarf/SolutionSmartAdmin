@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using SmartAdmin.Dto;
+using SmartAdmin.Data.Model;
 using SmartAdmin.Domain;
 using SmartAdmin.WebUI.Infrastructure.ActionFilters;
 
@@ -17,9 +17,9 @@ namespace SmartAdmin.WebUI.Controllers
         {  
             var DataInicial = DateTime.Now.AddMonths(2);
             var DataTermino = DateTime.Now;
-            
-            var AcessoDominio = new SmartAdmin.Domain.Acesso();
-            var UsuarioDominio = new SmartAdmin.Domain.Usuario();
+
+            var AcessoDominio = new SmartAdmin.Domain.Model.AcessoSpecialized();
+            var UsuarioDominio = new SmartAdmin.Domain.Model.UsuarioSpecialized();
 
             var CollectionAcesso = AcessoDominio.GetList(_ => _.DTH_ACESSO >= DataInicial || _.DTH_ACESSO <= DataTermino).Take(5000).ToList();
             var CollectionUsuario = UsuarioDominio.GetList(_ => _.STATUS == "A").Take(5000).ToList();
@@ -46,7 +46,7 @@ namespace SmartAdmin.WebUI.Controllers
         [AuthorizedUser]
         public ActionResult Load(DateTime DataInicial, DateTime DataFinal)
         {
-            var AcessoDominio = new SmartAdmin.Domain.Acesso();
+            var AcessoDominio = new SmartAdmin.Domain.Model.AcessoSpecialized();
             var Collection = new List<AcessoDto>();
 
             Collection = AcessoDominio.GetList(_ => _.DTH_ACESSO >= DataInicial &&

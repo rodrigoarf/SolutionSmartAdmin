@@ -50,10 +50,9 @@ namespace SmartAdmin.WebUI.Infrastructure.Session
         /// <summary>
         /// Retorna o objeto Administrator da armazenado na sessão atual.
         /// </summary>
-        public UsuarioModelView GetUsuario()
+        public UsuarioModelView GetObjectFromSession()
         {
-            var Model = (UsuarioModelView)HttpContext.Current.Session["SmartAdminSession"];
-            return (Model);
+            if (HttpContext.Current.Session["SmartAdminSession"] != null) { return HttpContext.Current.Session["SmartAdminSession"] as UsuarioModelView; } else { return null; }
         }
     }
 }
