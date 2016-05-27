@@ -18,6 +18,9 @@ namespace SmartAdmin.Data
         private RepositoryGeneric<AcessoDto> _acessoRepository;
         private RepositoryGeneric<MenuDto> _menuRepository;
         private RepositoryGeneric<MenuUsuarioDto> _menuusuarioRepository;
+        private RepositoryGeneric<NoticiaPublicadorDto> _noticiapublicadorRepository;
+        private RepositoryGeneric<NoticiaCategoriaDto> _noticiacategoriaRepository;
+        private RepositoryGeneric<NoticiaDto> _noticiaRepository;
 
         public RepositoryGeneric<UsuarioDto> UsuarioRepository
         {
@@ -67,6 +70,42 @@ namespace SmartAdmin.Data
             }
         }
 
+        public RepositoryGeneric<NoticiaPublicadorDto> NoticiaPublicadorRepository
+        {
+            get
+            {
+                if (this._noticiapublicadorRepository == null)
+                {
+                    this._noticiapublicadorRepository = new RepositoryGeneric<NoticiaPublicadorDto>(_Context);
+                }
+                return _noticiapublicadorRepository;
+            }
+        }
+
+        public RepositoryGeneric<NoticiaCategoriaDto> NoticiaCategoriaRepository
+        {
+            get
+            {
+                if (this._noticiacategoriaRepository == null)
+                {
+                    this._noticiacategoriaRepository = new RepositoryGeneric<NoticiaCategoriaDto>(_Context);
+                }
+                return _noticiacategoriaRepository;
+            }
+        }
+
+        public RepositoryGeneric<NoticiaDto> NoticiaRepository
+        {
+            get
+            {
+                if (this._noticiaRepository == null)
+                {
+                    this._noticiaRepository = new RepositoryGeneric<NoticiaDto>(_Context);
+                }
+                return _noticiaRepository;
+            }
+        }
+
         public void Dispose()
         {
             Clear(true);
@@ -84,6 +123,9 @@ namespace SmartAdmin.Data
                     _acessoRepository = null;
                     _menuRepository = null;
                     _menuusuarioRepository = null;
+                    _noticiapublicadorRepository = null;
+                    _noticiacategoriaRepository = null;
+                    _noticiaRepository = null;
                 }
             }
             _Disposed = true;

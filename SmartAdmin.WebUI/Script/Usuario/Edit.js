@@ -14,7 +14,7 @@ $(document).ready(function () {
                 //TELEFONE: { required: true },
                 CELULAR: { required: true },
                 ENDERECO: { required: true },
-                NUMERO: { required: true, maxlength: 5 },
+                NUMERO: { required: true, maxlength: 4 },
                 BAIRRO: { required: true },
                 CIDADE: { required: true },
                 CEP: { required: true },

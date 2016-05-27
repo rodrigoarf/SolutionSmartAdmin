@@ -42,6 +42,27 @@ namespace SmartAdmin.Domain.Model
             return (Collection);
 
         }
+
+        public bool CheckingInitialCharacter(UsuarioDto Model)
+        {
+            var CheckValues = Model.LOGIN.ToString().Substring(0, 3).ToCharArray();
+            var IsNumeric = false;
+            int Inteiro;
+
+            for (int i = 0; i < CheckValues.Length; i++)
+            {
+                IsNumeric = int.TryParse(CheckValues[i].ToString(), out Inteiro);
+                if (IsNumeric) { break; }
+            }
+
+            return (IsNumeric);
+        }
+
+        public bool CheckingLoginCharacters(UsuarioDto Model)
+        {
+            return (((Model.LOGIN.Length < 7) || (Model.LOGIN.Length > 14)) ? true : false);
+        }
+
     }
 }
 

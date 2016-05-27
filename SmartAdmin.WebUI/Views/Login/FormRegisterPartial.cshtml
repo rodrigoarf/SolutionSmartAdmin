@@ -107,7 +107,7 @@
         <a href="~/Login/Index" class="btn btn-sm btn-primary">Voltar</a>
     </footer> 
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "A"})
+    @Html.HiddenFor(model => model.STATUS, new { id= "STATUS", Value = "I"})
     @Html.HiddenFor(model => model.DTH_CRIACAO, new { id= "DTH_CRIACAO", Value = DateTime.Now.ToString() })
     @Html.Hidden("FLAG_ADM", "N")
 }

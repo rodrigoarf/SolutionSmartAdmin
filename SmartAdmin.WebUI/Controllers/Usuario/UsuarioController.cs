@@ -45,7 +45,7 @@ namespace SmartAdmin.WebUI.Controllers
         public ActionResult Load(UsuarioDto Model)
         {
             var UsuarioDominio = new UsuarioSpecialized();
-            var Collection = UsuarioDominio.GetByFilter(_ => _.NOME == Model.NOME && _.STATUS == Model.STATUS);
+            var Collection = UsuarioDominio.GetList(_ => _.NOME == Model.NOME && _.STATUS == Model.STATUS);
 
             return View("Index", Collection.ToPagedList(1, PageSize));     
         }
@@ -125,22 +125,22 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [AuthorizedUser]
-        public PartialViewResult PermissionMenuPartial(int Id)
+        public ActionResult Permission(int Id)
         {
             var UsuarioDomain = new UsuarioSpecialized();
             var Model = UsuarioDomain.GetItem(_ => _.ID == Id);
 
             var MenuDomain = new MenuSpecialized();
-            var Collection = MenuDomain.GetList(_=>_.STATUS=="A" && _.COD_MENU_PAI == 0);
+            var Collection = MenuDomain.GetList(_ => _.STATUS == "A" && _.COD_MENU_PAI == 0);
 
             var MenuUsuarioDomain = new MenuUsuarioSpecialized();
             var CollectionAllowed = MenuUsuarioDomain.GetList(_ => _.COD_USUARIO == Id);
 
             var CheckboxList = new List<SmartAdmin.WebUI.ModelView.CheckBoxes>();
-            bool retorno=false;
+            bool retorno = false;
 
             foreach (var item in Collection)
-	        {
+            {
                 foreach (var itemAllowed in CollectionAllowed)
                 {
                     if (item.ID == itemAllowed.COD_MENU)
@@ -148,7 +148,7 @@ namespace SmartAdmin.WebUI.Controllers
                         retorno = true;
                         break;
                     }
-                    else 
+                    else
                     {
                         retorno = false;
                         continue;
@@ -156,14 +156,14 @@ namespace SmartAdmin.WebUI.Controllers
                 }
 
                 CheckboxList.Add(new SmartAdmin.WebUI.ModelView.CheckBoxes() { ID = item.ID, Text = item.NOME, Value = item.ID.ToString(), Checked = retorno });
-	        }
+            }
 
             var ModelView = new SmartAdmin.WebUI.ModelView.PermissionModelView();
             ModelView.ID = Model.ID;
             ModelView.NOME = Model.NOME;
             ModelView.CollectionMenus = CheckboxList;
 
-            return (PartialView("PermissionMenuPartial", ModelView));
+            return View(ModelView);
         }
 
         [HttpPost]

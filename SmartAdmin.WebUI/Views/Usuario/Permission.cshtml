@@ -1,0 +1,117 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.WebUI.ModelView.PermissionModelView
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa-fw fa fa-home"></i>Permissão de menus
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 text-right"></div>
+    @using (Html.BeginForm("SaveMenuPermission", "Usuario", FormMethod.Post, new { @id = "smart-form-menu" }))
+    { 
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="jarviswidget jarviswidget-color-blueDark" id="widget-busca">
+                        <header>
+                            <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                            <h2>Busca por Usuários</h2>
+                        </header>
+                        <div>
+                            <div class="widget-body no-padding">
+                                <div class="smart-form">
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-3">
+                                                <label class="label">Nome do usuário</label>
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-user"></i>
+                                                    @HtmlControls.HiddenField("ID", new { @value = Model.ID })
+                                                    @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome do usuário completo", @readonly = "true" })
+                                                    <b class="tooltip tooltip-bottom-right">Nome do usuário completo</b>
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="col-md-12">
+            <div class="row">
+                <article class="col-sm-12 col-md-12 col-lg-12">
+                    <div id="Grid" class="jarviswidget jarviswidget-color-blueDark">
+                        <header>
+                            <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                            <h2>Grupo de menus</h2>
+                        </header>
+                        <div>
+                            <div class="widget-body no-padding">
+                                <div class="smart-form">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered smart-form has-tickbox" style="">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <label class="checkbox">
+                                                            <input id="select_all" name="checkbox-inline" type="checkbox">
+                                                            <i></i>
+                                                        </label>
+                                                    </th>
+                                                    <th>Nome do Menu</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    for (int i = 0; i < Model.CollectionMenus.Count; i++)
+                                                    {
+                                                    <tr>
+                                                        <td>
+                                                            <label class="checkbox">
+                                                                @Html.HiddenFor(_ => Model.CollectionMenus[i].ID)
+                                                                @Html.HiddenFor(_ => Model.CollectionMenus[i].Text)
+                                                                @Html.CheckBoxFor(_ => Model.CollectionMenus[i].Checked)
+                                                                <i></i>
+                                                            </label>
+                                                        </td>
+                                                        <td>@Model.CollectionMenus[i].Text</td>
+                                                    </tr>
+                                                    }                                              
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <footer>
+                                       <button type="submit" class="btn btn-md btn-warning"><i class="fa fa-cog"></i>&nbsp;Salvar</button>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $('#select_all').click(function (event) {
+        if (this.checked) {
+            $(':checkbox').each(function () {
+                this.checked = true;
+            });
+        }
+        else {
+            $(':checkbox').each(function () {
+                this.checked = false;
+            });
+        }
+    });
+    @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null)   
+</script>
+

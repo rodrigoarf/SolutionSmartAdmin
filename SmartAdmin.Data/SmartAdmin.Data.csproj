@@ -54,6 +54,12 @@
     <Compile Include="Models\MenuMapper.cs" />
     <Compile Include="Models\MenuUsuarioDto.cs" />
     <Compile Include="Models\MenuUsuarioMapper.cs" />
+    <Compile Include="Models\NoticiaCategoriaDto.cs" />
+    <Compile Include="Models\NoticiaCategoriaMapper.cs" />
+    <Compile Include="Models\NoticiaDto.cs" />
+    <Compile Include="Models\NoticiaMapper.cs" />
+    <Compile Include="Models\NoticiaPublicadorDto.cs" />
+    <Compile Include="Models\NoticiaPublicadorMapper.cs" />
     <Compile Include="Models\UsuarioDto.cs" />
     <Compile Include="Models\UsuarioMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

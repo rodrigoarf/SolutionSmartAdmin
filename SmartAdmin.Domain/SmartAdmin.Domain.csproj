@@ -46,10 +46,25 @@
     <Compile Include="Annotations\Acesso.cs" />
     <Compile Include="Annotations\AcessoAnnotations.cs" />
     <Compile Include="Annotations\Base.cs" />
+    <Compile Include="Annotations\Menu.cs" />
+    <Compile Include="Annotations\MenuAnnotations.cs" />
+    <Compile Include="Annotations\MenuUsuario.cs" />
+    <Compile Include="Annotations\MenuUsuarioAnnotations.cs" />
+    <Compile Include="Annotations\Noticia.cs" />
+    <Compile Include="Annotations\NoticiaAnnotations.cs" />
+    <Compile Include="Annotations\NoticiaCategoria.cs" />
+    <Compile Include="Annotations\NoticiaCategoriaAnnotations.cs" />
+    <Compile Include="Annotations\NoticiaPublicador.cs" />
+    <Compile Include="Annotations\NoticiaPublicadorAnnotations.cs" />
     <Compile Include="Annotations\Usuario.cs" />
     <Compile Include="Annotations\UsuarioAnnotations.cs" />
     <Compile Include="Filters\AcessoFilter.cs" />
     <Compile Include="Filters\Base.cs" />
+    <Compile Include="Filters\MenuFilter.cs" />
+    <Compile Include="Filters\MenuUsuarioFilter.cs" />
+    <Compile Include="Filters\NoticiaCategoriaFilter.cs" />
+    <Compile Include="Filters\NoticiaFilter.cs" />
+    <Compile Include="Filters\NoticiaPublicadorFilter.cs" />
     <Compile Include="Filters\UsuarioFilter.cs" />
     <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\Helpers.cs" />
@@ -67,6 +82,12 @@
     <Compile Include="Models\MenuUsuario\MenuUsuarioSpecialized.cs" />
     <Compile Include="Models\Menu\Menu.cs" />
     <Compile Include="Models\Menu\MenuSpecialized.cs" />
+    <Compile Include="Models\NoticiaCategoria\NoticiaCategoria.cs" />
+    <Compile Include="Models\NoticiaCategoria\NoticiaCategoriaSpecialized.cs" />
+    <Compile Include="Models\NoticiaPublicador\NoticiaPublicador.cs" />
+    <Compile Include="Models\NoticiaPublicador\NoticiaPublicadorSpecialized.cs" />
+    <Compile Include="Models\Noticia\Noticia.cs" />
+    <Compile Include="Models\Noticia\NoticiaSpecialized.cs" />
     <Compile Include="Models\Usuario\Usuario.cs" />
     <Compile Include="Models\Usuario\UsuarioSpecialized.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,7 +101,6 @@
       <Name>SmartAdmin.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

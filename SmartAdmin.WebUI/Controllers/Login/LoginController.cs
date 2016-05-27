@@ -24,9 +24,6 @@ namespace SmartAdmin.WebUI.Controllers
 
         public ActionResult Index()
         {
-            var t = new SmartAdmin.Domain.Security.Cryptography();
-            ViewBag.Pass = t.Encrypt("rodrigo");
-
             ViewBag.Mensagem = ((TempData["Mensagem"] != null) ? TempData["Mensagem"] as String : null);
             return View();
         }
@@ -43,9 +40,9 @@ namespace SmartAdmin.WebUI.Controllers
         {
             try
             {
-                var TextCrypt = new SmartAdmin.Domain.Security.Cryptography();
-                var SenhaCrypt = TextCrypt.Encrypt(Model.SENHA);  
-                var UsuarioLogado = UsuarioDomain.GetByFilter(_ => _.LOGIN == Model.LOGIN && _.SENHA == SenhaCrypt).FirstOrDefault();
+                //var TextCrypt = new SmartAdmin.Domain.Security.Cryptography();
+                //var SenhaCrypt = TextCrypt.Encrypt(Model.SENHA);  
+                var UsuarioLogado = UsuarioDomain.GetItem(_ => _.LOGIN == Model.LOGIN && _.SENHA == Model.SENHA && _.STATUS == "A");
 
                 if (UsuarioLogado != null)
                 {
@@ -70,7 +67,7 @@ namespace SmartAdmin.WebUI.Controllers
                 }
                 else
                 {
-                    TempData["Mensagem"] = "Usuário inexistente ou não esta ativo no sistema, contate o Administrador!";
+                    TempData["Mensagem"] = "Usuário inexistente ou não esta ativo no sistema, contate o <span style='color:#10e4ea;'>Administrador</span>";
                     return (RedirectToAction("Index", "Login"));
                 }  
             }
@@ -130,32 +127,36 @@ namespace SmartAdmin.WebUI.Controllers
             try
             {
                 var UsuarioDominio = new UsuarioSpecialized();
-                var ModelExists = UsuarioDominio.GetByFilter(_ => _.CPF_CNPJ == Model.CPF_CNPJ.Trim());
+                var ModelExists = UsuarioDominio.GetItem(_ => _.CPF_CNPJ == Model.CPF_CNPJ.Trim());
 
-                if (ModelExists == null)
-                {    
-                    if (CheckInitialValues(Model))
+                if (ModelExists != null)
+                {
+                    TempData["Mensagem"] = String.Format("<span style='color:#10e4ea;'>Documento Cpf/Cnpj</span> informado ja existente no sistema, informe outro Cnpj ou Cpf!");
+                    TempData["Model"] = Model;
+                    return (RedirectToAction("Registro"));
+                }   
+                else
+                {
+                    if (UsuarioDominio.CheckingInitialCharacter(Model))
                     {
                         TempData["Mensagem"] = String.Format("O campo login deve iniciar com <span style='color:#10e4ea;'>3 letras</span>, após isso números e letras são permitidos", Model.LOGIN);
                         TempData["Model"] = Model;
                         return (RedirectToAction("Registro"));
                     }
-                    else if (Model.LOGIN.Length <= 7)
+                    
+                    if (UsuarioDominio.CheckingLoginCharacters(Model))
                     {
-                        TempData["Mensagem"] = String.Format("O campo login contém apenas <span style='color:#10e4ea;'>{0} caracteres</span>, é esperado entre <span style='color:#10e4ea;'>7</span> e <span style='color:#10e4ea;'>14</span> caracteres.", Model.LOGIN.Length);
+                        TempData["Mensagem"] = String.Format("O campo login deve conter de <span style='color:#10e4ea;'>7</span> à <span style='color:#10e4ea;'>14</span> caracteres.");
                         TempData["Model"] = Model;
                         return (RedirectToAction("Registro"));
                     }
-                    
+
+                    //var Crypt = new SmartAdmin.Domain.Security.Cryptography();
+                    //Model.SENHA = Crypt.Encrypt(Model.SENHA);
+
                     UsuarioDominio.Save(Model);
                     TempData["Mensagem"] = String.Format("Usuário <span style='color:#10e4ea;'>{0}</span> salvo com sucesso!", Model.LOGIN);
-                    return (RedirectToAction("Registro"));
-                }
-                else
-                {
-                    TempData["Mensagem"] = String.Format("<span style='color:#10e4ea;'>Documento</span> informado ja existente no sistema, informe outro Cnpj ou Cpf!");
-                    TempData["Model"] = Model;
-                    return (RedirectToAction("Registro"));
+                    return (RedirectToAction("Index"));
                 }
             }
             catch (Exception Ex)
@@ -164,21 +165,6 @@ namespace SmartAdmin.WebUI.Controllers
                 TempData["Model"] = Model;
                 return (RedirectToAction("Registro"));
             }
-        }
-
-        private static bool CheckInitialValues(UsuarioDto Model)
-        {
-            var CheckValues = Model.LOGIN.ToString().Substring(0, 3).ToCharArray();
-            var IsNumeric = false;
-            int Inteiro;
-
-            for (int i = 0; i < CheckValues.Length; i++)
-            {
-                IsNumeric = int.TryParse(CheckValues[i].ToString(), out Inteiro);
-                if (IsNumeric) { break; }
-            } 
-     
-            return (IsNumeric);
         }
 
         [HttpPost]

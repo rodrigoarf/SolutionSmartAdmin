@@ -3,8 +3,6 @@
 
 @using (Html.BeginForm("Logar", "Login", FormMethod.Post, new { @id = "smart-form-login", @class = "smart-form client-form" }))
 {
-    @Html.AntiForgeryToken()     
-    @Html.Hidden("Remind","false")
     <header>
         Acesso a Administração
     </header> 
@@ -36,5 +34,7 @@
     <footer>
         <button id="btnLogar" type="submit" class="btn btn-warning">Logar</button>
     </footer>
+    @Html.AntiForgeryToken()     
+    @Html.Hidden("Remind","false")
 }     
 <script src="~/Script/Login/Index.js"></script>

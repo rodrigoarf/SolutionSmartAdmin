@@ -3,14 +3,10 @@
 
 @using (Html.BeginForm("Save", "Usuario", FormMethod.Post, new { @id = "smart-form-edit", @class = "smart-form" }))
 {
-    @Html.HiddenFor(model => Model.ID, new { id = "ID" })
-    @Html.HiddenFor(model => Model.DTH_CRIACAO, new { id = "DTH_CRIACAO" })
-    @Html.HiddenFor(model => Model.FOTO, new { id = "FOTO" })
-    @Html.HiddenFor(model => Model.FLAG_ADM, new { id = "FLAG_ADM" })
     <fieldset>
         <div class="row">
             <div class="col-sm-3">
-                 <img id="start-webcam" @((Model.FOTO == null) ? "src=/Content/img/avatars/sunny-big.png" : "src=" + Model.FOTO + "" )  style="margin: 0px 10px 5px 10px; border: 6px solid #e3e3e3; width: 240px; height:180px;" />
+                 <img id="start-webcam" @((Model.FOTO == null) ? "src=/Content/img/avatars/sunny-big.png" : "src=" + Model.FOTO + "")  style="margin: 0px 10px 5px 10px; border: 6px solid #e3e3e3; width: 240px; height:180px;" />
             </div>
             <div class="col-sm-4">           
                 <h1>@Model.NOME<br/><small>Usuário Administrador</small></h1>
@@ -27,7 +23,7 @@
             <section class="col col-6">
                 <label class="input">
                     <i class="icon-prepend fa fa-user"></i>
-                     @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome completo do usuário", @class="text-uppercase" })
+                     @HtmlControls.TextBox("NOME", new { @value = Model.NOME, @placeholder = "Nome completo do usuário"})
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Nome completo do usuário
                     </b>
@@ -49,7 +45,7 @@
             <section class="col col-3">
                 <label class="input">
                     <i class="icon-prepend fa fa-phone"></i>
-                     @HtmlControls.TextBox("TELEFONE", new { @value = Model.TELEFONE, @placeholder = "Telefone de contato", @class="phonemask"  })
+                     @HtmlControls.TextBox("TELEFONE", new { @value = Model.TELEFONE, @placeholder = "Telefone de contato", @class = "phonemask" })
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Informe seu telefone
                     </b>
@@ -58,7 +54,7 @@
             <section class="col col-3">
                 <label class="input">
                     <i class="icon-prepend fa fa-phone"></i>
-                     @HtmlControls.TextBox("CELULAR", new { @value = Model.CELULAR, @placeholder = "Celular de contato", @class="phonemask" })
+                     @HtmlControls.TextBox("CELULAR", new { @value = Model.CELULAR, @placeholder = "Celular de contato", @class = "phonemask" })
                      <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Informe seu celular
                     </b>
@@ -68,7 +64,7 @@
         <div class="row">
             <section class="col col-3">
                 <label class="select">
-                    @HtmlControls.DropDownListCustomSexo("SEXO",((Model.SEXO != null) ? ((Model.SEXO == "M") ? EInputSexo.M : EInputSexo.F) : EInputSexo.None), false, new { @tabindex = "3" })
+                    @HtmlControls.DropDownListCustomSexo("SEXO", ((Model.SEXO != null) ? ((Model.SEXO == "M") ? EInputSexo.M : EInputSexo.F) : EInputSexo.None), false, new { @tabindex = "3" })
                     <i></i>
                 </label>
             </section>
@@ -100,7 +96,7 @@
             </section>
             <section class="col col-1">
                 <label class="input">
-                    @HtmlControls.TextBox("NUMERO", new { @value = Model.NUMERO, @placeholder = "Nº", @class="integer"})
+                    @HtmlControls.TextBox("NUMERO", new { @value = Model.NUMERO, @placeholder = "Nº", @class = "integer" })
                     <b class="tooltip tooltip-bottom-right">
                         <i class="fa fa-warning txt-color-teal"></i> Número
                     </b>
@@ -136,7 +132,7 @@
             </section>   
             <section class="col col-3">
                 <label class="select">
-                    @HtmlControls.DropDownListCustomUF("UF",EInputUF.SP)
+                    @HtmlControls.DropDownListCustomUF("UF", EInputUF.SP)
                     <i></i>
                 </label>
             </section>
@@ -178,7 +174,7 @@
             <section class="col col-3">
                 <label class="input">
                     <i class="icon-prepend fa fa-user"></i>
-                    @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Usuário de acesso", @readonly="true" })
+                    @HtmlControls.TextBox("LOGIN", new { @value = Model.LOGIN, @placeholder = "Usuário de acesso", @readonly = "true" })
                 </label>
             </section>
         </div>
@@ -186,7 +182,7 @@
             <section class="col col-3">
                 <label class="input">                    
                     <i class="icon-prepend fa fa-lock"></i>
-                    @HtmlControls.Password("SENHA", new { @value = string.Empty, @placeholder = "Senha de acesso" })
+                    @HtmlControls.Password("SENHA", new { @value = Model.SENHA, @placeholder = "Senha de acesso" })
                     <div class="note">
                         <strong>Nota:</strong> Para alterar a senha basta inserir uma outra senha neste campo.
                     </div>
@@ -220,6 +216,10 @@
             Voltar
         </a>
     </footer>
+    @Html.HiddenFor(model => Model.ID, new { id = "ID" })
+    @Html.HiddenFor(model => Model.DTH_CRIACAO, new { id = "DTH_CRIACAO" })
+    @Html.HiddenFor(model => Model.FOTO, new { id = "FOTO" })
+    @Html.HiddenFor(model => Model.FLAG_ADM, new { id = "FLAG_ADM" })
 } 
 
 <div id="modal-webcam" class="modal fade" role="dialog" aria-labelledby="modal-webcam">

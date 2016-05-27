@@ -1,4 +1,53 @@
 /***********************************************************  
+NOTICIA_CATEGORIA
+***********************************************************/
+CREATE TABLE NOTICIA_PUBLICADOR
+(
+	COD_PUBLICADOR	  			INT NOT NULL 	AUTO_INCREMENT,
+    NOME						VARCHAR(100) 	NULL,
+	EMAIL						VARCHAR(100) 	NULL,
+	STATUS 					    CHAR(1) 	   	NOT NULL,
+    PRIMARY KEY (COD_PUBLICADOR)
+);
+
+ALTER TABLE NOTICIA_PUBLICADOR AUTO_INCREMENT = 1000;
+
+INSERT INTO NOTICIA_PUBLICADOR VALUES (NULL,'Antonio Rodrigo Fernandes', 'rodrigo_arf@hotmail.com','A');
+COMMIT;
+
+/***********************************************************  
+NOTICIA_CATEGORIA
+***********************************************************/
+CREATE TABLE NOTICIA_CATEGORIA
+(
+	COD_CATEGORIA	  			INT NOT NULL 	AUTO_INCREMENT,
+    TITULO						VARCHAR(100) 	NULL,
+	STATUS 					    CHAR(1) 	   	NOT NULL,
+    PRIMARY KEY (COD_CATEGORIA)
+);
+
+ALTER TABLE NOTICIA_CATEGORIA AUTO_INCREMENT = 1000;
+
+/***********************************************************  
+NOTICIA
+***********************************************************/
+CREATE TABLE NOTICIA
+(
+	COD_NOTICIA		  			INT NOT NULL 	AUTO_INCREMENT,
+    COD_CATEGORIA		  	    INT NOT NULL,
+	COD_PUBLICADOR				INT NOT NULL,
+    TITULO						VARCHAR(100) 	NULL,
+    TEXTO     					TEXT 			NULL,
+	DTH_CADASTRO   				DATETIME        DEFAULT CURRENT_TIMESTAMP, 
+	STATUS 					    CHAR(1) 	   	NOT NULL,
+    PRIMARY KEY (COD_NOTICIA),
+    FOREIGN KEY (COD_CATEGORIA) REFERENCES NOTICIA_CATEGORIA(COD_CATEGORIA),
+	FOREIGN KEY (COD_PUBLICADOR) REFERENCES NOTICIA_PUBLICADOR(COD_PUBLICADOR)
+);
+
+ALTER TABLE NOTICIA AUTO_INCREMENT = 1000;
+
+/***********************************************************  
 USUARIO
 ***********************************************************/
 CREATE TABLE USUARIO

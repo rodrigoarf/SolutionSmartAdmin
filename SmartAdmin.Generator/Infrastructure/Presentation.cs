@@ -88,7 +88,7 @@ namespace SmartAdmin.Gerador.Infrastructure
             TextClass.AppendLine("");
             TextClass.AppendLine("        public ActionResult Edit(Int32 Id)");
             TextClass.AppendLine("        {");
-            TextClass.AppendLine("            var ModelView = (Id > 0) ? AutoMapper.Mapper.Map<" + ClassName + "Annotations>(" + ClassName + "Domain.GetItem(_ => _.ID == Id)) : new " + ClassName + "Annotations();");
+            TextClass.AppendLine("            var ModelView = (Id > 0) ? Mapper.Map<" + ClassName + "Annotations>(" + ClassName + "Domain.GetItem(_ => _.ID == Id)) : new " + ClassName + "Annotations();");
             TextClass.AppendLine("            return View(ModelView);");
             TextClass.AppendLine("        }");
             TextClass.AppendLine("");

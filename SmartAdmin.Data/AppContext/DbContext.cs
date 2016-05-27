@@ -19,6 +19,9 @@ namespace SmartAdmin.Data.ApplicationContext
         public DbSet<AcessoDto> Acesso { get; set; }
         public DbSet<MenuDto> Menu { get; set; }
         public DbSet<MenuUsuarioDto> MenuUsuario { get; set; }
+        public DbSet<NoticiaPublicadorDto> NoticiaPublicador { get; set; }
+        public DbSet<NoticiaCategoriaDto> NoticiaCategoria { get; set; }
+        public DbSet<NoticiaDto> Noticia { get; set; }
 
         static SmartAdminContext()
         {
@@ -39,6 +42,9 @@ namespace SmartAdmin.Data.ApplicationContext
              ModelBuilder.Configurations.Add(new AcessoMapper());
              ModelBuilder.Configurations.Add(new MenuMapper());
              ModelBuilder.Configurations.Add(new MenuUsuarioMapper());
+             ModelBuilder.Configurations.Add(new NoticiaPublicadorMapper());
+             ModelBuilder.Configurations.Add(new NoticiaCategoriaMapper());
+             ModelBuilder.Configurations.Add(new NoticiaMapper());
         }
     }
 }

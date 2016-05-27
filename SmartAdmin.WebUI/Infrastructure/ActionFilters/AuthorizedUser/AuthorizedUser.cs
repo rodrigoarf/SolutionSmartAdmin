@@ -23,29 +23,6 @@ namespace SmartAdmin.WebUI.Infrastructure.ActionFilters
                 }));
             }
         }
-
-        //protected override void OnAuthorization(AuthorizationContext filterContext)
-        //{
-        //    base.OnAuthorization(filterContext);
-
-        //    if (filterContext == null)
-        //    {
-        //        throw new ArgumentNullException("filterContext");
-        //    }
-
-        //    List<string> allowedControllers = new List<string>() { "SecurityController" };
-        //    List<string> allowedActions = new List<string>() { "Index" };
-
-        //    string controllerName = filterContext.Controller.GetType().Name;
-        //    string actionName = filterContext.ActionDescriptor.ActionName;
-
-        //    if (!allowedControllers.Contains(controllerName)
-        //    || !allowedActions.Contains(actionName))
-        //    {
-        //        filterContext.Result = View("UnauthorizedAccess");
-        //    }
-        //}  
-
     }  
 }
 

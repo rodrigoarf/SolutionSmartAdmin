@@ -14,7 +14,6 @@ namespace SmartAdmin.WebUI.Controllers
 {
     public class MenuController : BaseController
     {
-        [Authorize]
         [AuthorizedUser]
         public ActionResult Index(int? Page)
         {

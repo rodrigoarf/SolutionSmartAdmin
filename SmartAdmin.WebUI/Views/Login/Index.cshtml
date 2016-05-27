@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     <title>SmartAdmin</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-production.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-skins.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/demo.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/css/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Content/css/demo.min.css">
     <link rel="shortcut icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
     <link rel="icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
 
-    <script src="~/Content/js/plugin/pace/pace.min.js"></script>
-    <script src="~/Content/js/libs/jquery-2.0.2.min.js"></script>
-    <script src="~/Content/js/libs/jquery-ui-1.10.3.min.js"></script>
-    <script src="~/Content/js/bootstrap/bootstrap.min.js"></script>
-    <script src="~/Content/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-    <script src="~/Content/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-    <script src="~/Content/js/notification/SmartNotification.min.js"></script>
+    <script src="/Content/js/plugin/pace/pace.min.js"></script>
+    <script src="/Content/js/libs/jquery-2.0.2.min.js"></script>
+    <script src="/Content/js/libs/jquery-ui-1.10.3.min.js"></script>
+    <script src="/Content/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/Content/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+    <script src="/Content/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="/Content/js/notification/SmartNotification.min.js"></script>
     <!--[if IE 8]><h1>Seu navegador está desatualizado, por favor atualize seu navegador, indo para www.microsoft.com/download</h1><![endif]-->
 
 </head>
@@ -25,8 +25,6 @@
 <body class="animated fadeInDown">
 
      @{Html.RenderPartial("HeaderPartial");}
-
-     @*@ViewBag.Pass*@
 
     <div id="main" role="main">
 
@@ -81,7 +79,6 @@
          @Html.Partial("RememberPartial", new SmartAdmin.Data.Model.UsuarioDto());
     </div>
     <script>
-        @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert('" + ViewBag.Mensagem + "');") : null)
 
         function PrintAlert(alert) {
             $.SmartMessageBox({
@@ -89,7 +86,10 @@
                 content: '<div style="margin:10px 0px 0px 5px;">' + alert + '</div>',
                 buttons: '[Voltar]'
             });
-        } 
+        }
+
+        @((!String.IsNullOrEmpty(ViewBag.Mensagem)) ? Html.Raw("PrintAlert(\"" + ViewBag.Mensagem + "\");") : null) 
+
     </script>
 </body>
 </html>

@@ -43,6 +43,10 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\SolutionSmartClinic\Clinic.WebUI\bin\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -143,9 +147,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\DomainToViewModelMapping.cs" />
+    <Compile Include="AutoMapper\ViewModelToDomainMapping.cs" />
     <Compile Include="Controllers\Acesso\AcessoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Dashboard\DashboardController.cs" />
+    <Compile Include="Controllers\NoticiaCategoria\NoticiaCategoriaController.cs" />
+    <Compile Include="Controllers\NoticiaPublicador\NoticiaPublicadorController.cs" />
+    <Compile Include="Controllers\Noticia\NoticiaController.cs" />
     <Compile Include="Infrastructure\ActionFilters\AuthorizedUser\AuthorizedUser.cs" />
     <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ActionFilters\ValidateAntiModelInjection\HttpAntiModelInjectionException.cs">
@@ -1063,9 +1073,6 @@
     <Content Include="Views\Financeiro\BancoEditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Usuario\PermissionMenuPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Inbox\Sent.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1089,6 +1096,11 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\SmartAdmin.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdminLocal.pubxml" />
+    <Content Include="Views\Usuario\Permission.cshtml" />
+    <Content Include="Views\Noticia\Index.cshtml" />
+    <Content Include="Views\Noticia\FiltroPartial.cshtml" />
+    <Content Include="Views\Noticia\GridPartial.cshtml" />
+    <Content Include="Views\Noticia\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

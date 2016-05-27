@@ -945,7 +945,8 @@ namespace SmartAdmin.WebUI.HtmlHelpers
     /// </summary>
     public enum EInputModel
     {
-        AgenciasBancarias
+        AgenciasBancarias,
+        Usuario
     }
 
     /// <summary>

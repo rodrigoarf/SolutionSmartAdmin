@@ -29,6 +29,14 @@ $('#REMEMBER').click(function () {
     else { $('#Remind').val("false"); }
 });
 
+$('#LOGIN').keypress(function (e) {
+    var Regex = new RegExp("^[a-zA-Z0-9]+$");
+    var Str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (Regex.test(Str)) { return true; }
+    e.preventDefault();
+    return false;
+});
+
 function PrintAlert(alert) {
     $.SmartMessageBox({
         title: '<i class="fa fa-lg fa-fw fa-exclamation-triangle"></i> Aviso!',

@@ -1,0 +1,54 @@
+﻿@using SmartAdmin.WebUI.HtmlHelpers;
+@model SmartAdmin.Domain.Annotations.NoticiaAnnotations
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}     
+@using (Html.BeginForm("Save", "Noticia", FormMethod.Post, new { @id = "smart-form-edit", @class = "smart-form" }))
+{
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <h1>Dados da Notícia</h1>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="input">
+                    <i class="icon-prepend fa fa-user"></i>
+                     @HtmlControls.TextBox("TITULO", new { @value = Model.TITULO, @placeholder = "Título da notícia"})
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i> Título da notícia
+                    </b>
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="input">
+                    <i class="icon-prepend fa fa-user"></i>
+                     @HtmlControls.TextBox("TEXTO", new { @value = Model.TEXTO, @placeholder = "Texto da notícia"})
+                    <b class="tooltip tooltip-bottom-right">
+                        <i class="fa fa-warning txt-color-teal"></i> Texto da notícia
+                    </b>
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="select">
+                     @HtmlControls.DropDownListCustomStatus("STATUS", ((Model.STATUS == "A") ? EInputStatus.Ativo : EInputStatus.Inativo))
+                </label>
+            </section>
+        </div>
+    </fieldset>
+    <footer>
+        <button id="btnSaveUsuario" type="submit" class="btn btn-warning">
+            Salvar
+        </button>
+        <a href="/Usuario/Index" class="btn btn-primary">
+            Voltar
+        </a>
+    </footer>
+    @Html.HiddenFor(model => Model.ID, new { id = "ID" })
+    @Html.HiddenFor(model => Model.DTH_CADASTRO, new { id = "DTH_CADASTRO" })
+} 

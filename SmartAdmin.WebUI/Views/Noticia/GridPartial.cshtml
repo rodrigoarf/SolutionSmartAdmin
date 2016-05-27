@@ -1,0 +1,43 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<SmartAdmin.Domain.Annotations.Noticia>  
+<header>
+    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+    <h2>Usuários</h2>
+</header>
+<div>
+    <div class="widget-body no-padding">
+        <div class="smart-form">
+            <div class="table-responsive">
+                <table id="datatable_tabletools" class="table table-bordered table-striped table-hover smart-form" style="border: 0;">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Notícia</th>
+                            <th class="text-center" style="width: 130px;">Publicada em</th>
+                            <th class="text-center" style="width: 90px;">Status</th>
+                            <th class="text-center" style="width: 90px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            @SmartAdmin.WebUI.HtmlHelpers.HtmlControls.HiddenField("ID")
+                            <tr>
+                                <td class="text-left">@item.TITULO</td>
+                                <td class="text-center">@item.DTH_CADASTRO</td>
+                                <td class="text-center">@((item.STATUS == "A") ? "Ativo" : "Inativo")</td>
+                                <td class="text-center">
+                                    <a href="/Usuario/Edit/@(item.ID)" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                    <a href="/Usuario/Permission/@(item.ID)" class="btn btn-xs btn-info"><i class="fa fa-lock"></i></a>
+                                </td>
+                            </tr> 
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <footer class="text-center" style="padding-top: 25px; padding-bottom: 25px;">
+                @Html.Partial("_PaginationPartial", Model)
+            </footer>
+        </div>
+    </div>
+</div>
+
